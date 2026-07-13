@@ -8,9 +8,8 @@ namespace ELearning.Models.Authentication
         public int RoleId { get; set; }
 
         [Required]
-        [StringLength(50)]
-        public string RoleName { get; set; } = null!;
+        public string RoleName { get; set; } = string.Empty;
 
-        public ICollection<User>? Users { get; set; }
+        public List<User>? Users { get; set; }
     }
 }

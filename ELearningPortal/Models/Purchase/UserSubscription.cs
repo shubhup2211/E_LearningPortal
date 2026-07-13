@@ -13,16 +13,16 @@ namespace ELearning.Models.Purchases
         [Required]
         [ForeignKey(nameof(User))]
         public int UserId { get; set; }
-        public User? User { get; set; }
+        public User User { get; set; } = null!;
 
         [Required]
         [ForeignKey(nameof(Subscription))]
         public int SubscriptionId { get; set; }
-        public Subscription? Subscription { get; set; }
+        public Subscription Subscription { get; set; } = null!;
 
         [ForeignKey(nameof(Payment))]
-        public int? PaymentId { get; set; }
-        public Payment? Payment { get; set; }
+        public int PaymentId { get; set; }
+        public Payment Payment { get; set; } = null!;
 
         [Required]
         public DateTime PurchaseDate { get; set; }

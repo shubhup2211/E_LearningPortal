@@ -13,20 +13,16 @@ namespace ELearning.Models.Courses
         public int CourseId { get; set; }
 
         [Required]
-        [StringLength(150)]
-        public string CourseName { get; set; } = null!;
+        public string CourseName { get; set; } = string.Empty;
 
         public string? Description { get; set; }
 
         [Required]
-        [Column(TypeName = "decimal(10,2)")]
-        public decimal Price { get; set; }
+        [ForeignKey(nameof(Branch))]
+        public int BranchId { get; set; }
+        public Branch Branch { get; set; }
 
-        [StringLength(255)]
         public string? Image { get; set; }
-
-        [Required]
-        public int DisplayOrder { get; set; }
 
         [Required]
         public ApprovalStatus ApprovalStatus { get; set; }
@@ -34,7 +30,7 @@ namespace ELearning.Models.Courses
         [Required]
         [ForeignKey(nameof(CreatedByUser))]
         public int CreatedBy { get; set; }
-        public User? CreatedByUser { get; set; }
+        public User CreatedByUser { get; set; }
 
         [Required]
         public Status Status { get; set; }
@@ -45,11 +41,11 @@ namespace ELearning.Models.Courses
         [Required]
         public DateTime ModifiedAt { get; set; }
 
-        // Navigation properties
-        public ICollection<SubCourse>? SubCourses { get; set; }
-        public ICollection<UserCourse>? UserCourses { get; set; }
-        public ICollection<SubscriptionCourse>? SubscriptionCourses { get; set; }
-        public ICollection<Rating>? Ratings { get; set; }
-        public ICollection<Certificate>? Certificates { get; set; }
+        // Navigation Properties
+        public List<SubCourse> SubCourses { get; set; } = new();
+        public List<UserCourse> UserCourses { get; set; } = new();
+        public List<SubscriptionCourse> SubscriptionCourses { get; set; } = new();
+        public List<Rating> Ratings { get; set; } = new();
+        public List<Certificate> Certificates { get; set; } = new();
     }
 }

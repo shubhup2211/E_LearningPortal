@@ -6,4 +6,5 @@ namespace ELearning.Enums
         Approved = 1,
         Rejected = 2
     }
+
 }

@@ -13,18 +13,12 @@ namespace ELearning.Models.Purchases
         [Required]
         [ForeignKey(nameof(User))]
         public int UserId { get; set; }
-        public User? User { get; set; }
+        public User User { get; set; } = null!;
 
         [Required]
-        [StringLength(100)]
         public string TransactionId { get; set; } = null!;
 
         [Required]
-        [StringLength(50)]
-        public string GatewayName { get; set; } = null!;
-
-        [Required]
-        [StringLength(100)]
         public string InvoiceNumber { get; set; } = null!;
 
         [Required]
@@ -32,7 +26,6 @@ namespace ELearning.Models.Purchases
         public decimal Amount { get; set; }
 
         [Required]
-        [StringLength(50)]
         public string PaymentMethod { get; set; } = null!;
 
         [Required]
@@ -42,8 +35,8 @@ namespace ELearning.Models.Purchases
         public DateTime PaymentDate { get; set; }
 
         // Navigation properties
-        public ICollection<UserCourse>? UserCourses { get; set; }
-        public ICollection<UserSubCourse>? UserSubCourses { get; set; }
-        public ICollection<UserSubscription>? UserSubscriptions { get; set; }
+        public List<UserCourse> UserCourses { get; set; } = new();
+        public List<UserSubCourse> UserSubCourses { get; set; } = new();
+        public List<UserSubscription> UserSubscriptions { get; set; } = new();
     }
 }

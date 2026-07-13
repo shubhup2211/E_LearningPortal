@@ -32,64 +32,34 @@ namespace ELearningPortal.Migrations
 
                     b.Property<string>("BranchName")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ContactNumber")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ContactPerson")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
-
-                    b.Property<int?>("Gender")
-                        .HasColumnType("int");
-
                     b.Property<string>("Location")
                         .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("ModifiedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("PasswordHash")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.Property<string>("Phone")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
                     b.Property<string>("Pincode")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.Property<string>("ProfileImage")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
                     b.HasKey("BranchId");
-
-                    b.HasIndex("Email")
-                        .IsUnique();
 
                     b.ToTable("Branches");
                 });
@@ -104,8 +74,7 @@ namespace ELearningPortal.Migrations
 
                     b.Property<string>("RoleName")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("RoleId");
 
@@ -120,61 +89,40 @@ namespace ELearningPortal.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"));
 
-                    b.Property<int?>("BranchId")
+                    b.Property<int>("BranchId")
                         .HasColumnType("int");
-
-                    b.Property<string>("ContactNumber")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.Property<string>("ContactPerson")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("FullName")
                         .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("Gender")
                         .HasColumnType("int");
 
-                    b.Property<string>("Location")
-                        .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
+                    b.Property<DateTime>("LastLoginAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("ModifiedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("PasswordHash")
                         .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Phone")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.Property<string>("Pincode")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ProfileImage")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("RoleId")
                         .HasColumnType("int");
@@ -210,8 +158,7 @@ namespace ELearningPortal.Migrations
 
                     b.Property<string>("FilePath")
                         .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("LessonId")
                         .HasColumnType("int");
@@ -221,8 +168,7 @@ namespace ELearningPortal.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("AssignmentId");
 
@@ -243,8 +189,7 @@ namespace ELearningPortal.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Remarks")
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ReviewStatus")
                         .HasColumnType("int");
@@ -260,8 +205,7 @@ namespace ELearningPortal.Migrations
 
                     b.Property<string>("UploadedFile")
                         .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -290,8 +234,7 @@ namespace ELearningPortal.Migrations
 
                     b.Property<string>("FilePath")
                         .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("LessonId")
                         .HasColumnType("int");
@@ -301,8 +244,7 @@ namespace ELearningPortal.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("AttachmentId");
 
@@ -322,10 +264,12 @@ namespace ELearningPortal.Migrations
                     b.Property<int>("ApprovalStatus")
                         .HasColumnType("int");
 
+                    b.Property<int>("BranchId")
+                        .HasColumnType("int");
+
                     b.Property<string>("CourseName")
                         .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -336,23 +280,18 @@ namespace ELearningPortal.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("DisplayOrder")
-                        .HasColumnType("int");
-
                     b.Property<string>("Image")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("ModifiedAt")
                         .HasColumnType("datetime2");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(10,2)");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
                     b.HasKey("CourseId");
+
+                    b.HasIndex("BranchId");
 
                     b.HasIndex("CreatedBy");
 
@@ -373,13 +312,12 @@ namespace ELearningPortal.Migrations
                     b.Property<int>("DisplayOrder")
                         .HasColumnType("int");
 
-                    b.Property<int?>("Duration")
-                        .HasColumnType("int");
+                    b.Property<string>("Duration")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LessonTitle")
                         .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("ModifiedAt")
                         .HasColumnType("datetime2");
@@ -390,10 +328,9 @@ namespace ELearningPortal.Migrations
                     b.Property<int>("SubCourseId")
                         .HasColumnType("int");
 
-                    b.Property<string>("VideoURL")
+                    b.Property<string>("VideoUrl")
                         .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("LessonId");
 
@@ -423,6 +360,9 @@ namespace ELearningPortal.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
                     b.HasKey("QuestionId");
 
                     b.HasIndex("LessonId");
@@ -443,13 +383,9 @@ namespace ELearningPortal.Migrations
 
                     b.Property<string>("OptionText")
                         .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("QuestionId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Status")
                         .HasColumnType("int");
 
                     b.HasKey("OptionId");
@@ -467,9 +403,6 @@ namespace ELearningPortal.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SubCourseId"));
 
-                    b.Property<int?>("BranchId")
-                        .HasColumnType("int");
-
                     b.Property<int>("CourseId")
                         .HasColumnType("int");
 
@@ -479,9 +412,11 @@ namespace ELearningPortal.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("DisplayOrder")
+                        .HasColumnType("int");
+
                     b.Property<string>("Image")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("ModifiedAt")
                         .HasColumnType("datetime2");
@@ -494,12 +429,9 @@ namespace ELearningPortal.Migrations
 
                     b.Property<string>("SubCourseName")
                         .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("SubCourseId");
-
-                    b.HasIndex("BranchId");
 
                     b.HasIndex("CourseId");
 
@@ -519,15 +451,21 @@ namespace ELearningPortal.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<string>("CertificatePath")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<int>("CertificateType")
+                        .HasColumnType("int");
+
                     b.Property<int>("CourseId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("GeneratedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("PdfPath")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                    b.Property<int>("SubCourseId")
+                        .HasColumnType("int");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -535,6 +473,8 @@ namespace ELearningPortal.Migrations
                     b.HasKey("CertificateId");
 
                     b.HasIndex("CourseId");
+
+                    b.HasIndex("SubCourseId");
 
                     b.HasIndex("UserId");
 
@@ -561,11 +501,11 @@ namespace ELearningPortal.Migrations
                     b.Property<bool?>("MCQCompleted")
                         .HasColumnType("bit");
 
-                    b.Property<int>("UserId")
+                    b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<bool?>("VideoCompleted")
-                        .HasColumnType("bit");
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
                     b.HasKey("ProgressId");
 
@@ -583,6 +523,9 @@ namespace ELearningPortal.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ResultId"));
+
+                    b.Property<DateTime>("AttemptedAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<bool>("IsPassed")
                         .HasColumnType("bit");
@@ -619,13 +562,7 @@ namespace ELearningPortal.Migrations
                     b.Property<int>("CourseId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Review")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("Stars")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Status")
                         .HasColumnType("int");
 
                     b.Property<int>("UserId")
@@ -651,31 +588,23 @@ namespace ELearningPortal.Migrations
                     b.Property<decimal>("Amount")
                         .HasColumnType("decimal(10,2)");
 
-                    b.Property<string>("GatewayName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
                     b.Property<string>("InvoiceNumber")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("PaymentDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("PaymentMethod")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("PaymentStatus")
                         .HasColumnType("int");
 
                     b.Property<string>("TransactionId")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -698,6 +627,9 @@ namespace ELearningPortal.Migrations
                     b.Property<int>("ApprovalStatus")
                         .HasColumnType("int");
 
+                    b.Property<int>("BranchId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
@@ -710,8 +642,7 @@ namespace ELearningPortal.Migrations
 
                     b.Property<string>("PlanName")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(10,2)");
@@ -723,6 +654,8 @@ namespace ELearningPortal.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("SubscriptionId");
+
+                    b.HasIndex("BranchId");
 
                     b.ToTable("Subscriptions");
                 });
@@ -764,7 +697,7 @@ namespace ELearningPortal.Migrations
                     b.Property<DateTime?>("ExpiryDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("PaymentId")
+                    b.Property<int>("PaymentId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("PurchaseDate")
@@ -798,7 +731,7 @@ namespace ELearningPortal.Migrations
                     b.Property<DateTime?>("ExpiryDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("PaymentId")
+                    b.Property<int>("PaymentId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("PurchaseDate")
@@ -835,7 +768,7 @@ namespace ELearningPortal.Migrations
                     b.Property<DateTime>("ExpiryDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("PaymentId")
+                    b.Property<int>("PaymentId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("PurchaseDate")
@@ -866,7 +799,8 @@ namespace ELearningPortal.Migrations
                     b.HasOne("ELearning.Models.Authentication.Branch", "Branch")
                         .WithMany("Users")
                         .HasForeignKey("BranchId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("ELearning.Models.Authentication.Role", "Role")
                         .WithMany("Users")
@@ -895,7 +829,7 @@ namespace ELearningPortal.Migrations
                     b.HasOne("ELearning.Models.Courses.Assignment", "Assignment")
                         .WithMany("AssignmentSubmissions")
                         .HasForeignKey("AssignmentId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("ELearning.Models.Authentication.User", "ReviewedByUser")
@@ -929,11 +863,19 @@ namespace ELearningPortal.Migrations
 
             modelBuilder.Entity("ELearning.Models.Courses.Course", b =>
                 {
+                    b.HasOne("ELearning.Models.Authentication.Branch", "Branch")
+                        .WithMany("Courses")
+                        .HasForeignKey("BranchId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("ELearning.Models.Authentication.User", "CreatedByUser")
                         .WithMany("CreatedCourses")
                         .HasForeignKey("CreatedBy")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("Branch");
 
                     b.Navigation("CreatedByUser");
                 });
@@ -973,18 +915,11 @@ namespace ELearningPortal.Migrations
 
             modelBuilder.Entity("ELearning.Models.Courses.SubCourse", b =>
                 {
-                    b.HasOne("ELearning.Models.Authentication.Branch", "Branch")
-                        .WithMany("SubCourses")
-                        .HasForeignKey("BranchId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
                     b.HasOne("ELearning.Models.Courses.Course", "Course")
                         .WithMany("SubCourses")
                         .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Branch");
 
                     b.Navigation("Course");
                 });
@@ -997,6 +932,12 @@ namespace ELearningPortal.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("ELearning.Models.Courses.SubCourse", "SubCourse")
+                        .WithMany("Certificates")
+                        .HasForeignKey("SubCourseId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("ELearning.Models.Authentication.User", "User")
                         .WithMany("Certificates")
                         .HasForeignKey("UserId")
@@ -1004,6 +945,8 @@ namespace ELearningPortal.Migrations
                         .IsRequired();
 
                     b.Navigation("Course");
+
+                    b.Navigation("SubCourse");
 
                     b.Navigation("User");
                 });
@@ -1076,6 +1019,17 @@ namespace ELearningPortal.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("ELearning.Models.Purchases.Subscription", b =>
+                {
+                    b.HasOne("ELearning.Models.Authentication.Branch", "Branch")
+                        .WithMany("Subscriptions")
+                        .HasForeignKey("BranchId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Branch");
+                });
+
             modelBuilder.Entity("ELearning.Models.Purchases.SubscriptionCourse", b =>
                 {
                     b.HasOne("ELearning.Models.Courses.Course", "Course")
@@ -1106,7 +1060,8 @@ namespace ELearningPortal.Migrations
                     b.HasOne("ELearning.Models.Purchases.Payment", "Payment")
                         .WithMany("UserCourses")
                         .HasForeignKey("PaymentId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("ELearning.Models.Authentication.User", "User")
                         .WithMany("UserCourses")
@@ -1126,7 +1081,8 @@ namespace ELearningPortal.Migrations
                     b.HasOne("ELearning.Models.Purchases.Payment", "Payment")
                         .WithMany("UserSubCourses")
                         .HasForeignKey("PaymentId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("ELearning.Models.Courses.SubCourse", "SubCourse")
                         .WithMany("UserSubCourses")
@@ -1152,7 +1108,8 @@ namespace ELearningPortal.Migrations
                     b.HasOne("ELearning.Models.Purchases.Payment", "Payment")
                         .WithMany("UserSubscriptions")
                         .HasForeignKey("PaymentId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("ELearning.Models.Purchases.Subscription", "Subscription")
                         .WithMany("UserSubscriptions")
@@ -1175,7 +1132,9 @@ namespace ELearningPortal.Migrations
 
             modelBuilder.Entity("ELearning.Models.Authentication.Branch", b =>
                 {
-                    b.Navigation("SubCourses");
+                    b.Navigation("Courses");
+
+                    b.Navigation("Subscriptions");
 
                     b.Navigation("Users");
                 });
@@ -1248,6 +1207,8 @@ namespace ELearningPortal.Migrations
 
             modelBuilder.Entity("ELearning.Models.Courses.SubCourse", b =>
                 {
+                    b.Navigation("Certificates");
+
                     b.Navigation("Lessons");
 
                     b.Navigation("UserSubCourses");

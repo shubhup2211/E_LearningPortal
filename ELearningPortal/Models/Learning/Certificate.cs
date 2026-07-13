@@ -2,6 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using ELearning.Models.Authentication;
 using ELearning.Models.Courses;
+using ELearningPortal.Enums;
 
 namespace ELearning.Models.Learning
 {
@@ -21,6 +22,14 @@ namespace ELearning.Models.Learning
         public Course? Course { get; set; }
 
         [Required]
+        [ForeignKey(nameof(SubCourse))]
+        public int SubCourseId { get; set; }
+        public SubCourse? SubCourse { get; set; }
+
+        [Required]
+        public CertificateType CertificateType { get; set; }
+
+        [Required]
         [StringLength(100)]
         public string CertificateNo { get; set; } = null!;
 
@@ -28,6 +37,6 @@ namespace ELearning.Models.Learning
         public DateTime GeneratedDate { get; set; }
 
         [StringLength(255)]
-        public string? PdfPath { get; set; }
+        public string? CertificatePath { get; set; }
     }
 }

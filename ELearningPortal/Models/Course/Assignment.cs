@@ -11,17 +11,15 @@ namespace ELearning.Models.Courses
         [Required]
         [ForeignKey(nameof(Lesson))]
         public int LessonId { get; set; }
-        public Lesson? Lesson { get; set; }
+        public Lesson Lesson { get; set; } = null!;
 
         [Required]
-        [StringLength(150)]
-        public string Title { get; set; } = null!;
+        public string Title { get; set; } = string.Empty;
 
         public string? Description { get; set; }
 
         [Required]
-        [StringLength(255)]
-        public string FilePath { get; set; } = null!;
+        public string FilePath { get; set; } = string.Empty;
 
         [Required]
         public DateTime CreatedAt { get; set; }
@@ -30,6 +28,6 @@ namespace ELearning.Models.Courses
         public DateTime ModifiedAt { get; set; }
 
         // Navigation properties
-        public ICollection<AssignmentSubmission>? AssignmentSubmissions { get; set; }
+        public List<AssignmentSubmission> AssignmentSubmissions { get; set; } = new();
     }
 }

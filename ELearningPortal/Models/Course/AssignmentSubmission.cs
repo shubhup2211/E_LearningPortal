@@ -13,16 +13,15 @@ namespace ELearning.Models.Courses
         [Required]
         [ForeignKey(nameof(Assignment))]
         public int AssignmentId { get; set; }
-        public Assignment? Assignment { get; set; }
+        public Assignment Assignment { get; set; } = null!;
 
         [Required]
         [ForeignKey(nameof(User))]
         public int UserId { get; set; }
-        public User? User { get; set; }
+        public User User { get; set; } = null!;
 
         [Required]
-        [StringLength(255)]
-        public string UploadedFile { get; set; } = null!;
+        public string UploadedFile { get; set; } = string.Empty;
 
         [Required]
         public DateTime SubmittedDate { get; set; }
@@ -36,7 +35,6 @@ namespace ELearning.Models.Courses
 
         public DateTime? ReviewedDate { get; set; }
 
-        [StringLength(500)]
         public string? Remarks { get; set; }
     }
 }

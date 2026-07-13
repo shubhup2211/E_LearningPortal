@@ -13,12 +13,12 @@ namespace ELearning.Models.Learning
         [Required]
         [ForeignKey(nameof(User))]
         public int UserId { get; set; }
-        public User? User { get; set; }
+        public User User { get; set; } = null!;
 
         [Required]
         [ForeignKey(nameof(Lesson))]
         public int LessonId { get; set; }
-        public Lesson? Lesson { get; set; }
+        public Lesson Lesson { get; set; } = null!;
 
         [Required]
         public int Score { get; set; }
@@ -28,5 +28,8 @@ namespace ELearning.Models.Learning
 
         [Required]
         public bool IsPassed { get; set; }
+
+        [Required]
+        public DateTime AttemptedAt { get; set; }
     }
 }

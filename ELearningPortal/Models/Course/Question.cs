@@ -1,3 +1,4 @@
+using ELearning.Enums;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -11,7 +12,7 @@ namespace ELearning.Models.Courses
         [Required]
         [ForeignKey(nameof(Lesson))]
         public int LessonId { get; set; }
-        public Lesson? Lesson { get; set; }
+        public Lesson Lesson { get; set; } = null!;
 
         [Required]
         public string QuestionText { get; set; } = null!;
@@ -22,7 +23,10 @@ namespace ELearning.Models.Courses
         [Required]
         public DateTime ModifiedAt { get; set; }
 
+        [Required]
+        public Status Status { get; set; }
+
         // Navigation properties
-        public ICollection<QuestionOption>? QuestionOptions { get; set; }
+        public List<QuestionOption> QuestionOptions { get; set; } = new();
     }
 }
