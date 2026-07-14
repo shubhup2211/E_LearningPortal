@@ -3,8 +3,16 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 @model List<User>
+
+<div class="d-flex justify-content-between align-items-center w-90 mb-4">
+    <h2 class="text-primary"><b>Users</b></h2>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        <b>+Add User</b>
+    </button>
+</div>
 
 <table class="table">
     <thead>
@@ -27,5 +35,90 @@
         }
     </tbody>
 </table>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold" id="exampleModalLabel">Add User</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Added "needs-validation" and "novalidate" to let Bootstrap manage the styles -->
+                <form id="addUserForm" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+
+                    <!-- Profile Image (Optional) -->
+                    <div class="mb-3">
+                        <label for="exampleProfile" class="form-label">Profile Image:</label>
+                        <input type="file" class="form-control" id="exampleProfile">
+                    </div>
+
+                    <!-- First Name & Last Name (Required) -->
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="exampleInputFName" class="form-label">First Name <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="exampleInputFName" placeholder="Enter First Name" required>
+                            <div class="invalid-feedback">First name is required.</div>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="exampleInputLName" class="form-label">Last Name <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="exampleInputLName" placeholder="Enter Last Name" required>
+                            <div class="invalid-feedback">Last name is required.</div>
+                        </div>
+                    </div>
+
+                    <!-- Email & Password (Required) -->
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="exampleInputEmail" class="form-label">Email address <span class="text-danger">*</span></label>
+                            <input type="email" class="form-control" id="exampleInputEmail" placeholder="Enter email" required>
+                            <div class="invalid-feedback">Please enter a valid email address.</div>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="exampleInputPass" class="form-label">Password <span class="text-danger">*</span></label>
+                            <input type="password" class="form-control" id="exampleInputPass" placeholder="Enter Password" required minlength="6">
+                            <div class="invalid-feedback">Password is required (min 6 characters).</div>
+                        </div>
+                    </div>
+
+                    <!-- Role & Status (Required) -->
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="exampleRole" class="form-label">Role <span class="text-danger">*</span></label>
+                            <select class="form-select" id="exampleRole" required>
+                                <option value="" selected disabled>Choose role...</option>
+                                <option value="Admin">Admin</option>
+                                <option value="User">User</option>
+                            </select>
+                            <div class="invalid-feedback">Please select a user role.</div>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="exampleStatus" class="form-label">Status <span class="text-danger">*</span></label>
+                            <select class="form-select" id="exampleStatus" required>
+                                <option value="Active">Active</option>
+                                <option value="Inactive">Inactive</option>
+                            </select>
+                            <div class="invalid-feedback">Please select a status indicator.</div>
+                        </div>
+                    </div>
+
+                    <!-- Phone Number (Required) -->
+                    <div class="mb-3">
+                        <label for="exampleInputPhone" class="form-label">Phone Number <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="exampleInputPhone" placeholder="Enter Phone Number" required>
+                        <div class="invalid-feedback">Phone number is required.</div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" form="addUserForm" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 

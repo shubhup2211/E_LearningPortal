@@ -11,15 +11,13 @@ namespace ELearning.Models.Courses
         [Required]
         [ForeignKey(nameof(Lesson))]
         public int LessonId { get; set; }
-        public Lesson? Lesson { get; set; }
+        public Lesson Lesson { get; set; } = null!;
 
         [Required]
-        [StringLength(150)]
-        public string Title { get; set; } = null!;
+        public string Title { get; set; } = string.Empty;
 
         [Required]
-        [StringLength(255)]
-        public string FilePath { get; set; } = null!;
+        public string FilePath { get; set; } = string.Empty;
 
         [Required]
         public DateTime CreatedAt { get; set; }

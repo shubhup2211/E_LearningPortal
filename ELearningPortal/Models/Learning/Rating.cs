@@ -14,19 +14,15 @@ namespace ELearning.Models.Learning
         [Required]
         [ForeignKey(nameof(Course))]
         public int CourseId { get; set; }
-        public Course? Course { get; set; }
+        public Course Course { get; set; } = null!;
 
         [Required]
         [ForeignKey(nameof(User))]
         public int UserId { get; set; }
-        public User? User { get; set; }
+        public User User { get; set; } = null!;
 
         [Required]
         public int Stars { get; set; }
 
-        public string? Review { get; set; }
-
-        [Required]
-        public Status Status { get; set; }
     }
 }

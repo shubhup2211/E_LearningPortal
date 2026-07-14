@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using ELearning.Enums;
+using ELearning.Models.Authentication;
 
 namespace ELearning.Models.Purchases
 {
@@ -9,12 +10,15 @@ namespace ELearning.Models.Purchases
         [Key]
         public int SubscriptionId { get; set; }
 
+        [ForeignKey(nameof(Branch))]
+        public int BranchId { get; set; }
+        public Branch Branch { get; set; } = null!;
+
         [Required]
-        [StringLength(100)]
         public string PlanName { get; set; } = null!;
 
         [Required]
-        public string Description { get; set; } = null!;
+        public string? Description { get; set; }
 
         [Required]
         [Column(TypeName = "decimal(10,2)")]
@@ -36,7 +40,7 @@ namespace ELearning.Models.Purchases
         public DateTime ModifiedAt { get; set; }
 
         // Navigation properties
-        public ICollection<SubscriptionCourse>? SubscriptionCourses { get; set; }
-        public ICollection<UserSubscription>? UserSubscriptions { get; set; }
+        public List<SubscriptionCourse> SubscriptionCourses { get; set; } = new();
+        public List<UserSubscription> UserSubscriptions { get; set; } = new();
     }
 }

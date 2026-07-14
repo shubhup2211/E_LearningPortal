@@ -50,10 +50,6 @@ namespace ELearning.Data
                 .HasIndex(u => u.Email)
                 .IsUnique();
 
-            modelBuilder.Entity<Branch>()
-                .HasIndex(b => b.Email)
-                .IsUnique();
-
             // Authentication Relationships
 
             // Role -> User (Restrict on delete of Role)
@@ -68,6 +64,13 @@ namespace ELearning.Data
                 .HasOne(u => u.Branch)
                 .WithMany(b => b.Users)
                 .HasForeignKey(u => u.BranchId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Branch -> Subscription (Restrict)
+            modelBuilder.Entity<Subscription>()
+                .HasOne(s => s.Branch)
+                .WithMany(b => b.Subscriptions)
+                .HasForeignKey(s => s.BranchId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             // Course Relationships
@@ -87,10 +90,10 @@ namespace ELearning.Data
                 .OnDelete(DeleteBehavior.Cascade);
 
             // Branch -> SubCourse (Restrict - per Branch -> Course restrict rule)
-            modelBuilder.Entity<SubCourse>()
-                .HasOne(s => s.Branch)
-                .WithMany(b => b.SubCourses)
-                .HasForeignKey(s => s.BranchId)
+            modelBuilder.Entity<Course>()
+                .HasOne(c => c.Branch)
+                .WithMany(b => b.Courses)
+                .HasForeignKey(c => c.BranchId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             // SubCourse -> Lesson (Cascade)
@@ -121,6 +124,13 @@ namespace ELearning.Data
                 .HasForeignKey(q => q.LessonId)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            // Lesson -> MCQResult (Cascade)
+            modelBuilder.Entity<MCQResult>()
+                .HasOne(q => q.Lesson)
+                .WithMany(l => l.MCQResults)
+                .HasForeignKey(q => q.LessonId)
+                .OnDelete(DeleteBehavior.Cascade);
+
             // Question -> QuestionOption (Cascade)
             modelBuilder.Entity<QuestionOption>()
                 .HasOne(o => o.Question)
@@ -133,7 +143,7 @@ namespace ELearning.Data
                 .HasOne(s => s.Assignment)
                 .WithMany(a => a.AssignmentSubmissions)
                 .HasForeignKey(s => s.AssignmentId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
 
             // User -> AssignmentSubmission (submitter) - Restrict to avoid multi-cascade path
             modelBuilder.Entity<AssignmentSubmission>()
@@ -283,6 +293,12 @@ namespace ELearning.Data
                 .WithMany(cs => cs.Certificates)
                 .HasForeignKey(c => c.CourseId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Certificate>()
+                   .HasOne(c => c.SubCourse)
+                   .WithMany(s => s.Certificates)
+                   .HasForeignKey(c => c.SubCourseId)
+                   .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

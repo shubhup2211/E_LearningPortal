@@ -13,17 +13,15 @@ namespace ELearning.Models.Courses
         [Required]
         [ForeignKey(nameof(SubCourse))]
         public int SubCourseId { get; set; }
-        public SubCourse? SubCourse { get; set; }
+        public SubCourse SubCourse { get; set; }
 
         [Required]
-        [StringLength(150)]
-        public string LessonTitle { get; set; } = null!;
+        public string LessonTitle { get; set; } = string.Empty;
 
         [Required]
-        [StringLength(500)]
-        public string VideoURL { get; set; } = null!;
+        public string VideoUrl { get; set; } = string.Empty;
 
-        public int? Duration { get; set; }
+        public string? Duration { get; set; }
 
         [Required]
         public int DisplayOrder { get; set; }
@@ -38,10 +36,10 @@ namespace ELearning.Models.Courses
         public DateTime ModifiedAt { get; set; }
 
         // Navigation properties
-        public ICollection<Attachment>? Attachments { get; set; }
-        public ICollection<Assignment>? Assignments { get; set; }
-        public ICollection<Question>? Questions { get; set; }
-        public ICollection<MCQResult>? MCQResults { get; set; }
-        public ICollection<LessonProgress>? LessonProgresses { get; set; }
+        public List<Attachment> Attachments { get; set; } = new();
+        public List<Assignment> Assignments { get; set; } = new();
+        public List<Question> Questions { get; set; } = new();
+        public List<MCQResult> MCQResults { get; set; } = new();
+        public List<LessonProgress> LessonProgresses { get; set; } = new();
     }
 }

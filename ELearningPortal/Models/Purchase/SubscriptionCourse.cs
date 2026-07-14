@@ -12,11 +12,11 @@ namespace ELearning.Models.Purchases
         [Required]
         [ForeignKey(nameof(Subscription))]
         public int SubscriptionId { get; set; }
-        public Subscription? Subscription { get; set; }
+        public Subscription Subscription { get; set; } = null!;
 
         [Required]
         [ForeignKey(nameof(Course))]
         public int CourseId { get; set; }
-        public Course? Course { get; set; }
+        public Course Course { get; set; } = null!;
     }
 }

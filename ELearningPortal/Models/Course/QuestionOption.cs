@@ -12,16 +12,13 @@ namespace ELearning.Models.Courses
         [Required]
         [ForeignKey(nameof(Question))]
         public int QuestionId { get; set; }
-        public Question? Question { get; set; }
+        public Question Question { get; set; } = null!;
 
         [Required]
-        [StringLength(255)]
         public string OptionText { get; set; } = null!;
 
         [Required]
         public bool IsCorrect { get; set; }
 
-        [Required]
-        public Status Status { get; set; }
     }
 }
