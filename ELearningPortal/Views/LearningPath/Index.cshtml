@@ -1,9 +1,12 @@
-﻿@{
+﻿@model IEnumerable<ELearning.Models.Courses.Course>
+
+@{
     ViewData["Title"] = "Completed Courses";
 }
 
 <div class="container py-4">
 
+    <!-- Heading -->
     <div class="d-flex justify-content-between align-items-center mb-4">
 
         <div>
@@ -14,120 +17,95 @@
         </div>
 
         <span class="badge bg-success fs-6 px-3 py-2">
-            ✔ 4 Courses Completed
+            ✔ @Model.Count() Courses Completed
         </span>
 
     </div>
 
+    <!-- Completed Courses -->
+
     <div class="row g-4">
 
-        <!-- Java -->
-        <div class="col-lg-6">
-            <div class="card border-0 shadow rounded-4 overflow-hidden">
+        @if (Model != null && Model.Any())
+        {
+            @foreach (var item in Model)
+            {
+                <div class="col-lg-6">
 
-                <div class="row g-0">
+                    <div class="card border-0 shadow rounded-4 overflow-hidden">
 
-                    <div class="col-4">
-                        <img src="~/images/java.jpg"
-                             class="img-fluid w-100 h-100"
-                             style="object-fit:cover;">
-                    </div>
+                        <div class="row g-0">
 
-                    <div class="col-8">
+                            <!-- Course Image -->
+                            <div class="col-4">
 
-                        <div class="card-body d-flex flex-column h-100">
-
-                            <div class="d-flex justify-content-between">
-
-                                <span class="badge bg-primary-subtle text-primary rounded-pill">
-                                    Programming
-                                </span>
-
-                                <span class="badge bg-success rounded-pill">
-                                    ✔ Completed
-                                </span>
+                                <img src="~/images/courses/@item.Image"
+                                     class="img-fluid w-100 h-100"
+                                     style="object-fit:cover;"
+                                     alt="@item.CourseName" />
 
                             </div>
 
-                            <h4 class="mt-3 fw-bold">Java</h4>
+                            <!-- Course Details -->
 
-                            <p class="text-muted small flex-grow-1">
-                                Master Java Programming from beginner to advanced including OOP, Collections and JDBC.
-                            </p>
+                            <div class="col-8">
 
-                            <div class="progress mb-3" style="height:8px;">
-                                <div class="progress-bar bg-success" style="width:100%;"></div>
-                            </div>
+                                <div class="card-body d-flex flex-column h-100">
 
-                            <div class="d-flex justify-content-between align-items-center">
+                                    <div class="d-flex justify-content-between">
 
-                                <strong class="text-success">
-                                    100% Completed
-                                </strong>
+                                        <span class="badge bg-primary-subtle text-primary rounded-pill">
 
-                                <button class="btn btn-success rounded-pill">
-                                    View Certificate
-                                </button>
+                                            @(item.Branch != null ? item.Branch.BranchName : "No Branch")
 
-                            </div>
+                                        </span>
 
-                        </div>
+                                        <span class="badge bg-success rounded-pill">
 
-                    </div>
+                                            ✔ Completed
 
-                </div>
+                                        </span>
 
-            </div>
-        </div>
+                                    </div>
 
-        <!-- Python -->
+                                    <h4 class="mt-3 fw-bold">
 
-        <div class="col-lg-6">
-            <div class="card border-0 shadow rounded-4 overflow-hidden">
+                                        @item.CourseName
 
-                <div class="row g-0">
+                                    </h4>
 
-                    <div class="col-4">
-                        <img src="~/images/python.jpg"
-                             class="img-fluid w-100 h-100"
-                             style="object-fit:cover;">
-                    </div>
+                                    <p class="text-muted small flex-grow-1">
 
-                    <div class="col-8">
+                                        @item.Description
 
-                        <div class="card-body d-flex flex-column h-100">
+                                    </p>
 
-                            <div class="d-flex justify-content-between">
+                                    <div class="progress mb-3" style="height:8px;">
 
-                                <span class="badge bg-warning-subtle text-warning rounded-pill">
-                                    Python
-                                </span>
+                                        <div class="progress-bar bg-success"
+                                             style="width:100%;">
+                                        </div>
 
-                                <span class="badge bg-success rounded-pill">
-                                    ✔ Completed
-                                </span>
+                                    </div>
 
-                            </div>
+                                    <div class="d-flex justify-content-between align-items-center">
 
-                            <h4 class="mt-3 fw-bold">Python</h4>
+                                        <strong class="text-success">
 
-                            <p class="text-muted small flex-grow-1">
-                                Learn Python for Web Development, Automation, Data Science and AI.
-                            </p>
+                                            100% Completed
 
-                            <div class="progress mb-3" style="height:8px;">
-                                <div class="progress-bar bg-success" style="width:100%;"></div>
-                            </div>
+                                        </strong>
 
-                            <div class="d-flex justify-content-between">
+                                        <a href="#"
+                                           class="btn btn-success rounded-pill">
 
-                                <strong class="text-success">
-                                    100% Completed
-                                </strong>
+                                            View Certificate
 
-                                <button class="btn btn-success rounded-pill">
-                                    View Certificate
-                                </button>
+                                        </a>
+
+                                    </div>
+
+                                </div>
 
                             </div>
 
@@ -136,129 +114,24 @@
                     </div>
 
                 </div>
+            }
+        }
+        else
+        {
+            <div class="col-12">
 
-            </div>
-        </div>
+                <div class="alert alert-info text-center shadow-sm rounded-4 p-5">
 
-        <!-- ASP.NET -->
+                    <h4>No Completed Courses Found</h4>
 
-        <div class="col-lg-6">
-            <div class="card border-0 shadow rounded-4 overflow-hidden">
-
-                <div class="row g-0">
-
-                    <div class="col-4">
-                        <img src="~/images/dotnet.jpg"
-                             class="img-fluid w-100 h-100"
-                             style="object-fit:cover;">
-                    </div>
-
-                    <div class="col-8">
-
-                        <div class="card-body d-flex flex-column h-100">
-
-                            <div class="d-flex justify-content-between">
-
-                                <span class="badge bg-info-subtle text-info rounded-pill">
-                                    ASP.NET
-                                </span>
-
-                                <span class="badge bg-success rounded-pill">
-                                    ✔ Completed
-                                </span>
-
-                            </div>
-
-                            <h4 class="mt-3 fw-bold">ASP.NET Core</h4>
-
-                            <p class="text-muted small flex-grow-1">
-                                Build secure MVC and Web API applications using Entity Framework Core.
-                            </p>
-
-                            <div class="progress mb-3" style="height:8px;">
-                                <div class="progress-bar bg-success" style="width:100%;"></div>
-                            </div>
-
-                            <div class="d-flex justify-content-between">
-
-                                <strong class="text-success">
-                                    100% Completed
-                                </strong>
-
-                                <button class="btn btn-success rounded-pill">
-                                    View Certificate
-                                </button>
-
-                            </div>
-
-                        </div>
-
-                    </div>
+                    <p class="mb-0">
+                        Complete a course to view it here.
+                    </p>
 
                 </div>
 
             </div>
-        </div>
-
-        <!-- Test -->
-
-        <div class="col-lg-6">
-            <div class="card border-0 shadow rounded-4 overflow-hidden">
-
-                <div class="row g-0">
-
-                    <div class="col-4">
-                        <img src="~/images/course1.jpg"
-                             class="img-fluid w-100 h-100"
-                             style="object-fit:cover;">
-                    </div>
-
-                    <div class="col-8">
-
-                        <div class="card-body d-flex flex-column h-100">
-
-                            <div class="d-flex justify-content-between">
-
-                                <span class="badge bg-secondary-subtle text-secondary rounded-pill">
-                                    Engineering
-                                </span>
-
-                                <span class="badge bg-success rounded-pill">
-                                    ✔ Completed
-                                </span>
-
-                            </div>
-
-                            <h4 class="mt-3 fw-bold">Engineering Basics</h4>
-
-                            <p class="text-muted small flex-grow-1">
-                                Learn engineering fundamentals and complete practical exercises.
-                            </p>
-
-                            <div class="progress mb-3" style="height:8px;">
-                                <div class="progress-bar bg-success" style="width:100%;"></div>
-                            </div>
-
-                            <div class="d-flex justify-content-between">
-
-                                <strong class="text-success">
-                                    100% Completed
-                                </strong>
-
-                                <button class="btn btn-success rounded-pill">
-                                    View Certificate
-                                </button>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-        </div>
+        }
 
     </div>
 
