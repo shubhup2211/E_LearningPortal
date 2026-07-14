@@ -1,0 +1,369 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="p-container-margin">
+    <!-- Header Section -->
+    <div class="flex justify-between items-start mb-stack-lg">
+        <div>
+            <h2 class="font-headline-lg text-headline-lg text-on-surface">Assignment Management</h2>
+            <p class="font-body-lg text-body-lg text-on-surface-variant">Manage lesson assignments and learning activities.</p>
+        </div>
+        <button class="bg-primary-container text-on-primary-container px-6 py-2.5 rounded-lg flex items-center gap-2 hover:shadow-lg transition-all transform hover:-translate-y-0.5 active:scale-95" onclick="toggleModal('createAssignmentModal')">
+            <span class="material-symbols-outlined text-lg">add</span>
+            <span class="font-title-md text-title-md font-semibold text-white">Create Assignment</span>
+        </button>
+    </div>
+    <!-- Summary Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-gutter mb-stack-lg">
+        <div class="bg-surface-container-lowest p-stack-lg rounded-xl shadow-sm border border-outline-variant flex items-center gap-4">
+            <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
+                <span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">assignment</span>
+            </div>
+            <div>
+                <p class="text-label-md text-on-surface-variant uppercase tracking-wider">Total Assignments</p>
+                <h4 class="text-headline-lg-mobile font-bold text-on-surface">1,284</h4>
+            </div>
+        </div>
+        <div class="bg-surface-container-lowest p-stack-lg rounded-xl shadow-sm border border-outline-variant flex items-center gap-4">
+            <div class="w-12 h-12 bg-tertiary/10 rounded-full flex items-center justify-center">
+                <span class="material-symbols-outlined text-tertiary" style="font-variation-settings: 'FILL' 1;">auto_stories</span>
+            </div>
+            <div>
+                <p class="text-label-md text-on-surface-variant uppercase tracking-wider">Lessons w/ Assignments</p>
+                <h4 class="text-headline-lg-mobile font-bold text-on-surface">85%</h4>
+            </div>
+        </div>
+        <div class="bg-surface-container-lowest p-stack-lg rounded-xl shadow-sm border border-outline-variant flex items-center gap-4">
+            <div class="w-12 h-12 bg-error/10 rounded-full flex items-center justify-center">
+                <span class="material-symbols-outlined text-error" style="font-variation-settings: 'FILL' 1;">pending_actions</span>
+            </div>
+            <div>
+                <p class="text-label-md text-on-surface-variant uppercase tracking-wider">Pending Reviews</p>
+                <h4 class="text-headline-lg-mobile font-bold text-on-surface">42</h4>
+            </div>
+        </div>
+        <div class="bg-surface-container-lowest p-stack-lg rounded-xl shadow-sm border border-outline-variant flex items-center gap-4">
+            <div class="w-12 h-12 bg-secondary/10 rounded-full flex items-center justify-center">
+                <span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">task_alt</span>
+            </div>
+            <div>
+                <p class="text-label-md text-on-surface-variant uppercase tracking-wider">Reviewed Assignments</p>
+                <h4 class="text-headline-lg-mobile font-bold text-on-surface">912</h4>
+            </div>
+        </div>
+    </div>
+    <!-- Filter Panel -->
+    <div class="bg-surface-container-lowest rounded-xl shadow-sm border border-outline-variant p-stack-lg mb-stack-lg">
+        <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
+            <div class="flex flex-col gap-1">
+                <label class="text-label-md font-semibold text-on-surface-variant">Master Course</label>
+                <select class="rounded-lg border-outline-variant text-body-md focus:border-primary focus:ring-primary">
+                    <option>All Approved Courses</option>
+                    <option>Computer Science 101</option>
+                    <option>Business Analytics</option>
+                </select>
+            </div>
+            <div class="flex flex-col gap-1">
+                <label class="text-label-md font-semibold text-on-surface-variant">Sub Course</label>
+                <select class="rounded-lg border-outline-variant text-body-md focus:border-primary focus:ring-primary">
+                    <option>Select Sub Course</option>
+                    <option>Data Structures</option>
+                </select>
+            </div>
+            <div class="flex flex-col gap-1">
+                <label class="text-label-md font-semibold text-on-surface-variant">Lesson</label>
+                <select class="rounded-lg border-outline-variant text-body-md focus:border-primary focus:ring-primary">
+                    <option>Select Lesson</option>
+                </select>
+            </div>
+            <div class="flex flex-col gap-1">
+                <label class="text-label-md font-semibold text-on-surface-variant">Status</label>
+                <select class="rounded-lg border-outline-variant text-body-md focus:border-primary focus:ring-primary">
+                    <option>All Statuses</option>
+                    <option>Has Submissions</option>
+                    <option>No Submissions</option>
+                </select>
+            </div>
+            <div class="flex flex-col gap-1">
+                <label class="text-label-md font-semibold text-on-surface-variant">Date Range</label>
+                <input class="rounded-lg border-outline-variant text-body-md focus:border-primary focus:ring-primary" type="date" />
+            </div>
+        </div>
+    </div>
+    <!-- Data Table Card -->
+    <div class="bg-surface-container-lowest rounded-xl shadow-sm border border-outline-variant overflow-hidden">
+        <table class="w-full text-left border-collapse">
+            <thead class="bg-surface-container-low border-b border-outline-variant">
+                <tr>
+                    <th class="px-6 py-4 font-title-md text-title-md text-on-surface">Assignment Title</th>
+                    <th class="px-6 py-4 font-title-md text-title-md text-on-surface">Course Context</th>
+                    <th class="px-6 py-4 font-title-md text-title-md text-on-surface">Description</th>
+                    <th class="px-6 py-4 font-title-md text-title-md text-on-surface">File</th>
+                    <th class="px-6 py-4 font-title-md text-title-md text-on-surface">Status</th>
+                    <th class="px-6 py-4 font-title-md text-title-md text-on-surface text-right">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-outline-variant">
+                <!-- Row 1 -->
+                <tr class="hover:bg-surface-container transition-colors duration-150">
+                    <td class="px-6 py-4">
+                        <div class="font-title-md text-primary font-semibold">Binary Search Tree Analysis</div>
+                        <div class="text-label-md text-on-surface-variant mt-0.5">Lesson: Advanced Algorithms</div>
+                    </td>
+                    <td class="px-6 py-4">
+                        <div class="text-body-md text-on-surface">CS101 - Algorithms</div>
+                        <div class="text-label-md text-on-surface-variant">Module: Data Structures</div>
+                    </td>
+                    <td class="px-6 py-4">
+                        <p class="text-body-md text-on-surface-variant line-clamp-1 max-w-[200px]">Implement and analyze the time complexity of...</p>
+                    </td>
+                    <td class="px-6 py-4">
+                        <div class="flex items-center gap-2 text-primary hover:underline cursor-pointer">
+                            <span class="material-symbols-outlined text-lg">picture_as_pdf</span>
+                            <span class="text-body-md font-medium">assignment_1.pdf</span>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4">
+                        <span class="px-3 py-1 rounded-full bg-tertiary/10 text-tertiary text-label-md font-bold uppercase tracking-tight">Active Submissions</span>
+                    </td>
+                    <td class="px-6 py-4 text-right">
+                        <div class="flex justify-end gap-2">
+                            <button class="p-2 hover:bg-surface-container-high rounded-full text-on-surface-variant transition-colors" onclick="toggleDrawer('viewAssignmentDrawer')" title="View">
+                                <span class="material-symbols-outlined text-[20px]">visibility</span>
+                            </button>
+                            <button class="p-2 hover:bg-surface-container-high rounded-full text-on-surface-variant transition-colors" title="Edit">
+                                <span class="material-symbols-outlined text-[20px]">edit</span>
+                            </button>
+                            <button class="p-2 hover:bg-error/10 rounded-full text-error transition-colors" onclick="toggleModal('deleteModal')" title="Delete">
+                                <span class="material-symbols-outlined text-[20px]">delete</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                <!-- Row 2 -->
+                <tr class="hover:bg-surface-container transition-colors duration-150">
+                    <td class="px-6 py-4">
+                        <div class="font-title-md text-primary font-semibold">Market Entry Strategy</div>
+                        <div class="text-label-md text-on-surface-variant mt-0.5">Lesson: Globalization</div>
+                    </td>
+                    <td class="px-6 py-4">
+                        <div class="text-body-md text-on-surface">MBA - International Business</div>
+                        <div class="text-label-md text-on-surface-variant">Module: Marketing</div>
+                    </td>
+                    <td class="px-6 py-4">
+                        <p class="text-body-md text-on-surface-variant line-clamp-1 max-w-[200px]">Case study analysis on entering the SEA market...</p>
+                    </td>
+                    <td class="px-6 py-4">
+                        <div class="flex items-center gap-2 text-primary hover:underline cursor-pointer">
+                            <span class="material-symbols-outlined text-lg">description</span>
+                            <span class="text-body-md font-medium">case_study_v2.docx</span>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4">
+                        <span class="px-3 py-1 rounded-full bg-outline-variant/20 text-on-surface-variant text-label-md font-bold uppercase tracking-tight">No Submissions</span>
+                    </td>
+                    <td class="px-6 py-4 text-right">
+                        <div class="flex justify-end gap-2">
+                            <button class="p-2 hover:bg-surface-container-high rounded-full text-on-surface-variant transition-colors">
+                                <span class="material-symbols-outlined text-[20px]">visibility</span>
+                            </button>
+                            <button class="p-2 hover:bg-surface-container-high rounded-full text-on-surface-variant transition-colors">
+                                <span class="material-symbols-outlined text-[20px]">edit</span>
+                            </button>
+                            <button class="p-2 hover:bg-error/10 rounded-full text-error transition-colors" onclick="toggleModal('deleteModal')">
+                                <span class="material-symbols-outlined text-[20px]">delete</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="px-6 py-4 bg-surface-container-low flex justify-between items-center border-t border-outline-variant">
+            <p class="text-body-md text-on-surface-variant">Showing 1 to 10 of 1,284 results</p>
+            <div class="flex items-center gap-2">
+                <button class="px-3 py-1.5 border border-outline-variant rounded hover:bg-white transition-colors disabled:opacity-50" disabled="">Previous</button>
+                <button class="px-3 py-1.5 bg-primary text-white border border-primary rounded">1</button>
+                <button class="px-3 py-1.5 border border-outline-variant rounded hover:bg-white transition-colors">2</button>
+                <button class="px-3 py-1.5 border border-outline-variant rounded hover:bg-white transition-colors">3</button>
+                <button class="px-3 py-1.5 border border-outline-variant rounded hover:bg-white transition-colors">Next</button>
+            </div>
+        </div>
+    </div>
+    <!-- Create Assignment Modal -->
+    <div class="fixed inset-0 z-[60] flex items-center justify-center p-4 hidden" id="createAssignmentModal">
+        <div class="absolute inset-0 modal-overlay" onclick="toggleModal('createAssignmentModal')"></div>
+        <div class="relative bg-white w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden transform transition-all scale-95 opacity-0 duration-300 ease-out flex flex-col max-h-[921px]">
+            <div class="px-stack-lg py-5 border-b border-outline-variant flex justify-between items-center bg-surface-container-lowest">
+                <h3 class="font-headline-lg-mobile text-on-surface font-bold">Create New Assignment</h3>
+                <button class="p-2 hover:bg-surface-container rounded-full text-on-surface-variant" onclick="toggleModal('createAssignmentModal')">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+            <div class="p-stack-lg overflow-y-auto flex-1 bg-surface-bright">
+                <form class="space-y-4">
+                    <div class="space-y-1">
+                        <label class="text-label-md font-semibold text-on-surface-variant">Lesson</label>
+                        <select class="w-full rounded-lg border-outline-variant focus:ring-primary focus:border-primary">
+                            <option>Select Lesson (Only lessons without assignments available)</option>
+                        </select>
+                    </div>
+                    <div class="space-y-1">
+                        <label class="text-label-md font-semibold text-on-surface-variant">Assignment Title</label>
+                        <input class="w-full rounded-lg border-outline-variant focus:ring-primary focus:border-primary" placeholder="e.g., Week 1 Lab Reflection" type="text" />
+                    </div>
+                    <div class="space-y-1">
+                        <label class="text-label-md font-semibold text-on-surface-variant">Description / Instructions</label>
+<textarea class="w-full rounded-lg border-outline-variant focus:ring-primary focus:border-primary" placeholder="Detail the requirements for this assignment..." rows="4"></textarea>
+                    </div>
+                    <div class="space-y-1">
+                        <label class="text-label-md font-semibold text-on-surface-variant">Attachment (PDF, DOCX, ZIP - Max 25MB)</label>
+                        <div class="border-2 border-dashed border-outline-variant rounded-xl p-8 text-center hover:border-primary transition-colors cursor-pointer group">
+                            <span class="material-symbols-outlined text-4xl text-outline-variant group-hover:text-primary mb-2">cloud_upload</span>
+                            <p class="text-body-md text-on-surface-variant font-medium">Drag and drop file here or <span class="text-primary underline">browse</span></p>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="p-stack-lg border-t border-outline-variant flex justify-end gap-3 bg-surface-container-low">
+                <button class="px-6 py-2 text-on-surface-variant hover:bg-surface-container rounded-lg transition-colors font-medium" onclick="toggleModal('createAssignmentModal')">Cancel</button>
+                <button class="px-6 py-2 bg-primary text-white rounded-lg hover:shadow-lg transition-all font-semibold">Publish Assignment</button>
+            </div>
+        </div>
+    </div>
+    <!-- View Assignment Drawer -->
+    <div class="fixed inset-0 z-50 overflow-hidden hidden" id="viewAssignmentDrawer">
+        <div class="absolute inset-0 modal-overlay" onclick="toggleDrawer('viewAssignmentDrawer')"></div>
+        <div class="absolute right-0 top-0 h-full w-full max-w-md bg-surface-container-lowest shadow-2xl transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col">
+            <div class="px-6 py-4 border-b border-outline-variant flex justify-between items-center bg-primary text-white">
+                <h3 class="font-title-lg text-title-lg">Assignment Details</h3>
+                <button class="p-2 hover:bg-white/10 rounded-full transition-colors" onclick="toggleDrawer('viewAssignmentDrawer')">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+            <div class="flex-1 overflow-y-auto p-6 space-y-8">
+                <div>
+                    <span class="text-label-md text-primary font-bold uppercase tracking-widest">Metadata</span>
+                    <h2 class="text-headline-lg-mobile font-bold text-on-surface mt-2">Binary Search Tree Analysis</h2>
+                    <p class="text-body-md text-on-surface-variant mt-1">Last modified on July 13, 2026</p>
+                </div>
+                <div class="space-y-4">
+                    <div class="flex justify-between items-center p-4 bg-surface-container rounded-lg">
+                        <div>
+                            <p class="text-label-md text-on-surface-variant">Submissions</p>
+                            <p class="text-title-md font-bold text-on-surface">148 Students</p>
+                        </div>
+                        <span class="material-symbols-outlined text-primary">groups</span>
+                    </div>
+                    <div class="flex justify-between items-center p-4 bg-surface-container rounded-lg">
+                        <div>
+                            <p class="text-label-md text-on-surface-variant">Avg. Grade</p>
+                            <p class="text-title-md font-bold text-on-surface">84.5%</p>
+                        </div>
+                        <span class="material-symbols-outlined text-tertiary">analytics</span>
+                    </div>
+                </div>
+                <div class="space-y-2">
+                    <h4 class="font-title-md text-on-surface">Course Context</h4>
+                    <ul class="space-y-3">
+                        <li class="flex items-center gap-3">
+                            <span class="material-symbols-outlined text-outline">school</span>
+                            <span class="text-body-md text-on-surface-variant"><strong class="text-on-surface">Course:</strong> Computer Science 101</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <span class="material-symbols-outlined text-outline">book</span>
+                            <span class="text-body-md text-on-surface-variant"><strong class="text-on-surface">Lesson:</strong> Advanced Data Structures</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="space-y-2">
+                    <h4 class="font-title-md text-on-surface">File Information</h4>
+                    <div class="flex items-center justify-between p-4 border border-outline-variant rounded-lg">
+                        <div class="flex items-center gap-3">
+                            <span class="material-symbols-outlined text-error">picture_as_pdf</span>
+                            <div>
+                                <p class="text-body-md font-semibold text-on-surface">assignment_1.pdf</p>
+                                <p class="text-label-md text-on-surface-variant">2.4 MB</p>
+                            </div>
+                        </div>
+                        <button class="p-2 hover:bg-surface-container rounded-full text-primary">
+                            <span class="material-symbols-outlined">download</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="p-6 border-t border-outline-variant flex flex-col gap-3">
+                <button class="w-full py-3 bg-primary text-white rounded-lg font-bold shadow-md hover:shadow-lg transition-all">Review Submissions</button>
+                <button class="w-full py-3 border border-outline-variant text-on-surface rounded-lg font-medium" onclick="toggleDrawer('viewAssignmentDrawer')">Close Panel</button>
+            </div>
+        </div>
+    </div>
+    <!-- Delete Modal -->
+    <div class="fixed inset-0 z-[70] flex items-center justify-center p-4 hidden" id="deleteModal">
+        <div class="absolute inset-0 modal-overlay" onclick="toggleModal('deleteModal')"></div>
+        <div class="relative bg-white w-full max-w-sm rounded-2xl shadow-2xl p-6 transform transition-all scale-95 opacity-0 duration-200">
+            <div class="text-center">
+                <div class="w-16 h-16 bg-error/10 text-error rounded-full flex items-center justify-center mx-auto mb-4">
+                    <span class="material-symbols-outlined text-4xl">warning</span>
+                </div>
+                <h3 class="font-title-lg text-title-lg text-on-surface font-bold">Delete Assignment?</h3>
+                <p class="text-body-md text-on-surface-variant mt-2">This action cannot be undone. All student submissions and grades linked to this assignment will be permanently removed.</p>
+            </div>
+            <div class="flex flex-col gap-2 mt-8">
+                <button class="w-full py-3 bg-error text-white rounded-lg font-bold shadow-sm hover:shadow-md transition-all">Yes, Delete Forever</button>
+                <button class="w-full py-3 text-on-surface-variant font-medium hover:bg-surface-container rounded-lg transition-colors" onclick="toggleModal('deleteModal')">Keep Assignment</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        function toggleModal(modalId) {
+            const modal = document.getElementById(modalId);
+            const content = modal.querySelector('.relative');
+
+            if (modal.classList.contains('hidden')) {
+                modal.classList.remove('hidden');
+                setTimeout(() => {
+                    content.classList.remove('scale-95', 'opacity-0');
+                    content.classList.add('scale-100', 'opacity-100');
+                }, 10);
+            } else {
+                content.classList.remove('scale-100', 'opacity-100');
+                content.classList.add('scale-95', 'opacity-0');
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                }, 200);
+            }
+        }
+
+        function toggleDrawer(drawerId) {
+            const drawerContainer = document.getElementById(drawerId);
+            const drawerPanel = drawerContainer.querySelector('.absolute.right-0');
+
+            if (drawerContainer.classList.contains('hidden')) {
+                drawerContainer.classList.remove('hidden');
+                setTimeout(() => {
+                    drawerPanel.classList.remove('translate-x-full');
+                }, 10);
+            } else {
+                drawerPanel.classList.add('translate-x-full');
+                setTimeout(() => {
+                    drawerContainer.classList.add('hidden');
+                }, 300);
+            }
+        }
+
+        // Lightweight atmospheric interaction: Card hover lift
+        document.querySelectorAll('.shadow-sm').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.classList.add('shadow-md');
+                card.style.transform = 'translateY(-2px)';
+                card.style.transition = 'all 0.3s ease';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.classList.remove('shadow-md');
+                card.style.transform = 'translateY(0)';
+            });
+        });
+    </script>

@@ -14,5 +14,13 @@ namespace ELearningPortal.Controllers.SuperAdmin
         {
             return View();
         }
+        public IActionResult SuperSubscription()
+        {
+            return View();
+        }
+        public IActionResult SuperSubscriptionApprove()
+        {
+            return View();
+        }
     }
 }

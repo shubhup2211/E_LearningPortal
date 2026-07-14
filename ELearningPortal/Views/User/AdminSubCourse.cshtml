@@ -1,0 +1,456 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<!-- Main Content Area -->
+<!-- Page Content -->
+<div class="p-6 md:p-8 space-y-8">
+    <!-- Page Header -->
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+        <div>
+            <h1 class="font-headline-lg text-headline-lg text-on-surface">Sub Course Management</h1>
+            <p class="text-on-surface-variant">Manage and organize your branch's specialized curriculum modules.</p>
+        </div>
+        <button class="bg-primary-container text-white px-6 py-2.5 rounded-lg font-title-md flex items-center gap-2 hover:bg-primary transition-all shadow-md active:scale-95" onclick="toggleModal('addModal')">
+            <span class="material-symbols-outlined">add</span>
+            Add Sub Course
+        </button>
+    </div>
+    <!-- Summary Cards Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant shadow-sm hover:shadow-md transition-shadow">
+            <div class="flex justify-between items-start mb-4">
+                <div class="p-3 bg-primary-fixed rounded-lg">
+                    <span class="material-symbols-outlined text-primary">menu_book</span>
+                </div>
+                <span class="text-tertiary font-medium text-label-md flex items-center">+4.5%</span>
+            </div>
+            <h3 class="text-on-surface-variant text-label-md">Total Sub Courses</h3>
+            <p class="text-3xl font-bold text-on-surface mt-1">892</p>
+        </div>
+        <div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant shadow-sm hover:shadow-md transition-shadow">
+            <div class="flex justify-between items-start mb-4">
+                <div class="p-3 bg-tertiary-fixed rounded-lg">
+                    <span class="material-symbols-outlined text-tertiary">check_circle</span>
+                </div>
+                <span class="text-tertiary font-medium text-label-md">Active</span>
+            </div>
+            <h3 class="text-on-surface-variant text-label-md">Published</h3>
+            <p class="text-3xl font-bold text-on-surface mt-1">840</p>
+        </div>
+        <div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant shadow-sm hover:shadow-md transition-shadow">
+            <div class="flex justify-between items-start mb-4">
+                <div class="p-3 bg-error-container rounded-lg">
+                    <span class="material-symbols-outlined text-error">visibility_off</span>
+                </div>
+                <span class="text-error font-medium text-label-md">Action Required</span>
+            </div>
+            <h3 class="text-on-surface-variant text-label-md">Inactive</h3>
+            <p class="text-3xl font-bold text-on-surface mt-1">52</p>
+        </div>
+        <div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant shadow-sm hover:shadow-md transition-shadow">
+            <div class="flex justify-between items-start mb-4">
+                <div class="p-3 bg-secondary-container rounded-lg">
+                    <span class="material-symbols-outlined text-secondary">payments</span>
+                </div>
+                <span class="text-on-surface-variant text-label-md">Avg Value</span>
+            </div>
+            <h3 class="text-on-surface-variant text-label-md">Average Price</h3>
+            <p class="text-3xl font-bold text-on-surface mt-1">$145.00</p>
+        </div>
+    </div>
+    <!-- Filters & Table Section -->
+    <div class="bg-surface-container-lowest rounded-2xl border border-outline-variant shadow-sm overflow-hidden">
+        <!-- Filter Toolbar -->
+        <div class="p-6 border-b border-outline-variant bg-surface-container-low/30">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+                <div class="space-y-1">
+                    <label class="text-xs font-semibold text-on-surface-variant uppercase tracking-wider">Search Name</label>
+                    <div class="relative">
+                        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-sm">search</span>
+                        <input class="w-full pl-9 pr-3 py-2 border border-outline-variant rounded-lg text-body-md focus:border-primary focus:ring-1 focus:ring-primary outline-none bg-white" placeholder="Filter by name..." type="text" />
+                    </div>
+                </div>
+                <div class="space-y-1">
+                    <label class="text-xs font-semibold text-on-surface-variant uppercase tracking-wider">Master Course</label>
+                    <select class="w-full px-3 py-2 border border-outline-variant rounded-lg text-body-md focus:border-primary focus:ring-1 focus:ring-primary outline-none bg-white appearance-none">
+                        <option>All Approved Courses</option>
+                        <option>Full Stack Java</option>
+                        <option>Python Full Stack</option>
+                        <option>MERN Stack</option>
+                    </select>
+                </div>
+                <div class="space-y-1">
+                    <label class="text-xs font-semibold text-on-surface-variant uppercase tracking-wider">Status</label>
+                    <select class="w-full px-3 py-2 border border-outline-variant rounded-lg text-body-md focus:border-primary focus:ring-1 focus:ring-primary outline-none bg-white">
+                        <option>All Statuses</option>
+                        <option>Active</option>
+                        <option>Inactive</option>
+                    </select>
+                </div>
+                <div class="space-y-1">
+                    <label class="text-xs font-semibold text-on-surface-variant uppercase tracking-wider">Price Range</label>
+                    <div class="flex items-center gap-2">
+                        <input class="w-1/2 px-3 py-2 border border-outline-variant rounded-lg text-body-md bg-white" placeholder="Min" type="number" />
+                        <span class="text-outline">-</span>
+                        <input class="w-1/2 px-3 py-2 border border-outline-variant rounded-lg text-body-md bg-white" placeholder="Max" type="number" />
+                    </div>
+                </div>
+                <div class="flex items-end gap-2 xl:col-span-1 lg:col-span-4">
+                    <button class="flex-1 bg-surface-container-high text-on-surface font-semibold py-2 px-4 rounded-lg hover:bg-outline-variant transition-colors flex items-center justify-center gap-2">
+                        <span class="material-symbols-outlined text-sm">filter_alt</span> Apply
+                    </button>
+                    <button class="p-2 text-on-surface-variant hover:bg-surface-variant rounded-lg border border-outline-variant">
+                        <span class="material-symbols-outlined">refresh</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Data Table -->
+        <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="bg-surface-container-low text-on-surface-variant text-label-md font-bold uppercase tracking-widest border-b border-outline-variant">
+                        <th class="px-6 py-4">Image</th>
+                        <th class="px-6 py-4">Sub Course Name</th>
+                        <th class="px-6 py-4">Master Course</th>
+                        <th class="px-6 py-4">Price</th>
+                        <th class="px-6 py-4">Order</th>
+                        <th class="px-6 py-4">Status</th>
+                        <th class="px-6 py-4">Created Date</th>
+                        <th class="px-6 py-4 text-right">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-outline-variant">
+                    <!-- Row 1 -->
+                    <tr class="hover:bg-surface-container-low/50 transition-colors">
+                        <td class="px-6 py-4">
+                            <img class="w-12 h-12 rounded-lg object-cover border border-outline-variant shadow-sm" data-alt="A high-quality 3D render of a golden coffee cup with the Java logo in a clean, minimalist style. The background is a soft gradient of deep blues and whites, with professional studio lighting highlighting the reflective surfaces of the cup. The image represents a high-end educational branding style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB5r5aGYYDwPaygRaZQHy7NFCWd--qFBy9_6cphX5QNnquayppGsoqr1uHFAakxmiJj0OU_W5AmLgnbJyUxTwgHghBtvGkf5HWLKScp815E1u2AWUrcqAS2ny74SF9EC9DETncDuffynRJxvZbs0_qDQe7d5ZTS2zQ8dS0qgM2d8cwu_LC871zTct0KSsalVltVoMTFv2-spPRNkRDKZCg_wM9C0iqEjOIVDVBqtfS2kWmsiMjrw6srX8qsk1QzrCtzo3PJF2CffgQ" />
+                        </td>
+                        <td class="px-6 py-4">
+                            <div class="font-bold text-on-surface">Core Java</div>
+                            <div class="text-xs text-on-surface-variant truncate w-48">Java Fundamentals</div>
+                        </td>
+                        <td class="px-6 py-4">
+                            <span class="px-3 py-1 bg-primary-fixed text-on-primary-fixed-variant text-xs font-bold rounded-full">Full Stack Java</span>
+                        </td>
+                        <td class="px-6 py-4 font-bold text-on-surface">$199.00</td>
+                        <td class="px-6 py-4 text-on-surface-variant">1</td>
+                        <td class="px-6 py-4">
+                            <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold bg-tertiary-container/10 text-tertiary-container">
+                                <span class="w-1.5 h-1.5 rounded-full bg-tertiary-container"></span>
+                                Active
+                            </span>
+                        </td>
+                        <td class="px-6 py-4 text-on-surface-variant text-sm">2026-07-13</td>
+                        <td class="px-6 py-4 text-right">
+                            <div class="flex justify-end gap-2">
+                                <button class="p-2 hover:bg-primary-fixed rounded-lg text-primary transition-colors" onclick="toggleDrawer('viewDrawer')" title="View Analytics">
+                                    <span class="material-symbols-outlined text-[20px]">analytics</span>
+                                </button>
+                                <button class="p-2 hover:bg-secondary-container rounded-lg text-secondary transition-colors" onclick="toggleModal('editModal')" title="Edit">
+                                    <span class="material-symbols-outlined text-[20px]">edit</span>
+                                </button>
+                                <button class="p-2 hover:bg-error-container rounded-lg text-error transition-colors" onclick="toggleModal('deleteModal')" title="Delete">
+                                    <span class="material-symbols-outlined text-[20px]">delete</span>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    <!-- Row 2 -->
+                    <tr class="hover:bg-surface-container-low/50 transition-colors">
+                        <td class="px-6 py-4">
+                            <img class="w-12 h-12 rounded-lg object-cover border border-outline-variant shadow-sm" data-alt="A futuristic digital illustration representing enterprise computing with glowing server racks and holographic data flow. The color scheme is professional navy blue and cyan, with a clean architectural feel. Soft light beams highlight the complexity and power of advanced backend systems, styled for a modern learning portal." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAwak2LBbgQgxtrQunpWNmNoGTFhM9FFZkZ7tDsBuRabekpRZ_xq7nEPKrXYMRMEWVyC0tvOb3IPULVYDQZH2pBBnjGTw4QZeYgNGqLv4vPTffPoYOFPZ6sTMljCxbd4cHYSLsMt9NGkcRenfwRYJhZBRpK8JFU9ZX2nBSvRWM5P2Dw16uMA26QtP8rG_BBjLuu_ieia7Z4hIl1-Ll2ok8vJ8_dtqbmo3vMkYN7oBGyOqE_aSTGbFv8T6FgPMsdrNmsr3VmbXfrh0Y" />
+                        </td>
+                        <td class="px-6 py-4">
+                            <div class="font-bold text-on-surface">Advanced Java</div>
+                            <div class="text-xs text-on-surface-variant truncate w-48">JDBC, Servlets, JSP</div>
+                        </td>
+                        <td class="px-6 py-4">
+                            <span class="px-3 py-1 bg-primary-fixed text-on-primary-fixed-variant text-xs font-bold rounded-full">Full Stack Java</span>
+                        </td>
+                        <td class="px-6 py-4 font-bold text-on-surface">$249.00</td>
+                        <td class="px-6 py-4 text-on-surface-variant">2</td>
+                        <td class="px-6 py-4">
+                            <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold bg-tertiary-container/10 text-tertiary-container">
+                                <span class="w-1.5 h-1.5 rounded-full bg-tertiary-container"></span>
+                                Active
+                            </span>
+                        </td>
+                        <td class="px-6 py-4 text-on-surface-variant text-sm">2026-07-13</td>
+                        <td class="px-6 py-4 text-right">
+                            <div class="flex justify-end gap-2">
+                                <button class="p-2 hover:bg-primary-fixed rounded-lg text-primary transition-colors">
+                                    <span class="material-symbols-outlined text-[20px]">analytics</span>
+                                </button>
+                                <button class="p-2 hover:bg-secondary-container rounded-lg text-secondary transition-colors">
+                                    <span class="material-symbols-outlined text-[20px]">edit</span>
+                                </button>
+                                <button class="p-2 hover:bg-error-container rounded-lg text-error transition-colors">
+                                    <span class="material-symbols-outlined text-[20px]">delete</span>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    <!-- Row 3 -->
+                    <tr class="hover:bg-surface-container-low/50 transition-colors">
+                        <td class="px-6 py-4">
+                            <img class="w-12 h-12 rounded-lg object-cover border border-outline-variant shadow-sm" data-alt="A sleek 3D stylized snake icon in emerald green and bright yellow representing the Python language. The icon sits on a glossy white pedestal in a bright, modern studio. The scene is airy and minimalist with soft shadows, reflecting a high-end educational aesthetic and a premium user interface style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA-zug8hLSmTkW-qU_jziVtxY9vfvNTZwdvpmnfFTYkJOPQQ9jbgwD8Kqu65jmJis9m04e_kYjteQSY1I3kBpFXiV12fGR86yRos9Cd6hyZ1Hpzil-2Eehd0ROZ4HgoZt1aaFRfSpR8FPF9UTCmmUf-F8-E9KRDSMEqoBX9gkf6g_6r9Iq5fiy4dSkbbxDW0t0-W2O_srHcjmqb4hNCevp_znQOPQmVkPUGg5DlN4Ay7619FT0Dqa4fVXuGI1YvJfDb37xsR7TtUN8" />
+                        </td>
+                        <td class="px-6 py-4">
+                            <div class="font-bold text-on-surface">Python Basics</div>
+                            <div class="text-xs text-on-surface-variant truncate w-48">Introduction to Python</div>
+                        </td>
+                        <td class="px-6 py-4">
+                            <span class="px-3 py-1 bg-secondary-fixed text-on-secondary-fixed-variant text-xs font-bold rounded-full">Python Full Stack</span>
+                        </td>
+                        <td class="px-6 py-4 font-bold text-on-surface">$120.00</td>
+                        <td class="px-6 py-4 text-on-surface-variant">1</td>
+                        <td class="px-6 py-4">
+                            <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold bg-tertiary-container/10 text-tertiary-container">
+                                <span class="w-1.5 h-1.5 rounded-full bg-tertiary-container"></span>
+                                Active
+                            </span>
+                        </td>
+                        <td class="px-6 py-4 text-on-surface-variant text-sm">2026-07-13</td>
+                        <td class="px-6 py-4 text-right">
+                            <div class="flex justify-end gap-2">
+                                <button class="p-2 hover:bg-primary-fixed rounded-lg text-primary transition-colors">
+                                    <span class="material-symbols-outlined text-[20px]">analytics</span>
+                                </button>
+                                <button class="p-2 hover:bg-secondary-container rounded-lg text-secondary transition-colors">
+                                    <span class="material-symbols-outlined text-[20px]">edit</span>
+                                </button>
+                                <button class="p-2 hover:bg-error-container rounded-lg text-error transition-colors">
+                                    <span class="material-symbols-outlined text-[20px]">delete</span>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- Pagination -->
+        <div class="p-6 border-t border-outline-variant flex items-center justify-between">
+            <p class="text-sm text-on-surface-variant">Showing 1 to 3 of 892 entries</p>
+            <div class="flex gap-2">
+                <button class="px-4 py-2 text-sm font-semibold border border-outline-variant rounded-lg hover:bg-surface-container transition-colors disabled:opacity-50" disabled="">Previous</button>
+                <button class="px-4 py-2 text-sm font-semibold bg-primary text-white rounded-lg shadow-sm">1</button>
+                <button class="px-4 py-2 text-sm font-semibold border border-outline-variant rounded-lg hover:bg-surface-container transition-colors">2</button>
+                <button class="px-4 py-2 text-sm font-semibold border border-outline-variant rounded-lg hover:bg-surface-container transition-colors">3</button>
+                <span class="px-2 self-center">...</span>
+                <button class="px-4 py-2 text-sm font-semibold border border-outline-variant rounded-lg hover:bg-surface-container transition-colors">Next</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modals & Drawers -->
+<!-- Add/Edit Modal (Large Centered) -->
+<div class="fixed inset-0 z-[60] hidden flex items-center justify-center p-4" id="addModal">
+    <div class="absolute inset-0 bg-on-background/60 backdrop-blur-sm" onclick="toggleModal('addModal')"></div>
+    <div class="relative bg-surface-container-lowest w-full max-w-4xl rounded-2xl shadow-2xl overflow-hidden max-h-[921px] flex flex-col">
+        <div class="px-8 py-6 border-b border-outline-variant flex items-center justify-between sticky top-0 bg-surface-container-lowest z-10">
+            <div>
+                <h2 class="text-2xl font-bold text-on-surface">Add New Sub Course</h2>
+                <p class="text-on-surface-variant">Create a new module under an approved Master Course.</p>
+            </div>
+            <button class="p-2 hover:bg-surface-variant rounded-full transition-colors" onclick="toggleModal('addModal')">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+        <div class="p-8 overflow-y-auto custom-scrollbar">
+            <form class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Left Column -->
+                <div class="space-y-6">
+                    <div class="space-y-2">
+                        <label class="font-bold text-sm text-on-surface-variant">Master Course</label>
+                        <select class="w-full px-4 py-2.5 border border-outline-variant rounded-xl bg-surface-container-low focus:ring-2 focus:ring-primary focus:border-transparent outline-none">
+                            <option>Select Parent Course...</option>
+                            <option>Full Stack Java</option>
+                            <option>Python Full Stack</option>
+                            <option>MERN Stack</option>
+                        </select>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="font-bold text-sm text-on-surface-variant">Sub Course Name</label>
+                        <input class="w-full px-4 py-2.5 border border-outline-variant rounded-xl bg-surface-container-low focus:ring-2 focus:ring-primary focus:border-transparent outline-none" placeholder="e.g., Reactive Spring Microservices" type="text" />
+                    </div>
+                    <div class="space-y-2">
+                        <label class="font-bold text-sm text-on-surface-variant">Description</label>
+<textarea class="w-full px-4 py-2.5 border border-outline-variant rounded-xl bg-surface-container-low focus:ring-2 focus:ring-primary focus:border-transparent outline-none resize-none" placeholder="Detailed module overview..." rows="4"></textarea>
+                    </div>
+                </div>
+                <!-- Right Column -->
+                <div class="space-y-6">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="space-y-2">
+                            <label class="font-bold text-sm text-on-surface-variant">Price ($)</label>
+                            <input class="w-full px-4 py-2.5 border border-outline-variant rounded-xl bg-surface-container-low focus:ring-2 focus:ring-primary focus:border-transparent outline-none" placeholder="199.00" type="number" />
+                        </div>
+                        <div class="space-y-2">
+                            <label class="font-bold text-sm text-on-surface-variant">Display Order</label>
+                            <input class="w-full px-4 py-2.5 border border-outline-variant rounded-xl bg-surface-container-low focus:ring-2 focus:ring-primary focus:border-transparent outline-none" placeholder="1" type="number" />
+                        </div>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="font-bold text-sm text-on-surface-variant">Thumbnail Image</label>
+                        <div class="border-2 border-dashed border-outline-variant rounded-2xl p-8 flex flex-col items-center justify-center bg-surface-container-low hover:bg-surface-variant/30 transition-colors cursor-pointer relative overflow-hidden group">
+                            <span class="material-symbols-outlined text-4xl text-outline mb-2 group-hover:scale-110 transition-transform">cloud_upload</span>
+                            <p class="text-sm font-medium text-on-surface-variant">Drag and drop or click to upload</p>
+                            <p class="text-xs text-outline mt-1">PNG, JPG up to 5MB (1:1 Ratio recommended)</p>
+                            <input class="absolute inset-0 opacity-0 cursor-pointer" type="file" />
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between p-4 bg-surface-container-low rounded-xl">
+                        <div class="flex items-center gap-3">
+                            <span class="material-symbols-outlined text-tertiary">toggle_on</span>
+                            <div>
+                                <p class="text-sm font-bold text-on-surface">Publish Immediately</p>
+                                <p class="text-xs text-on-surface-variant">Make this sub-course visible to students now.</p>
+                            </div>
+                        </div>
+                        <input checked="" class="w-10 h-5 bg-outline-variant rounded-full appearance-none relative before:absolute before:left-1 before:top-1 before:w-3 before:h-3 before:bg-white before:rounded-full before:transition-all checked:bg-primary checked:before:left-6 cursor-pointer" type="checkbox" />
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="px-8 py-6 border-t border-outline-variant flex justify-end gap-4 bg-surface-container-lowest">
+            <button class="px-6 py-2.5 rounded-lg border border-outline text-on-surface font-semibold hover:bg-surface-container-high transition-colors" onclick="toggleModal('addModal')">Cancel</button>
+            <button class="px-8 py-2.5 rounded-lg bg-primary text-white font-bold shadow-lg hover:bg-primary-container active:scale-95 transition-all">Create Sub Course</button>
+        </div>
+    </div>
+</div>
+<!-- Edit Modal (Placeholder - shared structure with Add) -->
+<div class="fixed inset-0 z-[60] hidden flex items-center justify-center p-4" id="editModal">
+    <div class="absolute inset-0 bg-on-background/60 backdrop-blur-sm" onclick="toggleModal('editModal')"></div>
+    <div class="relative bg-surface-container-lowest w-full max-w-4xl rounded-2xl p-8 shadow-2xl">
+        <h2 class="text-2xl font-bold mb-4">Edit Sub Course</h2>
+        <p>Form fields pre-filled with existing data...</p>
+        <div class="mt-8 flex justify-end">
+            <button class="px-6 py-2 bg-primary text-white rounded-lg" onclick="toggleModal('editModal')">Save Changes</button>
+        </div>
+    </div>
+</div>
+<!-- Delete Confirmation Modal -->
+<div class="fixed inset-0 z-[60] hidden flex items-center justify-center p-4" id="deleteModal">
+    <div class="absolute inset-0 bg-on-background/60 backdrop-blur-sm" onclick="toggleModal('deleteModal')"></div>
+    <div class="relative bg-surface-container-lowest w-full max-w-md rounded-2xl p-8 shadow-2xl text-center">
+        <div class="w-20 h-20 bg-error-container text-error rounded-full flex items-center justify-center mx-auto mb-6">
+            <span class="material-symbols-outlined text-4xl">warning</span>
+        </div>
+        <h2 class="text-2xl font-bold text-on-surface mb-2">Delete Sub Course?</h2>
+        <p class="text-on-surface-variant mb-8">This action cannot be undone. All associated student progress and attachments for this module will be permanently removed.</p>
+        <div class="flex gap-4">
+            <button class="flex-1 py-3 border border-outline rounded-xl font-bold text-on-surface hover:bg-surface-container-high transition-colors" onclick="toggleModal('deleteModal')">Cancel</button>
+            <button class="flex-1 py-3 bg-error text-white rounded-xl font-bold shadow-lg hover:bg-red-700 active:scale-95 transition-all">Yes, Delete</button>
+        </div>
+    </div>
+</div>
+<!-- View Analytics Drawer (Slide-out) -->
+<div class="fixed inset-0 z-50 invisible transition-all duration-300" id="viewDrawer">
+    <div class="absolute inset-0 bg-on-background/40 backdrop-blur-sm opacity-0 transition-opacity duration-300" onclick="toggleDrawer('viewDrawer')"></div>
+    <div class="absolute right-0 top-0 h-full w-full max-w-lg bg-surface-container-lowest shadow-2xl translate-x-full transition-transform duration-300 flex flex-col">
+        <div class="p-6 border-b border-outline-variant flex items-center justify-between">
+            <h3 class="font-headline-lg text-xl">Module Analytics</h3>
+            <button class="p-2 hover:bg-surface-variant rounded-full transition-colors" onclick="toggleDrawer('viewDrawer')">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+        <div class="flex-1 p-6 space-y-8 overflow-y-auto custom-scrollbar">
+            <div class="p-4 bg-primary-fixed/30 rounded-2xl flex items-center gap-4">
+                <img class="w-20 h-20 rounded-xl object-cover" data-alt="A stylized 3D gold and glass cup against a clean studio backdrop. High-end product photography style with focus on metallic reflections and sharp edges." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAmIUPie_Srz7pHBGmpvRmDnnC7Wog1ExqfmbOsuxqYhpUSAU9vz4ziabeF8__3ykwoA_JnzYDU4OHbc8-ffM6hjBODpRj6Yuf8h2mBC6ZNdO12jy2i8gqXafPZoon1bu6fGGhpUm9GPgAhEoCpOK1DCQlZYSQ5bFbcUFWUO1L3egcRXyDrCQ8xIjhJmBeOaCEAk1wpp5Ezt4WoXhqaL_9oQJLPFGC4mZ35T8-6iqDYBSGH6uOTUa0LTCNE6if39taAck9CITuidAA" />
+                <div>
+                    <h4 class="font-bold text-on-surface text-lg">Core Java</h4>
+                    <p class="text-sm text-on-surface-variant">Full Stack Java Curriculum</p>
+                </div>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div class="bg-surface-container p-4 rounded-xl">
+                    <p class="text-xs text-on-surface-variant uppercase font-bold tracking-wider">Enrollments</p>
+                    <p class="text-2xl font-bold text-on-surface mt-1">1,402</p>
+                </div>
+                <div class="bg-surface-container p-4 rounded-xl">
+                    <p class="text-xs text-on-surface-variant uppercase font-bold tracking-wider">Completion Rate</p>
+                    <p class="text-2xl font-bold text-on-surface mt-1">78%</p>
+                </div>
+            </div>
+            <div class="space-y-4">
+                <h5 class="font-bold text-on-surface">Student Performance</h5>
+                <div class="space-y-4">
+                    <div class="space-y-2">
+                        <div class="flex justify-between text-sm">
+                            <span class="text-on-surface-variant">Quiz Average Score</span>
+                            <span class="font-bold">84%</span>
+                        </div>
+                        <div class="w-full bg-outline-variant h-2 rounded-full overflow-hidden">
+                            <div class="bg-primary h-full w-[84%]"></div>
+                        </div>
+                    </div>
+                    <div class="space-y-2">
+                        <div class="flex justify-between text-sm">
+                            <span class="text-on-surface-variant">Engagement Level</span>
+                            <span class="font-bold">High</span>
+                        </div>
+                        <div class="w-full bg-outline-variant h-2 rounded-full overflow-hidden">
+                            <div class="bg-tertiary h-full w-[92%]"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="p-6 bg-on-secondary-fixed text-white rounded-2xl relative overflow-hidden">
+                <div class="relative z-10">
+                    <p class="text-sm opacity-80 mb-1">Total Revenue Generated</p>
+                    <p class="text-3xl font-bold">$278,998.00</p>
+                    <div class="mt-4 flex items-center gap-2 text-tertiary-fixed text-xs font-bold uppercase tracking-wider">
+                        <span class="material-symbols-outlined text-sm">trending_up</span>
+                        <span>+12% vs last quarter</span>
+                    </div>
+                </div>
+                <span class="material-symbols-outlined absolute -right-4 -bottom-4 text-9xl opacity-10 rotate-12">payments</span>
+            </div>
+        </div>
+        <div class="p-6 border-t border-outline-variant">
+            <button class="w-full bg-primary text-white py-3 rounded-xl font-bold shadow-lg hover:bg-primary-container transition-all">Download Full Report</button>
+        </div>
+    </div>
+</div>
+<!-- Scripts -->
+<script>
+    function toggleModal(id) {
+        const modal = document.getElementById(id);
+        modal.classList.toggle('hidden');
+    }
+
+    function toggleDrawer(id) {
+        const container = document.getElementById(id);
+        const drawer = container.querySelector('div:last-child');
+        const overlay = container.querySelector('div:first-child');
+
+        if (container.classList.contains('invisible')) {
+            container.classList.remove('invisible');
+            setTimeout(() => {
+                drawer.classList.remove('translate-x-full');
+                overlay.classList.remove('opacity-0');
+            }, 10);
+        } else {
+            drawer.classList.add('translate-x-full');
+            overlay.classList.add('opacity-0');
+            setTimeout(() => {
+                container.classList.add('invisible');
+            }, 300);
+        }
+    }
+
+    // Search Bar Micro-interaction
+    const searchInput = document.querySelectorAll('input[type="text"]');
+    searchInput.forEach(input => {
+        input.addEventListener('focus', () => {
+            input.parentElement.classList.add('ring-2', 'ring-primary/20');
+        });
+        input.addEventListener('blur', () => {
+            input.parentElement.classList.remove('ring-2', 'ring-primary/20');
+        });
+    });
+</script>

@@ -1,0 +1,348 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<!-- Page Header -->
+<div class="flex justify-between items-end mb-8">
+    <div>
+        <h2 class="font-headline-lg text-headline-lg text-on-surface">Lesson Management</h2>
+        <p class="font-body-lg text-body-lg text-on-surface-variant mt-1">Manage learning videos and lesson content for your branch.</p>
+    </div>
+    <button class="bg-primary text-white px-6 py-3 rounded-xl font-title-md flex items-center gap-2 hover:bg-primary-container transition-all shadow-lg shadow-primary/20" onclick="toggleModal('addLessonModal')">
+        <span class="material-symbols-outlined">add</span>
+        Add Lesson
+    </button>
+</div>
+<!-- Summary Statistics Cards -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+    <div class="bg-surface-container-lowest p-6 rounded-xl shadow-sm border border-outline-variant/30 flex items-center gap-4">
+        <div class="w-12 h-12 bg-primary-fixed rounded-xl flex items-center justify-center text-primary">
+            <span class="material-symbols-outlined">video_library</span>
+        </div>
+        <div>
+            <p class="text-label-md text-on-surface-variant uppercase tracking-wider">Total Lessons</p>
+            <h3 class="text-title-lg font-bold">1,240</h3>
+        </div>
+    </div>
+    <div class="bg-surface-container-lowest p-6 rounded-xl shadow-sm border border-outline-variant/30 flex items-center gap-4">
+        <div class="w-12 h-12 bg-tertiary-fixed-dim/20 rounded-xl flex items-center justify-center text-tertiary">
+            <span class="material-symbols-outlined">check_circle</span>
+        </div>
+        <div>
+            <p class="text-label-md text-on-surface-variant uppercase tracking-wider">Published</p>
+            <h3 class="text-title-lg font-bold">1,180</h3>
+        </div>
+    </div>
+    <div class="bg-surface-container-lowest p-6 rounded-xl shadow-sm border border-outline-variant/30 flex items-center gap-4">
+        <div class="w-12 h-12 bg-error-container rounded-xl flex items-center justify-center text-error">
+            <span class="material-symbols-outlined">pause_circle</span>
+        </div>
+        <div>
+            <p class="text-label-md text-on-surface-variant uppercase tracking-wider">Inactive</p>
+            <h3 class="text-title-lg font-bold">60</h3>
+        </div>
+    </div>
+    <div class="bg-surface-container-lowest p-6 rounded-xl shadow-sm border border-outline-variant/30 flex items-center gap-4">
+        <div class="w-12 h-12 bg-secondary-fixed rounded-xl flex items-center justify-center text-secondary">
+            <span class="material-symbols-outlined">schedule</span>
+        </div>
+        <div>
+            <p class="text-label-md text-on-surface-variant uppercase tracking-wider">Avg Duration</p>
+            <h3 class="text-title-lg font-bold">32 Min</h3>
+        </div>
+    </div>
+</div>
+<!-- Filter Panel -->
+<div class="bg-surface-container-lowest p-6 rounded-xl shadow-sm border border-outline-variant/30 mb-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+        <div class="space-y-1">
+            <label class="text-label-md font-semibold text-on-surface-variant">Search</label>
+            <div class="relative">
+                <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-sm">search</span>
+                <input class="w-full pl-9 pr-4 py-2 border border-outline-variant rounded-lg text-sm focus:ring-primary focus:border-primary" placeholder="Lesson ID or title..." type="text" />
+            </div>
+        </div>
+        <div class="space-y-1">
+            <label class="text-label-md font-semibold text-on-surface-variant">Master Course</label>
+            <select class="w-full px-3 py-2 border border-outline-variant rounded-lg text-sm focus:ring-primary focus:border-primary">
+                <option>All Master Courses</option>
+                <option>Advanced Mathematics</option>
+                <option>Quantum Physics</option>
+                <option>Classical Literature</option>
+            </select>
+        </div>
+        <div class="space-y-1">
+            <label class="text-label-md font-semibold text-on-surface-variant">Sub Course</label>
+            <select class="w-full px-3 py-2 border border-outline-variant rounded-lg text-sm focus:ring-primary focus:border-primary">
+                <option>All Sub Courses</option>
+                <option>Calculus III</option>
+                <option>Linear Algebra</option>
+            </select>
+        </div>
+        <div class="space-y-1">
+            <label class="text-label-md font-semibold text-on-surface-variant">Status</label>
+            <select class="w-full px-3 py-2 border border-outline-variant rounded-lg text-sm focus:ring-primary focus:border-primary">
+                <option>All Status</option>
+                <option>Active</option>
+                <option>Inactive</option>
+            </select>
+        </div>
+        <div class="space-y-1">
+            <label class="text-label-md font-semibold text-on-surface-variant">Date Range</label>
+            <input class="w-full px-3 py-2 border border-outline-variant rounded-lg text-sm focus:ring-primary focus:border-primary" type="date" />
+        </div>
+    </div>
+</div>
+<!-- Lesson Table Card -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm border border-outline-variant/30 overflow-hidden">
+    <div class="px-6 py-4 border-b border-outline-variant/30 flex justify-between items-center">
+        <h3 class="font-title-md text-on-surface">Lesson Inventory</h3>
+        <div class="flex gap-2">
+            <button class="p-2 text-outline hover:bg-surface-container-low rounded-lg transition-colors">
+                <span class="material-symbols-outlined">filter_list</span>
+            </button>
+            <button class="p-2 text-outline hover:bg-surface-container-low rounded-lg transition-colors">
+                <span class="material-symbols-outlined">download</span>
+            </button>
+        </div>
+    </div>
+    <div class="overflow-x-auto">
+        <table class="w-full text-left">
+            <thead class="bg-surface-container-low">
+                <tr>
+                    <th class="px-6 py-4 font-title-md text-sm text-on-surface-variant">Lesson Title</th>
+                    <th class="px-6 py-4 font-title-md text-sm text-on-surface-variant">Master Course</th>
+                    <th class="px-6 py-4 font-title-md text-sm text-on-surface-variant">Sub Course</th>
+                    <th class="px-6 py-4 font-title-md text-sm text-on-surface-variant">Duration</th>
+                    <th class="px-6 py-4 font-title-md text-sm text-on-surface-variant">Order</th>
+                    <th class="px-6 py-4 font-title-md text-sm text-on-surface-variant">Status</th>
+                    <th class="px-6 py-4 font-title-md text-sm text-on-surface-variant text-right">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-outline-variant/20">
+                <!-- Row 1 -->
+                <tr class="hover:bg-surface-container-low/50 transition-colors">
+                    <td class="px-6 py-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 rounded-lg bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAKrjCsmTQdVH7wH7D5f1ssSfEodbTp9fYs0VSTgsevkPZvC5QRqgSSKk824qdxKDa_Msg4FBQRKNn5fjKz6rsnva_mgnLoMTAEHiT4EB2Iv4OuX-8wI_DyfQ2w3Y-U5pw0PGk3A42IEPncO6Jb0KLVqqeHZja0MUynSVvkNrqpHQNxnDLH-IP3F8VUORsrI4ScamQB5oL9G1ivMcBRgzx4etlsWGRIZQa7NquNtAd2eDU_XgSQbiS58wleI-o2k0CTyGvk7VjCPDk')"></div>
+                            <span class="font-title-md text-sm text-on-surface">Introduction to Derivatives</span>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4 text-body-md text-on-surface-variant">Advanced Mathematics</td>
+                    <td class="px-6 py-4 text-body-md text-on-surface-variant">Calculus III</td>
+                    <td class="px-6 py-4 text-body-md text-on-surface-variant">24:15</td>
+                    <td class="px-6 py-4 text-body-md text-on-surface-variant">01</td>
+                    <td class="px-6 py-4">
+                        <span class="px-3 py-1 rounded-full bg-tertiary/10 text-tertiary text-xs font-bold uppercase tracking-tight">Active</span>
+                    </td>
+                    <td class="px-6 py-4 text-right">
+                        <div class="flex justify-end gap-2">
+                            <button class="p-2 text-primary hover:bg-primary/10 rounded-lg transition-colors" onclick="toggleDrawer('lessonDrawer')">
+                                <span class="material-symbols-outlined">visibility</span>
+                            </button>
+                            <button class="p-2 text-outline hover:bg-surface-container-low rounded-lg transition-colors">
+                                <span class="material-symbols-outlined">edit</span>
+                            </button>
+                            <button class="p-2 text-error hover:bg-error/10 rounded-lg transition-colors" onclick="toggleModal('deleteModal')">
+                                <span class="material-symbols-outlined">delete</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                <!-- Row 2 -->
+                <tr class="hover:bg-surface-container-low/50 transition-colors">
+                    <td class="px-6 py-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 rounded-lg bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAKrjCsmTQdVH7wH7D5f1ssSfEodbTp9fYs0VSTgsevkPZvC5QRqgSSKk824qdxKDa_Msg4FBQRKNn5fjKz6rsnva_mgnLoMTAEHiT4EB2Iv4OuX-8wI_DyfQ2w3Y-U5pw0PGk3A42IEPncO6Jb0KLVqqeHZja0MUynSVvkNrqpHQNxnDLH-IP3F8VUORsrI4ScamQB5oL9G1ivMcBRgzx4etlsWGRIZQa7NquNtAd2eDU_XgSQbiS58wleI-o2k0CTyGvk7VjCPDk')"></div>
+                            <span class="font-title-md text-sm text-on-surface">Matrix Transformations</span>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4 text-body-md text-on-surface-variant">Advanced Mathematics</td>
+                    <td class="px-6 py-4 text-body-md text-on-surface-variant">Linear Algebra</td>
+                    <td class="px-6 py-4 text-body-md text-on-surface-variant">38:00</td>
+                    <td class="px-6 py-4 text-body-md text-on-surface-variant">04</td>
+                    <td class="px-6 py-4">
+                        <span class="px-3 py-1 rounded-full bg-outline-variant/30 text-on-surface-variant text-xs font-bold uppercase tracking-tight">Inactive</span>
+                    </td>
+                    <td class="px-6 py-4 text-right">
+                        <div class="flex justify-end gap-2">
+                            <button class="p-2 text-primary hover:bg-primary/10 rounded-lg transition-colors">
+                                <span class="material-symbols-outlined">visibility</span>
+                            </button>
+                            <button class="p-2 text-outline hover:bg-surface-container-low rounded-lg transition-colors">
+                                <span class="material-symbols-outlined">edit</span>
+                            </button>
+                            <button class="p-2 text-error hover:bg-error/10 rounded-lg transition-colors" onclick="toggleModal('deleteModal')">
+                                <span class="material-symbols-outlined">delete</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="px-6 py-4 bg-surface-container-low border-t border-outline-variant/30 flex items-center justify-between">
+        <span class="text-sm text-on-surface-variant font-body-md">Showing 1 to 10 of 1,240 lessons</span>
+        <div class="flex gap-2">
+            <button class="px-4 py-2 border border-outline-variant rounded-lg text-sm hover:bg-surface-container-lowest transition-colors">Previous</button>
+            <button class="px-4 py-2 bg-primary text-white rounded-lg text-sm font-bold shadow-sm">1</button>
+            <button class="px-4 py-2 border border-outline-variant rounded-lg text-sm hover:bg-surface-container-lowest transition-colors">2</button>
+            <button class="px-4 py-2 border border-outline-variant rounded-lg text-sm hover:bg-surface-container-lowest transition-colors">3</button>
+            <button class="px-4 py-2 border border-outline-variant rounded-lg text-sm hover:bg-surface-container-lowest transition-colors">Next</button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal: Add Lesson -->
+<div class="hidden fixed inset-0 z-50 overflow-y-auto" id="addLessonModal">
+    <div class="flex items-center justify-center min-h-screen px-4 py-12">
+        <div class="fixed inset-0 bg-on-background/60 backdrop-blur-sm" onclick="toggleModal('addLessonModal')"></div>
+        <div class="relative bg-surface-container-lowest w-full max-w-3xl rounded-xl shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-300">
+            <div class="p-6 border-b border-outline-variant/30 flex justify-between items-center bg-surface-container-low">
+                <h3 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface">Add New Lesson</h3>
+                <button class="text-outline hover:text-error transition-colors" onclick="toggleModal('addLessonModal')">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+            <div class="p-8 space-y-6">
+                <div class="grid grid-cols-2 gap-6">
+                    <div class="space-y-1">
+                        <label class="text-label-md font-bold text-on-surface-variant">Master Course</label>
+                        <select class="w-full px-4 py-3 border border-outline-variant rounded-xl focus:ring-2 focus:ring-primary">
+                            <option>Select Master Course</option>
+                            <option>Advanced Mathematics</option>
+                        </select>
+                    </div>
+                    <div class="space-y-1">
+                        <label class="text-label-md font-bold text-on-surface-variant">Sub Course</label>
+                        <select class="w-full px-4 py-3 border border-outline-variant rounded-xl focus:ring-2 focus:ring-primary">
+                            <option>Select Sub Course</option>
+                            <option>Calculus III</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="space-y-1">
+                    <label class="text-label-md font-bold text-on-surface-variant">Lesson Title</label>
+                    <input class="w-full px-4 py-3 border border-outline-variant rounded-xl focus:ring-2 focus:ring-primary" placeholder="e.g. Fundamental Theorem of Calculus" type="text" />
+                </div>
+                <div class="space-y-1">
+                    <label class="text-label-md font-bold text-on-surface-variant">Video URL</label>
+                    <div class="relative">
+                        <input class="w-full px-4 py-3 border border-outline-variant rounded-xl focus:ring-2 focus:ring-primary" placeholder="https://youtube.com/watch?v=..." type="text" />
+                        <div class="mt-4 aspect-video bg-surface-container-low rounded-xl flex items-center justify-center border-2 border-dashed border-outline-variant">
+                            <div class="text-center">
+                                <span class="material-symbols-outlined text-4xl text-outline mb-2">play_circle</span>
+                                <p class="text-xs text-outline-variant">Video preview will appear here</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-6">
+                    <div class="space-y-1">
+                        <label class="text-label-md font-bold text-on-surface-variant">Duration (Min)</label>
+                        <input class="w-full px-4 py-3 border border-outline-variant rounded-xl focus:ring-2 focus:ring-primary" placeholder="30" type="number" />
+                    </div>
+                    <div class="space-y-1">
+                        <label class="text-label-md font-bold text-on-surface-variant">Display Order</label>
+                        <input class="w-full px-4 py-3 border border-outline-variant rounded-xl focus:ring-2 focus:ring-primary" placeholder="1" type="number" />
+                    </div>
+                </div>
+            </div>
+            <div class="p-6 bg-surface-container-low border-t border-outline-variant/30 flex justify-end gap-3">
+                <button class="px-6 py-2 border border-outline rounded-xl font-title-md hover:bg-white transition-colors" onclick="toggleModal('addLessonModal')">Cancel</button>
+                <button class="px-6 py-2 bg-primary text-white rounded-xl font-title-md hover:bg-primary-container shadow-lg shadow-primary/20 transition-all">Save Lesson</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Drawer: View Lesson -->
+<div class="hidden fixed inset-0 z-50 overflow-hidden" id="lessonDrawer">
+    <div class="absolute inset-0 bg-on-background/40 backdrop-blur-sm" onclick="toggleDrawer('lessonDrawer')"></div>
+    <div class="absolute right-0 top-0 h-full w-full max-w-md bg-surface-container-lowest shadow-2xl drawer-transition translate-x-full" id="drawerContent">
+        <div class="p-6 border-b border-outline-variant flex items-center justify-between">
+            <h3 class="font-title-lg text-on-surface">Lesson Details</h3>
+            <button class="p-2 hover:bg-surface-container-low rounded-full" onclick="toggleDrawer('lessonDrawer')">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+        <div class="p-6 overflow-y-auto h-[calc(100vh-80px)]">
+            <div class="aspect-video bg-black rounded-xl mb-6 relative overflow-hidden group cursor-pointer">
+                <div class="absolute inset-0 w-full h-full bg-cover bg-center opacity-70" data-alt="A high-definition video frame still showing a professional physics lecturer writing complex equations on a large transparent glass board. The background is a modern, dimly lit studio with ambient blue accent lighting. The lecturer is focused, capturing a high-end educational atmosphere typical of premium online masterclasses." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDoufKr6l5qycO0777fNbSrwx-_fielUz1G0dIUsEVwTA56gJmrIN9J0AeYDLgDLGCeaJLMzaGZRA8AZCOfwqpj-NZOhnyAzpplxuXqu_ktW1kqNjfNF23F-px0J-jHkMww3m16UOy4kycCx9lRH3LQCHJUj_qAoTiFfqkVJtwjU8oxXWtt3YilkPbaqfT8DNBaMEWyfpc2y-vOtoDVFvrok_CMq8xdWX_QcBtLmclJuViIjm9IeiRUcQthseGpsX769dLreXd7_SQ')"></div>
+                <div class="absolute inset-0 flex items-center justify-center">
+                    <span class="material-symbols-outlined text-white text-6xl drop-shadow-lg group-hover:scale-110 transition-transform">play_circle</span>
+                </div>
+            </div>
+            <div class="space-y-6">
+                <div>
+                    <h4 class="text-sm font-bold text-on-surface-variant uppercase tracking-widest mb-2">Title</h4>
+                    <p class="font-title-md text-on-surface">Introduction to Derivatives &amp; Limits</p>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <h4 class="text-sm font-bold text-on-surface-variant uppercase tracking-widest mb-1">Duration</h4>
+                        <p class="text-body-lg">24:15</p>
+                    </div>
+                    <div>
+                        <h4 class="text-sm font-bold text-on-surface-variant uppercase tracking-widest mb-1">Order</h4>
+                        <p class="text-body-lg">01</p>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-sm font-bold text-on-surface-variant uppercase tracking-widest mb-2">Description</h4>
+                    <p class="text-body-md text-on-surface-variant leading-relaxed">
+                        This foundational lesson covers the core concepts of derivatives, starting from the principle of limits. Students will explore tangent lines and instantaneous rates of change.
+                    </p>
+                </div>
+                <div class="p-4 bg-surface-container-low rounded-xl">
+                    <div class="flex items-center gap-3 text-primary mb-2">
+                        <span class="material-symbols-outlined">link</span>
+                        <span class="font-title-md">Course Path</span>
+                    </div>
+                    <p class="text-sm text-on-surface-variant">Mathematics &gt; Advanced Calc &gt; Calculus III</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal: Delete Confirmation -->
+<div class="hidden fixed inset-0 z-[60] flex items-center justify-center" id="deleteModal">
+    <div class="fixed inset-0 bg-on-background/60" onclick="toggleModal('deleteModal')"></div>
+    <div class="relative bg-surface-container-lowest w-[400px] p-8 rounded-xl shadow-2xl animate-in zoom-in-95 duration-200">
+        <div class="text-center">
+            <div class="w-16 h-16 bg-error-container text-error rounded-full flex items-center justify-center mx-auto mb-4">
+                <span class="material-symbols-outlined text-4xl">warning</span>
+            </div>
+            <h3 class="font-headline-lg-mobile text-headline-lg-mobile mb-2">Delete Lesson?</h3>
+            <p class="text-on-surface-variant mb-6">Are you sure you want to delete this lesson? This action cannot be undone and will remove it from all student views.</p>
+            <div class="flex flex-col gap-2">
+                <button class="w-full bg-error text-white py-3 rounded-xl font-bold hover:bg-red-700 transition-all">Yes, Delete Permanently</button>
+                <button class="w-full py-3 text-on-surface font-semibold hover:bg-surface-container-low rounded-xl" onclick="toggleModal('deleteModal')">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function toggleModal(id) {
+        const modal = document.getElementById(id);
+        modal.classList.toggle('hidden');
+    }
+
+    function toggleDrawer(id) {
+        const drawer = document.getElementById(id);
+        const content = document.getElementById('drawerContent');
+
+        if (drawer.classList.contains('hidden')) {
+            drawer.classList.remove('hidden');
+            setTimeout(() => {
+                content.classList.remove('translate-x-full');
+            }, 10);
+        } else {
+            content.classList.add('translate-x-full');
+            setTimeout(() => {
+                drawer.classList.add('hidden');
+            }, 300);
+        }
+    }
+</script>

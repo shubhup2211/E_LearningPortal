@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - EduAdmin Portal</title>
+    <title>@ViewData["Title"] - EduSuperAdmin Portal</title>
 
     <!-- Tailwind CSS & Plugins -->
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
@@ -136,65 +136,44 @@
     <aside class="w-[280px] h-full bg-on-secondary-fixed shadow-lg flex flex-col z-50 shrink-0">
         <!-- Logo Header -->
         <div class="p-6 flex flex-col gap-1 border-b border-white/5">
-            <span class="text-xl font-bold text-surface-container-lowest">EduAdmin</span>
-            <span class="text-xs text-outline-variant opacity-70 uppercase tracking-widest">Branch Portal</span>
+            <span class="text-xl font-bold text-surface-container-lowest">EduSuperAdmin</span>
+            <span class="text-xs text-outline-variant opacity-70 uppercase tracking-widest">SuperAdmin Portal</span>
         </div>
 
         <!-- Scrollable Navigation -->
         <nav class="flex-1 overflow-y-auto sidebar-scroll px-3 py-6 space-y-1">
             <!-- Dashboard -->
-            <a class="flex items-center gap-3 px-4 py-3 text-outline-variant hover:bg-white/5 hover:text-surface-container-lowest transition-colors" asp-area="" asp-controller="User" asp-action="Index">
+            <a class="flex items-center gap-3 px-4 py-3 text-outline-variant hover:bg-white/5 hover:text-surface-container-lowest transition-colors" asp-area="" asp-controller="Branch" asp-action="Index">
                 <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span>
                 <span class="font-medium text-sm">Dashboard</span>
             </a>
 
-            <!-- USER MANAGEMENT GROUP -->
+            <!-- Branch MANAGEMENT GROUP -->
             <div class="px-4 pt-6 pb-2">
-                <p class="text-[10px] font-bold text-outline-variant uppercase tracking-wider opacity-60">User Management</p>
+                <p class="text-[10px] font-bold text-outline-variant uppercase tracking-wider opacity-60">Branch Management</p>
             </div>
-            <a class="flex items-center gap-3 px-4 py-3 text-outline-variant hover:bg-white/5 hover:text-surface-container-lowest transition-colors" asp-area="" asp-controller="User" asp-action="AdminUser">
-                <span class="material-symbols-outlined">group</span>                 
-                <span class="text-sm">Users</span>
+            <a class="flex items-center gap-3 px-4 py-3 text-outline-variant hover:bg-white/5 hover:text-surface-container-lowest transition-colors" asp-area="" asp-controller="Branch" asp-action="SuperBranch">
+                <span class="material-symbols-outlined">group</span>
+                <span class="text-sm">Branches</span>
             </a>
 
             <!-- COURSE MANAGEMENT GROUP -->
             <div class="px-4 pt-6 pb-2">
                 <p class="text-[10px] font-bold text-outline-variant uppercase tracking-wider opacity-60">Course Management</p>
             </div>
-            <a class="flex items-center gap-3 px-4 py-3 text-outline-variant hover:bg-white/5 hover:text-surface-container-lowest transition-colors" asp-area="" asp-controller="User" asp-action="AdminCourse">
+            <a class="flex items-center gap-3 px-4 py-3 text-outline-variant hover:bg-white/5 hover:text-surface-container-lowest transition-colors" asp-area="" asp-controller="CourseApproval" asp-action="SuperCourse">
                 <span class="material-symbols-outlined">school</span>
                 <span class="text-sm">Courses</span>
-            </a>
-            <a class="flex items-center gap-3 px-4 py-3 text-outline-variant hover:bg-white/5 hover:text-surface-container-lowest transition-colors" asp-area="" asp-controller="User" asp-action="AdminSubCourse">
-                <span class="material-symbols-outlined">layers</span>
-                <span class="text-sm">Sub Courses</span>
-            </a>
-            <a class="flex items-center gap-3 px-4 py-3 text-outline-variant hover:bg-white/5 hover:text-surface-container-lowest transition-colors" asp-area="" asp-controller="User" asp-action="AdminLesson">
-                <span class="material-symbols-outlined">menu_book</span>
-                <span class="text-sm">Lessons</span>
-            </a>
-            <a class="flex items-center gap-3 px-4 py-3 text-outline-variant hover:bg-white/5 hover:text-surface-container-lowest transition-colors" asp-area="" asp-controller="User" asp-action="AdminAttachment">
-                <span class="material-symbols-outlined">attachment</span>
-                <span class="text-sm">Attachments</span>
-            </a>
-            <a class="flex items-center gap-3 px-4 py-3 text-outline-variant hover:bg-white/5 hover:text-surface-container-lowest transition-colors" asp-area="" asp-controller="User" asp-action="AdminAssignment">
-                <span class="material-symbols-outlined">attachment</span>
-                <span class="text-sm">Assignment</span>
-            </a>
-            <a class="flex items-center gap-3 px-4 py-3 text-outline-variant hover:bg-white/5 hover:text-surface-container-lowest transition-colors" asp-area="" asp-controller="User" asp-action="AdminMCQ">
-                <span class="material-symbols-outlined">quiz</span>
-                <span class="text-sm">Questions (MCQ)</span>
             </a>
 
             <!-- PURCHASE MANAGEMENT GROUP -->
             <div class="px-4 pt-6 pb-2">
-                <p class="text-[10px] font-bold text-outline-variant uppercase tracking-wider opacity-60">Purchase Management</p>
+                <p class="text-[10px] font-bold text-outline-variant uppercase tracking-wider opacity-60">Subscription Management</p>
             </div>
-            <a class="flex items-center gap-3 px-4 py-3 text-outline-variant hover:bg-white/5 hover:text-surface-container-lowest transition-colors" asp-area="" asp-controller="User" asp-action="AdminSubscription">
+            <a class="flex items-center gap-3 px-4 py-3 text-outline-variant hover:bg-white/5 hover:text-surface-container-lowest transition-colors" asp-area="" asp-controller="SubscriptionApproval" asp-action="SuperSubscription">
                 <span class="material-symbols-outlined">payments</span>
                 <span class="text-sm">Subscription Plans</span>
             </a>
-
         </nav>
 
         <!-- Sidebar Footer -->

@@ -1,0 +1,326 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!-- Scrollable Content Canvas -->
+<div class="flex-1 overflow-y-auto p-container-margin">
+    <!-- Page Action Header -->
+    <div class="flex justify-between items-end mb-8">
+        <div>
+            <h3 class="font-headline-lg text-headline-lg text-on-surface mb-1">Curriculum Assessment</h3>
+            <p class="text-on-surface-variant font-body-lg">Manage multiple choice questions across all sub-courses and lessons.</p>
+        </div>
+        <button class="bg-primary hover:bg-primary-container text-on-primary px-6 py-3 rounded-lg font-title-md flex items-center gap-2 transition-all shadow-md active:scale-95" onclick="openModal('quizBuilderModal')">
+            <span class="material-symbols-outlined">add</span>
+            Create New Quiz
+        </button>
+    </div>
+    <!-- Main Data Table Container -->
+    <div class="bg-surface-container-lowest rounded-xl shadow-sm border border-outline-variant overflow-hidden">
+        <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+                <thead class="bg-surface-container-low sticky top-0 z-10">
+                    <tr>
+                        <th class="px-6 py-4 font-title-md text-on-surface border-b border-outline-variant">Lesson</th>
+                        <th class="px-6 py-4 font-title-md text-on-surface border-b border-outline-variant">Master Course</th>
+                        <th class="px-6 py-4 font-title-md text-on-surface border-b border-outline-variant">Sub Course</th>
+                        <th class="px-6 py-4 font-title-md text-on-surface border-b border-outline-variant">Questions</th>
+                        <th class="px-6 py-4 font-title-md text-on-surface border-b border-outline-variant">Status</th>
+                        <th class="px-6 py-4 font-title-md text-on-surface border-b border-outline-variant">Last Modified</th>
+                        <th class="px-6 py-4 font-title-md text-on-surface border-b border-outline-variant text-right">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-outline-variant">
+                    <!-- Row 1 -->
+                    <tr class="hover:bg-surface-container-low transition-colors group">
+                        <td class="px-6 py-4 font-title-md text-primary">Introduction to Python</td>
+                        <td class="px-6 py-4 text-on-surface-variant font-body-md">Data Science</td>
+                        <td class="px-6 py-4 text-on-surface-variant font-body-md">Python Fundamentals</td>
+                        <td class="px-6 py-4">
+                            <span class="bg-surface-container px-3 py-1 rounded-full text-primary font-bold text-label-md">25 Questions</span>
+                        </td>
+                        <td class="px-6 py-4">
+                            <div class="flex items-center gap-2">
+                                <div class="w-2 h-2 rounded-full bg-tertiary"></div>
+                                <span class="text-tertiary font-bold text-label-md">Active</span>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4 text-on-surface-variant font-body-md">Oct 12, 2023</td>
+                        <td class="px-6 py-4 text-right">
+                            <div class="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                <button class="p-2 hover:bg-primary/10 text-primary rounded-lg" onclick="toggleDrawer(true)" title="View MCQs">
+                                    <span class="material-symbols-outlined">visibility</span>
+                                </button>
+                                <button class="p-2 hover:bg-secondary/10 text-secondary rounded-lg" onclick="openModal('quizBuilderModal')" title="Edit">
+                                    <span class="material-symbols-outlined">edit</span>
+                                </button>
+                                <button class="p-2 hover:bg-error/10 text-error rounded-lg" onclick="openModal('deleteModal')" title="Delete">
+                                    <span class="material-symbols-outlined">delete</span>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    <!-- Row 2 -->
+                    <tr class="hover:bg-surface-container-low transition-colors group">
+                        <td class="px-6 py-4 font-title-md text-primary">Advanced SQL Queries</td>
+                        <td class="px-6 py-4 text-on-surface-variant font-body-md">Data Science</td>
+                        <td class="px-6 py-4 text-on-surface-variant font-body-md">Database Mastery</td>
+                        <td class="px-6 py-4">
+                            <span class="bg-surface-container px-3 py-1 rounded-full text-primary font-bold text-label-md">12 Questions</span>
+                        </td>
+                        <td class="px-6 py-4">
+                            <div class="flex items-center gap-2">
+                                <div class="w-2 h-2 rounded-full bg-error"></div>
+                                <span class="text-error font-bold text-label-md">Inactive</span>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4 text-on-surface-variant font-body-md">Oct 14, 2023</td>
+                        <td class="px-6 py-4 text-right">
+                            <div class="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                <button class="p-2 hover:bg-primary/10 text-primary rounded-lg" onclick="toggleDrawer(true)">
+                                    <span class="material-symbols-outlined">visibility</span>
+                                </button>
+                                <button class="p-2 hover:bg-secondary/10 text-secondary rounded-lg" onclick="openModal('quizBuilderModal')">
+                                    <span class="material-symbols-outlined">edit</span>
+                                </button>
+                                <button class="p-2 hover:bg-error/10 text-error rounded-lg" onclick="openModal('deleteModal')">
+                                    <span class="material-symbols-outlined">delete</span>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- Pagination Footer -->
+        <div class="px-6 py-4 bg-surface-container-low flex justify-between items-center border-t border-outline-variant">
+            <p class="text-label-md text-on-surface-variant">Showing 1 to 10 of 42 lessons</p>
+            <div class="flex gap-2">
+                <button class="p-2 border border-outline-variant rounded hover:bg-surface-container transition-colors disabled:opacity-50" disabled="">
+                    <span class="material-symbols-outlined">chevron_left</span>
+                </button>
+                <button class="px-4 py-2 bg-primary text-white rounded font-bold text-label-md">1</button>
+                <button class="px-4 py-2 hover:bg-surface-container rounded font-bold text-label-md">2</button>
+                <button class="px-4 py-2 hover:bg-surface-container rounded font-bold text-label-md">3</button>
+                <button class="p-2 border border-outline-variant rounded hover:bg-surface-container transition-colors">
+                    <span class="material-symbols-outlined">chevron_right</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="hidden" id="RenderBody"></div>
+
+<!-- Right Drawer: View MCQs -->
+<div class="fixed inset-y-0 right-0 w-[480px] bg-white shadow-2xl z-[60] translate-x-full transition-transform duration-300 flex flex-col" id="viewDrawer">
+    <div class="p-6 border-b border-outline-variant flex justify-between items-center bg-surface-container-low">
+        <div>
+            <h4 class="font-title-lg text-primary">Question Preview</h4>
+            <p class="text-label-md text-on-surface-variant">Introduction to Python</p>
+        </div>
+        <button class="p-2 hover:bg-error/10 text-on-surface-variant hover:text-error rounded-full transition-colors" onclick="toggleDrawer(false)">
+            <span class="material-symbols-outlined">close</span>
+        </button>
+    </div>
+    <div class="flex-1 overflow-y-auto p-6 space-y-6 bg-background">
+        <div class="p-4 bg-surface-container-lowest rounded-lg border border-outline-variant shadow-sm">
+            <div class="flex justify-between items-start mb-4">
+                <span class="text-primary font-bold text-label-md">Question 01</span>
+            </div>
+            <p class="font-title-md mb-4 text-on-surface">What is the correct syntax to output "Hello World" in Python?</p>
+            <div class="space-y-2">
+                <div class="p-3 border border-tertiary bg-tertiary/5 rounded-lg flex items-center justify-between">
+                    <span class="text-body-md">print("Hello World")</span>
+                    <span class="material-symbols-outlined text-tertiary text-[18px]">check_circle</span>
+                </div>
+                <div class="p-3 border border-outline-variant rounded-lg">
+                    <span class="text-body-md">echo("Hello World");</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="p-6 border-t border-outline-variant bg-surface-container-lowest">
+        <button class="w-full py-3 bg-secondary text-white font-title-md rounded-lg hover:bg-on-secondary-fixed transition-colors" onclick="openModal('quizBuilderModal'); toggleDrawer(false);">Edit This Quiz</button>
+    </div>
+</div>
+<!-- FULL-SCREEN MODAL: REDESIGNED QUIZ BUILDER -->
+<div class="fixed inset-0 z-[100] hidden" id="quizBuilderModal">
+    <div class="absolute inset-0 bg-on-surface/40 backdrop-blur-sm"></div>
+    <div class="absolute inset-0 bg-background flex flex-col overflow-hidden">
+        <!-- Modal Header -->
+        <header class="h-20 bg-surface-container-lowest border-b border-outline-variant flex justify-between items-center px-8 shrink-0">
+            <div class="flex items-center gap-6">
+                <div class="p-3 bg-primary/10 rounded-lg">
+                    <span class="material-symbols-outlined text-primary text-[28px]">quiz</span>
+                </div>
+                <div>
+                    <h3 class="font-headline-lg text-2xl text-on-surface">Quiz Builder</h3>
+                    <p class="text-on-surface-variant font-body-md">Design a set of 5 multiple choice questions for your curriculum.</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-4">
+                <button class="px-6 py-2.5 text-secondary font-title-md hover:bg-surface-container rounded-lg transition-colors border border-outline-variant" onclick="closeModal('quizBuilderModal')">Cancel</button>
+                <button class="px-8 py-2.5 bg-primary text-on-primary font-title-md rounded-lg hover:shadow-lg hover:bg-primary-container transition-all active:scale-95" onclick="closeModal('quizBuilderModal')">Save MCQ Set</button>
+            </div>
+        </header>
+        <div class="flex-1 overflow-y-auto">
+            <div class="max-w-5xl mx-auto py-10 px-8">
+                <!-- Step 1: Lesson Selection (Cascading Selection) -->
+                <div class="bg-surface-container-low rounded-xl border border-outline-variant p-8 mb-10">
+                    <div class="flex items-center gap-3 mb-6">
+                        <span class="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center font-bold text-label-md">1</span>
+                        <h4 class="font-title-lg text-on-surface">Lesson Selection</h4>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="space-y-2">
+                            <label class="block text-label-md font-bold text-on-surface-variant uppercase tracking-wider">Master Course</label>
+                            <select class="w-full h-12 border-outline-variant rounded-lg bg-surface-container-lowest text-body-md focus:ring-2 focus:ring-primary focus:border-primary transition-all">
+                                <option>Data Science</option>
+                                <option>Web Development</option>
+                                <option>Artificial Intelligence</option>
+                            </select>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="block text-label-md font-bold text-on-surface-variant uppercase tracking-wider">Sub Course</label>
+                            <select class="w-full h-12 border-outline-variant rounded-lg bg-surface-container-lowest text-body-md focus:ring-2 focus:ring-primary focus:border-primary transition-all">
+                                <option>Python Fundamentals</option>
+                                <option>Database Management</option>
+                                <option>Machine Learning</option>
+                            </select>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="block text-label-md font-bold text-on-surface-variant uppercase tracking-wider">Target Lesson</label>
+                            <select class="w-full h-12 border-outline-variant rounded-lg bg-surface-container-lowest text-body-md focus:ring-2 focus:ring-primary focus:border-primary transition-all">
+                                <option>Introduction to Python</option>
+                                <option>Advanced Lists &amp; Dicts</option>
+                                <option>Object Oriented Programming</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <!-- Step 2: Question Builder Area -->
+                <div class="flex items-center gap-3 mb-8">
+                    <span class="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center font-bold text-label-md">2</span>
+                    <h4 class="font-title-lg text-on-surface">Configure Questions</h4>
+                </div>
+                <div class="space-y-8 pb-10">
+                    <!-- Question Card Template (5 times) -->
+                    <script>
+                        function renderQuestionCards() {
+                            let html = '';
+                            for(let i=1; i<=5; i++) {
+                                const num = i.toString().padStart(2, '0');
+                                html += `
+                                <div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm hover:border-primary/40 transition-all overflow-hidden">
+                                    <div class="px-6 py-4 bg-surface-container-low border-b border-outline-variant flex justify-between items-center">
+                                        <div class="flex items-center gap-3">
+                                            <span class="text-primary font-bold font-title-md">Question ${num}</span>
+                                        </div>
+                                        <div class="text-on-surface-variant/40">
+                                            <span class="material-symbols-outlined">drag_indicator</span>
+                                        </div>
+                                    </div>
+                                    <div class="p-8">
+                                        <div class="mb-8">
+                                            <label class="block text-label-md font-bold text-on-surface-variant mb-2">Question Text</label>
+                                            <textarea class="w-full border-outline-variant rounded-lg bg-background text-title-md p-4 min-h-[100px] focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all placeholder:text-on-surface-variant/30" placeholder="Type your multiple choice question here..."></textarea>
+                                        </div>
+
+                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6">
+                                            ${['A', 'B', 'C', 'D'].map(opt => `
+                                            <div class="relative flex items-center gap-4 group">
+                                                <label class="flex items-center cursor-pointer">
+                                                    <input type="radio" name="q${i}_correct" class="w-5 h-5 text-tertiary border-outline-variant focus:ring-tertiary cursor-pointer" ${opt === 'A' ? 'checked' : ''}>
+                                                </label>
+                                                <div class="flex-1 flex items-center gap-3 border border-outline-variant rounded-lg px-4 h-12 bg-background group-focus-within:border-primary group-focus-within:ring-2 group-focus-within:ring-primary/10 transition-all">
+                                                    <span class="font-bold text-primary text-sm">${opt}</span>
+                                                    <input type="text" class="flex-1 border-none bg-transparent focus:ring-0 text-body-md p-0 placeholder:text-on-surface-variant/40" placeholder="Option ${opt} text...">
+                                                </div>
+                                            </div>
+                                            `).join('')}
+                                        </div>
+
+                                        <div class="mt-8 pt-6 border-t border-outline-variant/40 flex justify-end">
+                                            <span class="text-label-md text-on-surface-variant flex items-center gap-1 italic">
+                                                <span class="material-symbols-outlined text-[16px]">info</span>
+                                                Select the radio button next to the correct answer.
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                `;
+                            }
+                            document.write(html);
+                        }
+                        renderQuestionCards();
+                    </script>
+                </div>
+            </div>
+        </div>
+        <!-- Fixed Footer Actions -->
+        <footer class="h-20 bg-surface-container-lowest border-t border-outline-variant px-8 flex justify-between items-center shrink-0">
+            <p class="text-body-md text-on-surface-variant">
+                5 of 5 questions configured.
+            </p>
+            <div class="flex items-center gap-4">
+                <button class="px-6 py-2.5 text-secondary font-title-md hover:bg-surface-container rounded-lg transition-colors" onclick="closeModal('quizBuilderModal')">Discard Draft</button>
+                <button class="px-10 py-2.5 bg-primary text-on-primary font-title-md rounded-lg hover:shadow-lg hover:bg-primary-container transition-all active:scale-95 flex items-center gap-2" onclick="closeModal('quizBuilderModal')">
+                    <span class="material-symbols-outlined text-[20px]">save</span>
+                    Save &amp; Finalize MCQ
+                </button>
+            </div>
+        </footer>
+    </div>
+</div>
+<!-- Delete Modal -->
+<div class="fixed inset-0 z-[120] hidden flex items-center justify-center p-4" id="deleteModal">
+    <div class="absolute inset-0 bg-on-surface/60 backdrop-blur-sm"></div>
+    <div class="relative bg-white rounded-2xl shadow-2xl max-w-md w-full overflow-hidden">
+        <div class="p-8 text-center">
+            <div class="w-16 h-16 bg-error-container text-error rounded-full flex items-center justify-center mx-auto mb-6">
+                <span class="material-symbols-outlined text-[40px] fill-icon">warning</span>
+            </div>
+            <h3 class="font-headline-lg text-2xl mb-2">Delete MCQ Set?</h3>
+            <p class="text-on-surface-variant font-body-lg mb-8">This action cannot be undone. All questions will be permanently removed.</p>
+            <div class="flex gap-3">
+                <button class="flex-1 py-3 bg-surface-container text-on-surface font-title-md rounded-lg hover:bg-outline-variant transition-colors" onclick="closeModal('deleteModal')">Cancel</button>
+                <button class="flex-1 py-3 bg-error text-white font-title-md rounded-lg hover:bg-on-error-container transition-colors" onclick="closeModal('deleteModal')">Yes, Delete All</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Micro-Interactions Script -->
+<script>
+    function toggleDrawer(isOpen) {
+        const drawer = document.getElementById('viewDrawer');
+        if (isOpen) {
+            drawer.classList.remove('translate-x-full');
+        } else {
+            drawer.classList.add('translate-x-full');
+        }
+    }
+
+    function openModal(id) {
+        const modal = document.getElementById(id);
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal(id) {
+        const modal = document.getElementById(id);
+        modal.classList.add('hidden');
+        document.body.style.overflow = 'auto';
+    }
+
+    // Close on escape
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            closeModal('quizBuilderModal');
+            closeModal('deleteModal');
+            toggleDrawer(false);
+        }
+    });
+</script>

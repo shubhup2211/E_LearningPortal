@@ -15,5 +15,10 @@ namespace ELearningPortal.Controllers.SuperAdmin
         {
             return View();
         }
+
+        public IActionResult SuperBranch()
+        {
+            return View();
+        }
     }
 }
