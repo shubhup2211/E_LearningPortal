@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Views\UserDashboard\" />
     <Folder Include="wwwroot\uploads\" />
   </ItemGroup>
 
