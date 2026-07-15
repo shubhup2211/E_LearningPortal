@@ -7,11 +7,15 @@ using ELearningPortal.Services.SuperAdmin;
 using ELearningPortal.Services.User;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.EntityFrameworkCore;
+using ELearningPortal.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.Configure<RazorpaySettings>(
+    builder.Configuration.GetSection("Razorpay"));
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("dbconn")));

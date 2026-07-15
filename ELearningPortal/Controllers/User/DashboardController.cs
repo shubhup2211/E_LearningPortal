@@ -27,6 +27,8 @@ namespace ELearningPortal.Controllers.User
             ViewBag.Progress = await dashboardService.GetCourseProgressAsync(userId);
 
             return View(courses);
+
+            //return RedirectToAction("Lesson");
         }
     }
 }

@@ -1,6 +1,10 @@
-﻿@{
+﻿
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+@{
     ViewData["Title"] = "My Courses";
 }
+
 @model List<ELearning.Models.Courses.Course>
 
 
@@ -68,7 +72,7 @@
 {
     <h5 class="fw-bold text-success">
 
-        Starts From ₹@item.SubCourses.Min(x => x.Price)
+        Starts From ₹="@(item.SubCourses.Any() ? item.SubCourses.Min(x => x.Price) : 0)"
 
     </h5>
 }
@@ -129,29 +133,52 @@ else
                                 @item.SubCourses.Count Lesson
                             </small>
 
-                            <button class="btn btn-primary rounded-pill btn-sm px-3 btnBuy"
+                                            @{
+                    int userId = 3;   // Temporary until Login
 
-        data-id="@item.CourseId"
+                    bool purchased = item.UserCourses.Any(x =>
+                        x.UserId == userId &&
+                        x.Status == ELearning.Enums.PurchaseStatus.Active);
+                }
 
-        data-name="@item.CourseName"
+                @if (purchased)
+                {
+                    <a asp-controller="Dashboard"
+                       asp-action="Index"
+                       class="btn btn-success rounded-pill btn-sm px-3">
 
-        data-description="@item.Description"
+                        Continue Learning
 
-        data-image="@item.Image"
+                    </a>
+                }
+                else
+                {
+                    <button class="btn btn-primary rounded-pill btn-sm px-3 btnBuy"
 
-        data-branch="@item.Branch.BranchName"
+                            data-id="@item.CourseId"
 
-        data-rating="@(item.Ratings.Any() ? item.Ratings.Average(x=>x.Stars).ToString("0.0") : "No Rating")"
+                            data-name="@item.CourseName"
 
-        data-lessons="@item.SubCourses.Sum(x=>x.Lessons.Count)"
+                            data-description="@item.Description"
 
-        data-modules="@item.SubCourses.Count"
+                            data-image="@item.Image"
 
-        data-price="@item.SubCourses.Min(x=>x.Price)">
+                            data-branch="@item.Branch.BranchName"
 
-    Buy Course
+                            data-rating="@(item.Ratings.Any() ? item.Ratings.Average(x=>x.Stars).ToString("0.0") : "No Rating")"
 
-</button>
+                            data-lessons="@item.SubCourses.Sum(x=>x.Lessons.Count)"
+
+                            data-modules="@item.SubCourses.Count"
+
+                            data-price="@(item.SubCourses.Any()
+    ? item.SubCourses.Min(x => x.Price)
+    : 0)">
+
+                        Buy Course
+
+                    </button>
+                }
 
                         </div>
 
@@ -251,96 +278,7 @@ else
                         </div>
 
                         <hr>
-                        <div id="paymentSection" style="display:none;">
-
-    <hr />
-
-    <h5 class="fw-bold mb-3">
-
-        Select Payment Method
-
-    </h5>
-
-    <div class="list-group">
-
-        <label class="list-group-item">
-
-            <input class="form-check-input me-2"
-                   type="radio"
-                   name="payment"
-                   value="UPI">
-
-            UPI
-
-        </label>
-
-        <label class="list-group-item">
-
-            <input class="form-check-input me-2"
-                   type="radio"
-                   name="payment"
-                   value="Credit Card">
-
-            Credit Card
-
-        </label>
-
-        <label class="list-group-item">
-
-            <input class="form-check-input me-2"
-                   type="radio"
-                   name="payment"
-                   value="Debit Card">
-
-            Debit Card
-
-        </label>
-
-        <label class="list-group-item">
-
-            <input class="form-check-input me-2"
-                   type="radio"
-                   name="payment"
-                   value="Net Banking">
-
-            Net Banking
-
-        </label>
-
-        <label class="list-group-item">
-
-            <input class="form-check-input me-2"
-                   type="radio"
-                   name="payment"
-                   value="Wallet">
-
-            Wallet
-
-        </label>
-
-    </div>
-
-    <div class="mt-4">
-
-        <h4 class="text-success">
-
-            Total :
-
-            ₹<span id="paymentAmount"></span>
-
-        </h4>
-
-    </div>
-
-    <button id="btnPayment"
-
-            class="btn btn-success w-100 rounded-pill mt-3">
-
-        Proceed Payment
-
-    </button>
-
-</div>
+                        
                         <h3 class="text-success fw-bold">
 
                             ₹<span id="coursePrice"></span>
@@ -353,23 +291,25 @@ else
 
             </div>
 
-           <div class="modal-footer border-0 d-flex justify-content-between">
+                              <div class="modal-footer border-0">
 
-    <button class="btn btn-light rounded-pill"
-            data-bs-dismiss="modal">
+                        <button class="btn btn-light rounded-pill"
+                                data-bs-dismiss="modal">
 
-        Cancel
+                            Cancel
 
-    </button>
+                        </button>
 
-    <button id="btnShowPayment"
-            class="btn btn-primary rounded-pill px-4">
+                        <button id="btnPayment"
+                                class="btn btn-success rounded-pill px-5">
 
-        Pay Now
+                            <i class="bi bi-credit-card"></i>
 
-    </button>
+                            Proceed Payment
 
-</div>
+                        </button>
+
+                    </div>
 
         </div>
 
@@ -385,65 +325,139 @@ else
 
 
 
-@section Scripts{
+            @section Scripts{
 
-<script>
+            <script>
 
-$(".btnBuy").click(function () {
+                var selectedCourseId = 0;
 
-    $("#courseName").text($(this).data("name"));
+            $(".btnBuy").click(function () {
 
-    $("#courseDescription").text($(this).data("description"));
+                selectedCourseId = $(this).data("id");
 
-    $("#courseBranch").text($(this).data("branch"));
+                $("#courseName").text($(this).data("name"));
 
-    $("#courseRating").text($(this).data("rating"));
+                $("#courseDescription").text($(this).data("description"));
 
-    $("#courseLessons").text($(this).data("lessons"));
+                $("#courseBranch").text($(this).data("branch"));
 
-    $("#courseModules").text($(this).data("modules"));
+                $("#courseRating").text($(this).data("rating"));
 
-    $("#coursePrice").text($(this).data("price"));
+                $("#courseLessons").text($(this).data("lessons"));
 
-    $("#paymentAmount").text($(this).data("price"));
+                $("#courseModules").text($(this).data("modules"));
 
-$("#paymentSection").hide();
+                $("#coursePrice").text($(this).data("price"));
 
-$("#btnShowPayment").click(function(){
+                $("#courseImage").attr(
+                    "src",
+                    "/images/courses/" + $(this).data("image"));
 
-    $("#paymentSection").slideDown();
+                var modal = new bootstrap.Modal(
+                    document.getElementById("buyCourseModal"));
 
-    $(this).hide();
+                modal.show();
+
+            });
+
+
+            $("#btnPayment").click(function () {
+
+    $.ajax({
+
+        url: "/Payment/CreateOrder",
+
+        type: "POST",
+
+        data: {
+
+            courseId: selectedCourseId
+
+        },
+
+        success: function (order) {
+
+            var options = {
+
+                key: order.key,
+
+                amount: order.amount,
+
+                currency: order.currency,
+
+                order_id: order.orderId,
+
+                name: "E-Learning Portal",
+
+                description: "Course Purchase",
+
+                image: "/images/logo.png",
+
+                handler: function (response) {
+
+                    savePayment(
+                        response.razorpay_payment_id
+                    );
+
+                },
+
+                theme: {
+
+                    color: "#0d6efd"
+
+                }
+
+            };
+
+            var rzp = new Razorpay(options);
+
+            rzp.open();
+
+        }
+
+    });
 
 });
 
 
-$("#btnPayment").click(function(){
+        function savePayment(paymentId) {
 
-    var method =
-        $("input[name='payment']:checked").val();
+    $.ajax({
 
-    if(method==null)
-    {
-        alert("Please select payment method.");
+        url: "/Payment/CompletePayment",
 
-        return;
-    }
+        type: "POST",
 
-    alert("Payment Successful\nMethod : "+method);
+        data: {
 
-});
+            courseId: selectedCourseId,
 
-    $("#courseImage").attr("src",
-        "/images/courses/" + $(this).data("image"));
+            paymentId: paymentId,
 
-    var modal = new bootstrap.Modal(
-        document.getElementById('buyCourseModal'));
+            paymentMethod: "Razorpay"
 
-    modal.show();
+        },
 
-});
+        success: function (result) {
 
-</script>
+            if (result.success) {
+
+                alert("🎉 Course Purchased Successfully");
+
+                location.reload();
+
+            }
+            else {
+
+                alert("Unable to save payment.");
+
+            }
+
+        }
+
+    });
+
+}
+            </script>
 
 }

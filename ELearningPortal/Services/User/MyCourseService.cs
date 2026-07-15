@@ -25,6 +25,7 @@ namespace ELearningPortal.Services.User
                 .Include(x => x.SubCourses)
                     .ThenInclude(x => x.Lessons)
                 .Include(x => x.Ratings)
+                .Include(x => x.UserCourses)
                 .Where(x => x.Status == Status.Active)
                 .ToListAsync();
         }
