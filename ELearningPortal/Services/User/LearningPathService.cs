@@ -1,5 +1,6 @@
 ﻿using ELearning.Data;
 using ELearning.Models.Courses;
+using ELearning.Models.Learning;
 using ELearningPortal.Interfaces.IUser;
 using Microsoft.EntityFrameworkCore;
 
@@ -23,5 +24,22 @@ namespace ELearningPortal.Services.User
                 .Select(x => x.Course!)
                 .ToListAsync();
         }
+
+
+
+        public async Task<Certificate?> GetCertificateAsync(int userId, int courseId)
+        {
+            return await db.Certificates
+                .FirstOrDefaultAsync(x =>
+                    x.UserId == userId &&
+                    x.CourseId == courseId);
+        }
+
+
+
+
+
+
+
     }
 }

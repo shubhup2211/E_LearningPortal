@@ -23,6 +23,8 @@ namespace ELearningPortal.Services.User
             return await db.Courses
                 .Include(x => x.Branch)
                 .Include(x => x.SubCourses)
+                    .ThenInclude(x => x.Lessons)
+                .Include(x => x.Ratings)
                 .Where(x => x.Status == Status.Active)
                 .ToListAsync();
         }

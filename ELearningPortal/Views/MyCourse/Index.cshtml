@@ -64,9 +64,61 @@
                             @item.Description
                         </p>
 
-                        <h4>Price:$999</h4>
+                        @if (item.SubCourses.Any())
+{
+    <h5 class="fw-bold text-success">
 
-                        <h3>Rating: * * * * *</h3>
+        Starts From ₹@item.SubCourses.Min(x => x.Price)
+
+    </h5>
+}
+else
+{
+    <h5 class="fw-bold text-danger">
+
+        Price Not Available
+
+    </h5>
+}
+
+                       @if (item.Ratings.Any())
+{
+    var avg = item.Ratings.Average(x => x.Stars);
+
+    <div>
+
+        <span class="text-warning fs-5">
+
+            @for (int i = 1; i <= 5; i++)
+            {
+                if (i <= Math.Round(avg))
+                {
+                    @:★
+                }
+                else
+                {
+                    @:☆
+                }
+            }
+
+        </span>
+
+        <small class="text-muted">
+
+            (@avg.ToString("0.0"))
+
+        </small>
+
+    </div>
+}
+else
+{
+    <small class="text-muted">
+
+        No Ratings Yet
+
+    </small>
+}
                     </div>
 
                     <div class="card-footer bg-white border-0">
@@ -77,9 +129,29 @@
                                 @item.SubCourses.Count Lesson
                             </small>
 
-                            <button class="btn btn-primary rounded-pill btn-sm px-3">
-                                Buy Course
-                            </button>
+                            <button class="btn btn-primary rounded-pill btn-sm px-3 btnBuy"
+
+        data-id="@item.CourseId"
+
+        data-name="@item.CourseName"
+
+        data-description="@item.Description"
+
+        data-image="@item.Image"
+
+        data-branch="@item.Branch.BranchName"
+
+        data-rating="@(item.Ratings.Any() ? item.Ratings.Average(x=>x.Stars).ToString("0.0") : "No Rating")"
+
+        data-lessons="@item.SubCourses.Sum(x=>x.Lessons.Count)"
+
+        data-modules="@item.SubCourses.Count"
+
+        data-price="@item.SubCourses.Min(x=>x.Price)">
+
+    Buy Course
+
+</button>
 
                         </div>
 
@@ -90,6 +162,288 @@
             </div>
         }
 
+
+
+
+
+
+
+
+
+
     </div>
 
 </div>
+
+                        <!-- Buy Course Modal -->
+
+<div class="modal fade" id="buyCourseModal" tabindex="-1">
+
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+
+        <div class="modal-content border-0 rounded-4 shadow">
+
+            <div class="modal-header border-0">
+
+                <h4 class="fw-bold mb-0">
+                    📚 Course Details
+                </h4>
+
+                <button class="btn-close"
+                        data-bs-dismiss="modal">
+                </button>
+
+            </div>
+
+            <div class="modal-body">
+
+                <div class="row">
+
+                    <!-- Image -->
+
+                    <div class="col-md-5">
+
+                        <img id="courseImage"
+                             class="img-fluid rounded-4 shadow-sm"
+                             style="height:250px;width:100%;object-fit:cover;">
+
+                    </div>
+
+                    <!-- Details -->
+
+                    <div class="col-md-7">
+
+                        <span id="courseBranch"
+                              class="badge bg-primary-subtle text-primary mb-2">
+                        </span>
+
+                        <h3 id="courseName"
+                            class="fw-bold">
+                        </h3>
+
+                        <p id="courseDescription"
+                           class="text-muted">
+                        </p>
+
+                        <div class="mb-2">
+
+                            ⭐
+                            <span id="courseRating"></span>
+
+                        </div>
+
+                        <div class="mb-2">
+
+                            📚
+                            <span id="courseLessons"></span>
+
+                            Lessons
+
+                        </div>
+
+                        <div class="mb-2">
+
+                            📦
+                            <span id="courseModules"></span>
+
+                            Modules
+
+                        </div>
+
+                        <hr>
+                        <div id="paymentSection" style="display:none;">
+
+    <hr />
+
+    <h5 class="fw-bold mb-3">
+
+        Select Payment Method
+
+    </h5>
+
+    <div class="list-group">
+
+        <label class="list-group-item">
+
+            <input class="form-check-input me-2"
+                   type="radio"
+                   name="payment"
+                   value="UPI">
+
+            UPI
+
+        </label>
+
+        <label class="list-group-item">
+
+            <input class="form-check-input me-2"
+                   type="radio"
+                   name="payment"
+                   value="Credit Card">
+
+            Credit Card
+
+        </label>
+
+        <label class="list-group-item">
+
+            <input class="form-check-input me-2"
+                   type="radio"
+                   name="payment"
+                   value="Debit Card">
+
+            Debit Card
+
+        </label>
+
+        <label class="list-group-item">
+
+            <input class="form-check-input me-2"
+                   type="radio"
+                   name="payment"
+                   value="Net Banking">
+
+            Net Banking
+
+        </label>
+
+        <label class="list-group-item">
+
+            <input class="form-check-input me-2"
+                   type="radio"
+                   name="payment"
+                   value="Wallet">
+
+            Wallet
+
+        </label>
+
+    </div>
+
+    <div class="mt-4">
+
+        <h4 class="text-success">
+
+            Total :
+
+            ₹<span id="paymentAmount"></span>
+
+        </h4>
+
+    </div>
+
+    <button id="btnPayment"
+
+            class="btn btn-success w-100 rounded-pill mt-3">
+
+        Proceed Payment
+
+    </button>
+
+</div>
+                        <h3 class="text-success fw-bold">
+
+                            ₹<span id="coursePrice"></span>
+
+                        </h3>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+           <div class="modal-footer border-0 d-flex justify-content-between">
+
+    <button class="btn btn-light rounded-pill"
+            data-bs-dismiss="modal">
+
+        Cancel
+
+    </button>
+
+    <button id="btnShowPayment"
+            class="btn btn-primary rounded-pill px-4">
+
+        Pay Now
+
+    </button>
+
+</div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+@section Scripts{
+
+<script>
+
+$(".btnBuy").click(function () {
+
+    $("#courseName").text($(this).data("name"));
+
+    $("#courseDescription").text($(this).data("description"));
+
+    $("#courseBranch").text($(this).data("branch"));
+
+    $("#courseRating").text($(this).data("rating"));
+
+    $("#courseLessons").text($(this).data("lessons"));
+
+    $("#courseModules").text($(this).data("modules"));
+
+    $("#coursePrice").text($(this).data("price"));
+
+    $("#paymentAmount").text($(this).data("price"));
+
+$("#paymentSection").hide();
+
+$("#btnShowPayment").click(function(){
+
+    $("#paymentSection").slideDown();
+
+    $(this).hide();
+
+});
+
+
+$("#btnPayment").click(function(){
+
+    var method =
+        $("input[name='payment']:checked").val();
+
+    if(method==null)
+    {
+        alert("Please select payment method.");
+
+        return;
+    }
+
+    alert("Payment Successful\nMethod : "+method);
+
+});
+
+    $("#courseImage").attr("src",
+        "/images/courses/" + $(this).data("image"));
+
+    var modal = new bootstrap.Modal(
+        document.getElementById('buyCourseModal'));
+
+    modal.show();
+
+});
+
+</script>
+
+}

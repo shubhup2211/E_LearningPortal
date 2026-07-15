@@ -25,7 +25,7 @@ builder.Services.AddScoped<ICourseService, CourseService>();
 builder.Services.AddScoped<ILessonService, LessonService>();
 builder.Services.AddScoped<IAttachmentService, AttachmentService>();
 builder.Services.AddScoped<ISubscriptionService, SubscriptionService>();
-
+builder.Services.AddScoped<IDashboardService, DashboardService>();
 builder.Services.AddScoped<IHomeService, HomeService>();
 builder.Services.AddScoped<IMyCourseService, MyCourseService>();
 builder.Services.AddScoped<ILearningPathService, LearningPathService>();

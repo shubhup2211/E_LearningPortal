@@ -1,4 +1,5 @@
 ﻿using ELearningPortal.Interfaces.IUser;
+using ELearningPortal.Services.User;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ELearningPortal.Controllers.User
@@ -20,5 +21,35 @@ namespace ELearningPortal.Controllers.User
 
             return View(courses);
         }
+
+
+
+        public async Task<IActionResult> GetCertificate(int courseId)
+        {
+            int userId = 3;
+
+            var certificate = await _learningPathService
+                .GetCertificateAsync(userId, courseId);
+
+            if (certificate == null)
+                return Json(null);
+
+            return Json(new
+            {
+                certificateNo = certificate.CertificateNo,
+                generatedDate = certificate.GeneratedDate.ToString("dd MMM yyyy"),
+                pdf = certificate.CertificatePath
+            });
+        }
+
+
+
+
+
+
+
+
+
+
     }
 }

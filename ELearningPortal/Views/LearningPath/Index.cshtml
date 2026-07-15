@@ -96,12 +96,12 @@
 
                                         </strong>
 
-                                        <a href="#"
-                                           class="btn btn-success rounded-pill">
+                                        <button class="btn btn-success rounded-pill btnCertificate"
+                                                data-course="@item.CourseId">
 
                                             View Certificate
 
-                                        </a>
+                                        </button>
 
                                     </div>
 
@@ -136,3 +136,135 @@
     </div>
 
 </div>
+
+@section Scripts{
+
+    <div class="modal fade"
+         id="certificateModal"
+         tabindex="-1">
+
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+
+            <div class="modal-content">
+
+                <div class="modal-header">
+
+                    <h5 class="modal-title">
+
+                        📜 Course Certificate
+
+                    </h5>
+
+                    <button class="btn-close"
+                            data-bs-dismiss="modal">
+                    </button>
+
+                </div>
+
+                <div class="modal-body">
+
+                    <iframe id="pdfFrame"
+                            width="100%"
+                            height="600"
+                            style="border:none;">
+                    </iframe>
+
+                </div>
+
+                <div class="modal-footer justify-content-between">
+
+                    <div>
+
+                        <strong>
+
+                            Certificate No :
+
+                        </strong>
+
+                        <span id="certificateNo"></span>
+
+                        <br>
+
+                        <strong>
+
+                            Generated :
+
+                        </strong>
+
+                        <span id="generatedDate"></span>
+
+                    </div>
+
+                    <div>
+
+                        <a id="downloadPdf"
+                           class="btn btn-success"
+                           download>
+
+                            Download PDF
+
+                        </a>
+
+                        <a id="openPdf"
+                           target="_blank"
+                           class="btn btn-primary">
+
+                            Full Screen
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+
+        $(".btnCertificate").click(function(){
+
+            var id=$(this).data("course");
+
+            $.get("/LearningPath/GetCertificate",
+            {
+                courseId:id
+            },
+
+            function(res)
+            {
+                if(res==null)
+                {
+                    alert("Certificate not found.");
+                    return;
+                }
+
+                $("#certificateNo").text(res.certificateNo);
+
+                $("#generatedDate").text(res.generatedDate);
+
+                $("#pdfFrame").attr("src",res.pdf);
+
+                $("#downloadPdf").attr("href",res.pdf);
+
+                $("#openPdf").attr("href",res.pdf);
+
+                var modal=new bootstrap.Modal(
+                    document.getElementById("certificateModal"));
+
+                modal.show();
+
+            });
+
+        });
+
+    </script>
+
+
+}
+
+
+
