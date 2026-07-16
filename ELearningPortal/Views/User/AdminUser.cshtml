@@ -1,0 +1,467 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+    <!-- Page Content -->
+    <div class="p-section-padding space-y-stack-lg">
+        <!-- Page Header -->
+        <div class="flex justify-between items-start">
+            <div>
+                <div class="flex items-center gap-2 mb-1">
+                    <h2 class="font-headline-lg text-headline-lg text-on-surface">Users Management</h2>
+                    <span class="bg-surface-container-high text-on-surface-variant px-2 py-0.5 rounded text-[11px] font-bold uppercase tracking-wider flex items-center gap-1 cursor-help" title="Role: Student (Read Only)">
+                        STUDENT <span class="material-symbols-outlined text-[14px]">lock</span>
+                    </span>
+                </div>
+                <p class="text-body-lg text-on-surface-variant">Manage students for your assigned branch. <span class="font-semibold text-primary">Branch: Central Branch (Read Only)</span></p>
+            </div>
+            <button class="bg-primary text-white px-6 py-3 rounded-xl font-title-md flex items-center gap-2 shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all" id="add-user-btn">
+                <span class="material-symbols-outlined">person_add</span>
+                + Add User
+            </button>
+        </div>
+        <!-- Top Summary Bento -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter">
+            <div class="bg-surface-container-lowest p-stack-lg rounded-xl border border-outline-variant shadow-sm hover:shadow-md transition-shadow">
+                <div class="flex justify-between items-start mb-4">
+                    <div class="p-2 bg-primary/10 rounded-lg">
+                        <span class="material-symbols-outlined text-primary">group</span>
+                    </div>
+                    <span class="text-tertiary font-bold text-label-md flex items-center">
+                        <span class="material-symbols-outlined text-[16px]">trending_up</span> 12%
+                    </span>
+                </div>
+                <p class="text-on-surface-variant text-label-md font-medium uppercase tracking-wider">Total Students</p>
+                <h3 class="text-display-lg font-display-lg text-on-surface mt-1">2,840</h3>
+            </div>
+            <div class="bg-surface-container-lowest p-stack-lg rounded-xl border border-outline-variant shadow-sm hover:shadow-md transition-shadow">
+                <div class="flex justify-between items-start mb-4">
+                    <div class="p-2 bg-tertiary/10 rounded-lg">
+                        <span class="material-symbols-outlined text-tertiary">how_to_reg</span>
+                    </div>
+                    <span class="text-tertiary font-bold text-label-md flex items-center">
+                        <span class="material-symbols-outlined text-[16px]">trending_up</span> 8.4%
+                    </span>
+                </div>
+                <p class="text-on-surface-variant text-label-md font-medium uppercase tracking-wider">Active Students</p>
+                <h3 class="text-display-lg font-display-lg text-on-surface mt-1">2,512</h3>
+            </div>
+            <div class="bg-surface-container-lowest p-stack-lg rounded-xl border border-outline-variant shadow-sm hover:shadow-md transition-shadow">
+                <div class="flex justify-between items-start mb-4">
+                    <div class="p-2 bg-secondary/10 rounded-lg">
+                        <span class="material-symbols-outlined text-secondary">person_off</span>
+                    </div>
+                    <span class="text-error font-bold text-label-md flex items-center">
+                        <span class="material-symbols-outlined text-[16px]">trending_down</span> 2.1%
+                    </span>
+                </div>
+                <p class="text-on-surface-variant text-label-md font-medium uppercase tracking-wider">Inactive Students</p>
+                <h3 class="text-display-lg font-display-lg text-on-surface mt-1">328</h3>
+            </div>
+            <div class="bg-surface-container-lowest p-stack-lg rounded-xl border border-outline-variant shadow-sm hover:shadow-md transition-shadow">
+                <div class="flex justify-between items-start mb-4">
+                    <div class="p-2 bg-surface-variant rounded-lg">
+                        <span class="material-symbols-outlined text-on-surface-variant">calendar_month</span>
+                    </div>
+                    <span class="text-tertiary font-bold text-label-md flex items-center">
+                        <span class="material-symbols-outlined text-[16px]">trending_up</span> 42%
+                    </span>
+                </div>
+                <p class="text-on-surface-variant text-label-md font-medium uppercase tracking-wider">New Registrations</p>
+                <h3 class="text-display-lg font-display-lg text-on-surface mt-1">124</h3>
+            </div>
+        </div>
+        <!-- Filter Section -->
+        <div class="bg-surface-container-low p-gutter rounded-xl border border-outline-variant flex flex-wrap items-center gap-gutter">
+            <div class="flex items-center gap-2 w-full mb-2 border-b border-outline-variant/30 pb-4"><button class="px-4 py-1.5 rounded-full bg-primary text-white text-label-md font-bold">All</button><button class="px-4 py-1.5 rounded-full bg-surface-container-high text-on-surface-variant text-label-md font-medium hover:bg-surface-variant transition-colors">Recently Added</button><button class="px-4 py-1.5 rounded-full bg-surface-container-high text-on-surface-variant text-label-md font-medium hover:bg-surface-variant transition-colors">Active</button><button class="px-4 py-1.5 rounded-full bg-surface-container-high text-on-surface-variant text-label-md font-medium hover:bg-surface-variant transition-colors">Inactive</button></div>
+            <div class="flex-1 min-w-[240px]">
+                <div class="relative">
+                    <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[20px]">search</span>
+                    <input class="w-full pl-10 pr-4 py-2 bg-white border border-outline-variant rounded-lg text-body-md focus:ring-2 focus:ring-primary/20 focus:border-primary" placeholder="Filter by name, email or phone..." type="text" />
+                </div>
+            </div>
+            <div class="flex items-center gap-gutter">
+                <select class="bg-white border border-outline-variant rounded-lg px-4 py-2 text-body-md min-w-[140px] focus:ring-2 focus:ring-primary/20 focus:border-primary">
+                    <option value="">Status: All</option>
+                    <option value="active">Active</option>
+                    <option value="inactive">Inactive</option>
+                </select>
+                <select class="bg-white border border-outline-variant rounded-lg px-4 py-2 text-body-md min-w-[140px] focus:ring-2 focus:ring-primary/20 focus:border-primary">
+                    <option value="">Gender: All</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                </select>
+                <div class="relative min-w-[200px]">
+                    <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[20px]">date_range</span>
+                    <input class="w-full pl-10 pr-4 py-2 bg-white border border-outline-variant rounded-lg text-body-md focus:ring-2 focus:ring-primary/20 focus:border-primary" placeholder="Registration Date" type="text" />
+                </div>
+                <button class="flex items-center gap-2 px-4 py-2 text-on-surface-variant font-medium hover:bg-surface-container transition-colors rounded-lg">
+                    <span class="material-symbols-outlined">filter_list</span>
+                    Clear
+                </button>
+            </div>
+        </div>
+        <!-- User Table -->
+        <div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm overflow-hidden">
+            <div class="overflow-x-auto custom-scrollbar">
+                <table class="w-full border-collapse text-left" id="user-table">
+                    <thead>
+                        <tr class="bg-surface-container-low border-bottom border-outline-variant">                            
+                            <th class="px-6 py-4 font-title-md text-label-md text-outline uppercase tracking-wider">Student / Profile</th>
+                            <th class="px-6 py-4 font-title-md text-label-md text-outline uppercase tracking-wider">Contact Details</th>
+                            <th class="px-6 py-4 font-title-md text-label-md text-outline uppercase tracking-wider">Role</th>
+                            <th class="px-6 py-4 font-title-md text-label-md text-outline uppercase tracking-wider">Branch</th>
+                            <th class="px-6 py-4 font-title-md text-label-md text-outline uppercase tracking-wider">Status</th>
+                            <th class="px-6 py-4 font-title-md text-label-md text-outline uppercase tracking-wider">Created At</th>
+                            <th class="px-6 py-4 font-title-md text-label-md text-outline uppercase tracking-wider">Modified At</th>
+                            <th class="px-6 py-4 font-title-md text-label-md text-outline uppercase tracking-wider text-right">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-outline-variant/30">
+                        <tr class="hover:bg-surface-container-lowest/50 transition-colors group" data-user-id="1">
+                            <td class="px-6 py-4">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold">
+                                        SA
+                                    </div>
+                                    <div>
+                                        <p class="font-title-md text-[14px] text-on-surface user-name">Super Admin</p>
+                                        <p class="text-label-md text-outline">ID: 1</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4">
+                                <div class="space-y-0.5">
+                                    <p class="text-body-md text-on-surface-variant flex items-center gap-1">
+                                        <span class="material-symbols-outlined text-[16px]">mail</span> <span class="user-email">superadmin@elearning.com</span>
+                                    </p>
+                                    <p class="text-body-md text-on-surface-variant flex items-center gap-1">
+                                        <span class="material-symbols-outlined text-[16px]">phone</span> <span class="user-phone">9876543210</span>
+                                    </p>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 text-body-md user-role">Super Admin</td>
+                            <td class="px-6 py-4 text-body-md">Main Branch</td>
+                            <td class="px-6 py-4">
+                                <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-tertiary/10 text-tertiary text-label-md font-bold user-status-badge">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span> <span class="user-status-text">Active</span>
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 text-body-md text-on-surface-variant">2026-07-13</td>
+                            <td class="px-6 py-4 text-body-md text-on-surface-variant">2026-07-13</td>
+                            <td class="px-6 py-4 text-right">
+                                <div class="flex items-center justify-end gap-1">
+                                    <button class="p-2 hover:bg-surface-container rounded-lg text-on-surface-variant">
+                                        <span class="material-symbols-outlined text-[20px]">visibility</span>
+                                    </button><button class="p-2 hover:bg-surface-container rounded-lg text-on-surface-variant edit-user-btn">
+                                        <span class="material-symbols-outlined text-[20px]">edit</span>
+                                    </button><button class="p-2 hover:bg-surface-container rounded-lg text-error delete-user-btn">
+                                        <span class="material-symbols-outlined text-[20px]">delete</span>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-surface-container-lowest/50 transition-colors group" data-user-id="2">
+                            <td class="px-6 py-4">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-full bg-secondary/10 flex items-center justify-center text-secondary font-bold">
+                                        RP
+                                    </div>
+                                    <div>
+                                        <p class="font-title-md text-[14px] text-on-surface user-name">Rahul Patil</p>
+                                        <p class="text-label-md text-outline">ID: 2</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4">
+                                <div class="space-y-0.5">
+                                    <p class="text-body-md text-on-surface-variant flex items-center gap-1">
+                                        <span class="material-symbols-outlined text-[16px]">mail</span> <span class="user-email">rahul@elearning.com</span>
+                                    </p>
+                                    <p class="text-body-md text-on-surface-variant flex items-center gap-1">
+                                        <span class="material-symbols-outlined text-[16px]">phone</span> <span class="user-phone">9876543211</span>
+                                    </p>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 text-body-md user-role">Manager</td>
+                            <td class="px-6 py-4 text-body-md">Main Branch</td>
+                            <td class="px-6 py-4">
+                                <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-tertiary/10 text-tertiary text-label-md font-bold user-status-badge">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span> <span class="user-status-text">Active</span>
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 text-body-md text-on-surface-variant">2026-07-13</td>
+                            <td class="px-6 py-4 text-body-md text-on-surface-variant">2026-07-13</td>
+                            <td class="px-6 py-4 text-right">
+                                <div class="flex items-center justify-end gap-1">
+                                    <button class="p-2 hover:bg-surface-container rounded-lg text-on-surface-variant">
+                                        <span class="material-symbols-outlined text-[20px]">visibility</span>
+                                    </button><button class="p-2 hover:bg-surface-container rounded-lg text-on-surface-variant edit-user-btn">
+                                        <span class="material-symbols-outlined text-[20px]">edit</span>
+                                    </button><button class="p-2 hover:bg-surface-container rounded-lg text-error delete-user-btn">
+                                        <span class="material-symbols-outlined text-[20px]">delete</span>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- Pagination -->
+            <div class="bg-surface-container-low px-6 py-4 border-t border-outline-variant flex items-center justify-between">
+                <p class="text-body-md text-on-surface-variant">Showing <span class="font-bold text-on-surface">1-10</span> of <span class="font-bold text-on-surface">2,840</span> students</p>
+                <div class="flex items-center gap-2">
+                    <button class="p-2 rounded-lg border border-outline-variant hover:bg-white transition-colors disabled:opacity-50" disabled="">
+                        <span class="material-symbols-outlined">chevron_left</span>
+                    </button>
+                    <button class="w-9 h-9 flex items-center justify-center rounded-lg bg-primary text-white font-bold text-body-md">1</button>
+                    <button class="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-white text-on-surface-variant font-medium text-body-md">2</button>
+                    <button class="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-white text-on-surface-variant font-medium text-body-md">3</button>
+                    <span class="text-on-surface-variant mx-1">...</span>
+                    <button class="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-white text-on-surface-variant font-medium text-body-md">284</button>
+                    <button class="p-2 rounded-lg border border-outline-variant hover:bg-white transition-colors">
+                        <span class="material-symbols-outlined">chevron_right</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Empty State Visualization Logic (Hidden by default, shown if no results) -->
+        <div class="hidden flex-col items-center justify-center py-20 bg-surface-container-lowest rounded-xl border border-dashed border-outline-variant" id="no-students-found">
+            <div class="w-64 h-64 mb-6 opacity-60">
+            </div>
+            <h3 class="font-title-lg text-title-lg text-on-surface mb-2">No Students Found</h3>
+            <p class="text-body-lg text-on-surface-variant max-w-sm text-center mb-8">We couldn't find any students matching your current filters. Try adjusting your search criteria.</p>
+            <button class="px-6 py-2 border-2 border-primary text-primary font-bold rounded-xl hover:bg-primary/5 transition-all">Clear All Filters</button>
+        </div>
+    </div>
+
+<div class="hidden fixed inset-0 z-[100]" id="modal-container">
+    <!-- Modal Backdrop -->
+    <div class="absolute inset-0 bg-on-surface/40 backdrop-blur-sm modal-close-trigger"></div>
+    <!-- Add/Edit User Modal -->
+    <div class="hidden relative w-full max-w-2xl bg-white rounded-xl shadow-lg overflow-hidden flex flex-col mx-auto mt-20 z-10 animate-in fade-in zoom-in duration-200" id="user-modal">
+        <div class="px-6 py-4 border-b border-outline-variant flex justify-between items-center">
+            <h2 class="font-title-lg text-title-lg text-on-surface" id="modal-title">Add User</h2>
+            <button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container rounded-full p-1 modal-close-trigger">close</button>
+        </div>
+        <form id="user-form">
+            <div class="p-6 overflow-y-auto max-h-[70vh] custom-scrollbar space-y-4">
+                <div class="space-y-1">
+                    <label class="text-label-md text-on-surface-variant font-medium">Profile Image:</label>
+                    <div class="flex items-center gap-3 p-2 border border-outline-variant rounded-lg">
+                        <button class="px-4 py-1.5 bg-surface-container-low border border-outline-variant rounded text-body-md" type="button">Choose File</button>
+                        <span class="text-body-md text-outline">No file chosen</span>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="space-y-1">
+                        <label class="text-label-md text-on-surface-variant font-medium">First Name <span class="text-error">*</span></label>
+                        <input class="w-full px-4 py-2 border border-outline-variant rounded-lg text-body-md focus:ring-2 focus:ring-primary/20 focus:border-primary" id="input-first-name" name="firstName" placeholder="Enter First Name" required="" type="text" />
+                    </div>
+                    <div class="space-y-1">
+                        <label class="text-label-md text-on-surface-variant font-medium">Last Name <span class="text-error">*</span></label>
+                        <input class="w-full px-4 py-2 border border-outline-variant rounded-lg text-body-md focus:ring-2 focus:ring-primary/20 focus:border-primary" id="input-last-name" name="lastName" placeholder="Enter Last Name" required="" type="text" />
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="space-y-1">
+                        <label class="text-label-md text-on-surface-variant font-medium">Email address <span class="text-error">*</span></label>
+                        <input class="w-full px-4 py-2 border border-outline-variant rounded-lg text-body-md focus:ring-2 focus:ring-primary/20 focus:border-primary" id="input-email" name="email" placeholder="Enter email" required="" type="email" />
+                    </div>
+                    <div class="space-y-1">
+                        <label class="text-label-md text-on-surface-variant font-medium">Password <span class="text-error">*</span></label>
+                        <input class="w-full px-4 py-2 border border-outline-variant rounded-lg text-body-md focus:ring-2 focus:ring-primary/20 focus:border-primary" id="input-password" name="password" placeholder="Enter Password" type="password" />
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="space-y-1">
+                        <label class="text-label-md text-on-surface-variant font-medium">Role <span class="text-error">*</span></label>
+                        <select class="w-full px-4 py-2 border border-outline-variant rounded-lg text-body-md focus:ring-2 focus:ring-primary/20 focus:border-primary" id="input-role" name="role">
+                            <option value="">Choose role...</option>
+                            <option value="Super Admin">Super Admin</option>
+                            <option value="Manager">Manager</option>
+                            <option value="Student">Student</option>
+                        </select>
+                    </div>
+                    <div class="space-y-1">
+                        <label class="text-label-md text-on-surface-variant font-medium">Status <span class="text-error">*</span></label>
+                        <select class="w-full px-4 py-2 border border-outline-variant rounded-lg text-body-md focus:ring-2 focus:ring-primary/20 focus:border-primary" id="input-status" name="status">
+                            <option value="Active">Active</option>
+                            <option value="Inactive">Inactive</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="space-y-1">
+                    <label class="text-label-md text-on-surface-variant font-medium">Phone Number <span class="text-error">*</span></label>
+                    <input class="w-full px-4 py-2 border border-outline-variant rounded-lg text-body-md focus:ring-2 focus:ring-primary/20 focus:border-primary" id="input-phone" name="phone" placeholder="Enter Phone Number" required="" type="tel" />
+                </div>
+            </div>
+            <div class="px-6 py-4 bg-surface-container-low border-t border-outline-variant flex justify-end gap-3">
+                <button class="px-6 py-2 bg-secondary text-white rounded-lg font-title-md hover:bg-secondary/90 transition-colors modal-close-trigger" type="button">Close</button>
+                <button class="px-6 py-2 bg-primary text-white rounded-lg font-title-md hover:bg-primary-container transition-all" type="submit">Save changes</button>
+            </div>
+        </form>
+    </div>
+    <!-- Delete Confirmation Modal -->
+    <div class="hidden relative w-full max-w-md bg-white rounded-xl shadow-lg overflow-hidden flex flex-col mx-auto mt-40 z-10 animate-in fade-in zoom-in duration-200" id="delete-modal">
+        <div class="p-6 text-center space-y-4">
+            <div class="w-16 h-16 bg-error/10 text-error rounded-full flex items-center justify-center mx-auto mb-4">
+                <span class="material-symbols-outlined text-4xl">delete_forever</span>
+            </div>
+            <h3 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface">Confirm Delete</h3>
+            <p class="text-body-lg text-on-surface-variant">Are you sure you want to delete this user? This action cannot be undone.</p>
+        </div>
+        <div class="px-6 py-4 bg-surface-container-low border-t border-outline-variant flex justify-center gap-3">
+            <button class="px-6 py-2 bg-outline-variant text-on-surface font-title-md rounded-lg hover:bg-outline-variant/80 transition-colors modal-close-trigger" type="button">Cancel</button>
+            <button class="px-6 py-2 bg-error text-white rounded-lg font-title-md hover:bg-error/90 transition-all" id="confirm-delete-btn" type="button">Yes, Delete</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const modalContainer = document.getElementById('modal-container');
+        const userModal = document.getElementById('user-modal');
+        const deleteModal = document.getElementById('delete-modal');
+        const modalTitle = document.getElementById('modal-title');
+        const userForm = document.getElementById('user-form');
+
+        let activeUserId = null;
+
+        // Open Modal Helper
+        const openModal = (type) => {
+            modalContainer.classList.remove('hidden');
+            modalContainer.classList.add('flex');
+            document.body.classList.add('overflow-hidden');
+
+            if (type === 'user') {
+                userModal.classList.remove('hidden');
+                deleteModal.classList.add('hidden');
+            } else if (type === 'delete') {
+                deleteModal.classList.remove('hidden');
+                userModal.classList.add('hidden');
+                deleteModal.classList.add('flex');
+            }
+        };
+
+        // Close Modals Helper
+        const closeModals = () => {
+            modalContainer.classList.add('hidden');
+            modalContainer.classList.remove('flex');
+            userModal.classList.add('hidden');
+            deleteModal.classList.add('hidden');
+            document.body.classList.remove('overflow-hidden');
+            userForm.reset();
+            activeUserId = null;
+        };
+
+        // Add User Button Click (Main Header & Sidebar)
+        const addButtons = ['add-user-btn', 'sidebar-add-btn'];
+        addButtons.forEach(id => {
+            const btn = document.getElementById(id);
+            if (btn) {
+                btn.addEventListener('click', () => {
+                    modalTitle.innerText = 'Add User';
+                    openModal('user');
+                });
+            }
+        });
+
+        // Table Action Delegations (Edit / Delete)
+        const table = document.getElementById('user-table');
+        if (table) {
+            table.addEventListener('click', (e) => {
+                const row = e.target.closest('tr');
+                if (!row) return;
+
+                const userId = row.getAttribute('data-user-id');
+
+                // Edit Click
+                if (e.target.closest('.edit-user-btn')) {
+                    activeUserId = userId;
+                    modalTitle.innerText = 'Edit User';
+
+                    // Pre-fill data
+                    const fullName = row.querySelector('.user-name').innerText;
+                    const email = row.querySelector('.user-email').innerText;
+                    const phone = row.querySelector('.user-phone').innerText;
+                    const role = row.querySelector('.user-role').innerText;
+                    const status = row.querySelector('.user-status-text').innerText;
+
+                    const nameParts = fullName.split(' ');
+                    document.getElementById('input-first-name').value = nameParts[0] || '';
+                    document.getElementById('input-last-name').value = nameParts.slice(1).join(' ') || '';
+                    document.getElementById('input-email').value = email;
+                    document.getElementById('input-phone').value = phone;
+
+                    // Select Role
+                    const roleSelect = document.getElementById('input-role');
+                    Array.from(roleSelect.options).forEach(opt => {
+                        if (opt.value === role) opt.selected = true;
+                    });
+
+                    // Select Status
+                    const statusSelect = document.getElementById('input-status');
+                    Array.from(statusSelect.options).forEach(opt => {
+                        if (opt.value === status) opt.selected = true;
+                    });
+
+                    openModal('user');
+                }
+
+                // Delete Click
+                if (e.target.closest('.delete-user-btn')) {
+                    activeUserId = userId;
+                    openModal('delete');
+                }
+            });
+        }
+
+        // Close triggers
+        document.querySelectorAll('.modal-close-trigger').forEach(trigger => {
+            trigger.addEventListener('click', closeModals);
+        });
+
+        // Form Submission (Simulated)
+        userForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const formData = new FormData(userForm);
+            console.log('Saving User Data:', Object.fromEntries(formData));
+            // In a real app, you'd send this to your API
+            closeModals();
+            alert('User saved successfully!');
+        });
+
+        // Confirm Delete (Simulated)
+        document.getElementById('confirm-delete-btn').addEventListener('click', () => {
+            console.log('Deleting User ID:', activeUserId);
+            // In a real app, find and remove row or call API
+            const rowToRemove = document.querySelector(`tr[data-user-id="${activeUserId}"]`);
+            if (rowToRemove) rowToRemove.remove();
+
+            closeModals();
+        });
+
+        // Original Search Simulation Logic
+        const searchInput = document.querySelector('input[placeholder*="Search students"]');
+        if(searchInput) {
+            searchInput.addEventListener('input', (e) => {
+                const tableContainer = document.querySelector('table').closest('.bg-surface-container-lowest');
+                const emptyState = document.getElementById('no-students-found');
+
+                if (e.target.value === 'show_empty') {
+                    tableContainer.classList.add('hidden');
+                    emptyState.classList.remove('hidden');
+                    emptyState.classList.add('flex');
+                } else {
+                    tableContainer.classList.remove('hidden');
+                    emptyState.classList.add('hidden');
+                    emptyState.classList.remove('flex');
+                }
+            });
+        }
+    });
+</script>

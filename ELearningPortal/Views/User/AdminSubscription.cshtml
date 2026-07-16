@@ -1,0 +1,315 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<!-- Page Canvas -->
+<section class="p-container-margin flex flex-col gap-stack-lg">
+    <!-- Page Header -->
+    <div class="flex justify-between items-end">
+        <div>
+            <h2 class="font-headline-lg text-headline-lg text-on-surface">Subscription Management</h2>
+            <p class="font-body-lg text-body-lg text-secondary">Manage premium subscription plans and course bundles.</p>
+        </div>
+        <button class="bg-primary text-on-primary px-6 py-2.5 rounded-xl font-title-md flex items-center gap-2 hover:bg-primary-container transition-all shadow-sm active:scale-95" onclick="toggleModal('createModal', true)">
+            <span class="material-symbols-outlined">add</span>
+            Create Plan
+        </button>
+    </div>
+    <!-- Summary Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-gutter">
+        <div class="bg-surface-container-low p-6 rounded-xl border border-outline-variant shadow-sm flex flex-col gap-2">
+            <div class="flex justify-between items-start">
+                <span class="material-symbols-outlined text-primary p-2 bg-primary-fixed rounded-lg">inventory_2</span>
+                <span class="text-tertiary font-label-md">+4% vs last mo</span>
+            </div>
+            <p class="text-on-surface-variant font-label-md">Total Plans</p>
+            <h3 class="text-headline-lg font-headline-lg">24</h3>
+        </div>
+        <div class="bg-surface-container-low p-6 rounded-xl border border-outline-variant shadow-sm flex flex-col gap-2">
+            <div class="flex justify-between items-start">
+                <span class="material-symbols-outlined text-primary p-2 bg-primary-fixed rounded-lg">check_circle</span>
+                <span class="text-secondary font-label-md">No change</span>
+            </div>
+            <p class="text-on-surface-variant font-label-md">Active Subscriptions</p>
+            <h3 class="text-headline-lg font-headline-lg">18</h3>
+        </div>
+        <div class="bg-surface-container-low p-6 rounded-xl border border-outline-variant shadow-sm flex flex-col gap-2">
+            <div class="flex justify-between items-start">
+                <span class="material-symbols-outlined text-on-error-container p-2 bg-error-container rounded-lg">pending_actions</span>
+                <span class="text-error font-label-md">Needs attention</span>
+            </div>
+            <p class="text-on-surface-variant font-label-md">Pending Approvals</p>
+            <h3 class="text-headline-lg font-headline-lg">05</h3>
+        </div>
+        <div class="bg-surface-container-low p-6 rounded-xl border border-outline-variant shadow-sm flex flex-col gap-2">
+            <div class="flex justify-between items-start">
+                <span class="material-symbols-outlined text-tertiary p-2 bg-tertiary-fixed-dim rounded-lg">payments</span>
+                <span class="text-tertiary font-label-md">+12.5%</span>
+            </div>
+            <p class="text-on-surface-variant font-label-md">Total Revenue</p>
+            <h3 class="text-headline-lg font-headline-lg">$14,280</h3>
+        </div>
+    </div>
+    <!-- Filters -->
+    <div class="bg-white p-6 rounded-xl border border-outline-variant shadow-sm flex flex-wrap gap-4 items-center">
+        <div class="flex-grow min-w-[240px]">
+            <label class="block text-label-md font-label-md text-on-surface-variant mb-1">Search Plan</label>
+            <div class="relative">
+                <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[20px]">search</span>
+                <input class="w-full pl-10 pr-4 py-2 rounded-lg border border-outline-variant focus:border-primary focus:ring-1 focus:ring-primary outline-none text-body-md" placeholder="Plan name or keyword..." type="text" />
+            </div>
+        </div>
+        <div class="w-48">
+            <label class="block text-label-md font-label-md text-on-surface-variant mb-1">Approval Status</label>
+            <select class="w-full px-4 py-2 rounded-lg border border-outline-variant focus:border-primary focus:ring-1 focus:ring-primary outline-none text-body-md bg-white">
+                <option>All Status</option>
+                <option>Pending</option>
+                <option>Approved</option>
+                <option>Rejected</option>
+            </select>
+        </div>
+        <div class="w-48">
+            <label class="block text-label-md font-label-md text-on-surface-variant mb-1">Status</label>
+            <select class="w-full px-4 py-2 rounded-lg border border-outline-variant focus:border-primary focus:ring-1 focus:ring-primary outline-none text-body-md bg-white">
+                <option>All</option>
+                <option>Active</option>
+                <option>Inactive</option>
+            </select>
+        </div>
+        <div class="pt-5">
+            <button class="text-primary hover:bg-primary-fixed px-4 py-2 rounded-lg transition-colors font-title-md flex items-center gap-2">
+                <span class="material-symbols-outlined text-[20px]">restart_alt</span>
+                Reset
+            </button>
+        </div>
+    </div>
+    <!-- Data Table Card -->
+    <div class="bg-white rounded-xl border border-outline-variant shadow-sm overflow-hidden">
+        <div class="px-6 py-4 border-b border-outline-variant flex justify-between items-center">
+            <h3 class="font-title-md text-title-md">Subscription Plans</h3>
+            <div class="flex items-center gap-2 text-secondary text-label-md">
+                <span class="material-symbols-outlined text-[16px]">info</span>
+                Approved plans are visible to learners.
+            </div>
+        </div>
+        <div class="overflow-x-auto">
+            <table class="w-full text-left">
+                <thead class="bg-surface-container-low text-on-surface-variant font-label-md uppercase tracking-wider">
+                    <tr>
+                        <th class="px-6 py-4 border-b border-outline-variant">Plan Name</th>
+                        <th class="px-6 py-4 border-b border-outline-variant">Included Courses</th>
+                        <th class="px-6 py-4 border-b border-outline-variant">Price</th>
+                        <th class="px-6 py-4 border-b border-outline-variant">Validity</th>
+                        <th class="px-6 py-4 border-b border-outline-variant text-center">Approval</th>
+                        <th class="px-6 py-4 border-b border-outline-variant text-center">Status</th>
+                        <th class="px-6 py-4 border-b border-outline-variant">Created At</th>
+                        <th class="px-6 py-4 border-b border-outline-variant text-right">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="text-body-md divide-y divide-outline-variant">
+                    <!-- Plan 1 -->
+                    <tr class="hover:bg-surface-container-lowest transition-colors">
+                        <td class="px-6 py-4">
+                            <div class="font-title-md text-primary">Gold Certification Bundle</div>
+                            <div class="text-[11px] text-outline">ID: SUB-2024-001</div>
+                        </td>
+                        <td class="px-6 py-4">
+                            <div class="flex -space-x-2">
+                                <div class="w-8 h-8 rounded-full bg-primary-fixed border-2 border-white flex items-center justify-center text-[10px] font-bold">ML</div>
+                                <div class="w-8 h-8 rounded-full bg-secondary-fixed border-2 border-white flex items-center justify-center text-[10px] font-bold">UI</div>
+                                <div class="w-8 h-8 rounded-full bg-tertiary-fixed border-2 border-white flex items-center justify-center text-[10px] font-bold">+3</div>
+                            </div>
+                            <span class="text-[11px] text-on-surface-variant">5 Master Courses</span>
+                        </td>
+                        <td class="px-6 py-4 font-semibold text-on-surface">$299.00</td>
+                        <td class="px-6 py-4 text-on-surface-variant">365 Days</td>
+                        <td class="px-6 py-4 text-center">
+                            <span class="px-3 py-1 rounded-full bg-tertiary-fixed text-tertiary font-label-md border border-tertiary/20">Approved</span>
+                        </td>
+                        <td class="px-6 py-4">
+                            <div class="flex justify-center">
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input checked="" class="sr-only peer" type="checkbox" />
+                                    <div class="w-11 h-6 bg-outline-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                                </label>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4 text-outline">Oct 12, 2023</td>
+                        <td class="px-6 py-4 text-right">
+                            <div class="flex justify-end gap-2">
+                                <button class="p-2 hover:bg-surface-container-high rounded-lg text-secondary transition-colors"><span class="material-symbols-outlined text-[20px]">visibility</span></button>
+                                <button class="p-2 hover:bg-surface-container-high rounded-lg text-primary transition-colors"><span class="material-symbols-outlined text-[20px]">edit</span></button>
+                                <button class="p-2 hover:bg-error-container rounded-lg text-error transition-colors" onclick="toggleModal('deleteModal', true)"><span class="material-symbols-outlined text-[20px]">delete</span></button>
+                            </div>
+                        </td>
+                    </tr>
+                    <!-- Plan 2 -->
+                    <tr class="hover:bg-surface-container-lowest transition-colors">
+                        <td class="px-6 py-4">
+                            <div class="font-title-md text-primary">Silver Developer Path</div>
+                            <div class="text-[11px] text-outline">ID: SUB-2024-002</div>
+                        </td>
+                        <td class="px-6 py-4">
+                            <div class="flex -space-x-2">
+                                <div class="w-8 h-8 rounded-full bg-primary-fixed border-2 border-white flex items-center justify-center text-[10px] font-bold">PY</div>
+                                <div class="w-8 h-8 rounded-full bg-secondary-fixed border-2 border-white flex items-center justify-center text-[10px] font-bold">JS</div>
+                            </div>
+                            <span class="text-[11px] text-on-surface-variant">2 Master Courses</span>
+                        </td>
+                        <td class="px-6 py-4 font-semibold text-on-surface">$149.00</td>
+                        <td class="px-6 py-4 text-on-surface-variant">180 Days</td>
+                        <td class="px-6 py-4 text-center">
+                            <span class="px-3 py-1 rounded-full bg-amber-100 text-amber-700 font-label-md border border-amber-200">Pending</span>
+                        </td>
+                        <td class="px-6 py-4">
+                            <div class="flex justify-center">
+                                <label class="relative inline-flex items-center cursor-pointer opacity-50">
+                                    <input class="sr-only peer" disabled="" type="checkbox" />
+                                    <div class="w-11 h-6 bg-outline-variant rounded-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5"></div>
+                                </label>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4 text-outline">Nov 02, 2023</td>
+                        <td class="px-6 py-4 text-right">
+                            <div class="flex justify-end gap-2">
+                                <button class="p-2 hover:bg-surface-container-high rounded-lg text-secondary transition-colors"><span class="material-symbols-outlined text-[20px]">visibility</span></button>
+                                <button class="p-2 hover:bg-surface-container-high rounded-lg text-primary transition-colors"><span class="material-symbols-outlined text-[20px]">edit</span></button>
+                                <button class="p-2 hover:bg-error-container rounded-lg text-error transition-colors"><span class="material-symbols-outlined text-[20px]">delete</span></button>
+                            </div>
+                        </td>
+                    </tr>
+                    <!-- DB Image Reference Mock -->
+                    <tr>
+                        <td class="p-0" colspan="8">
+                            <div class="relative w-full h-[85px] group">
+                                <img alt="Data table background reference" class="w-full h-full object-cover opacity-10" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCb6uha0DdTU6JSj1L7tFa5iiHDNnRS3tiw_3jzYuMpJNXysRbXiMtIKKXjn6fUXX8oy4TAlV08HtAEBo0IEhAM6FTVpT6Pam0DUEfB0EagRAq0CTo07SLVdz6cHnjv6ep7wH8u8no8JJ27DUnNLFHj9colj6xYkrM1AZ9lCN-btjSp6J8EXtPP743p3yT5Dr7mmdg7GLBWsLZ1DNRWVCQwz1ePuH0yAMxdrUwFhNv21dFvk58sGzkrUxokREAIaY2epeuShh93rsc" />
+                                <div class="absolute inset-0 flex items-center px-6 text-outline text-[11px] font-medium uppercase tracking-widest pointer-events-none">Legacy Records Loaded From Database Context</div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="px-6 py-4 border-t border-outline-variant bg-surface-container-low flex justify-between items-center text-label-md text-secondary">
+            <span>Showing 1-10 of 24 plans</span>
+            <div class="flex gap-2">
+                <button class="px-3 py-1 rounded border border-outline-variant bg-white hover:bg-surface-container-high transition-colors">Prev</button>
+                <button class="px-3 py-1 rounded bg-primary text-on-primary">1</button>
+                <button class="px-3 py-1 rounded border border-outline-variant bg-white hover:bg-surface-container-high transition-colors">2</button>
+                <button class="px-3 py-1 rounded border border-outline-variant bg-white hover:bg-surface-container-high transition-colors">3</button>
+                <button class="px-3 py-1 rounded border border-outline-variant bg-white hover:bg-surface-container-high transition-colors">Next</button>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Create Subscription Modal -->
+<div class="fixed inset-0 z-[60] hidden" id="createModal">
+    <div class="absolute inset-0 bg-on-background/60 backdrop-blur-sm" onclick="toggleModal('createModal', false)"></div>
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-2xl bg-white rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+        <div class="px-6 py-4 border-b border-outline-variant flex justify-between items-center bg-surface-container-low">
+            <h3 class="font-headline-lg text-title-lg text-on-surface">Create Subscription Plan</h3>
+            <button class="text-secondary hover:text-on-surface p-2 transition-colors" onclick="toggleModal('createModal', false)">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+        <div class="p-6 overflow-y-auto flex flex-col gap-4">
+            <div class="grid grid-cols-2 gap-4">
+                <div class="col-span-2">
+                    <label class="block text-label-md font-label-md text-on-surface-variant mb-1">Plan Name*</label>
+                    <input class="w-full px-4 py-2 rounded-lg border border-outline-variant focus:border-primary focus:ring-1 focus:ring-primary outline-none" placeholder="e.g. Enterprise Full Access" type="text" />
+                </div>
+                <div class="col-span-2">
+                    <label class="block text-label-md font-label-md text-on-surface-variant mb-1">Description</label>
+<textarea class="w-full px-4 py-2 rounded-lg border border-outline-variant focus:border-primary focus:ring-1 focus:ring-primary outline-none" placeholder="Describe what this plan covers..." rows="3"></textarea>
+                </div>
+                <div>
+                    <label class="block text-label-md font-label-md text-on-surface-variant mb-1">Price ($)*</label>
+                    <input class="w-full px-4 py-2 rounded-lg border border-outline-variant focus:border-primary focus:ring-1 focus:ring-primary outline-none" placeholder="0.00" type="number" />
+                </div>
+                <div>
+                    <label class="block text-label-md font-label-md text-on-surface-variant mb-1">Validity (Days)*</label>
+                    <input class="w-full px-4 py-2 rounded-lg border border-outline-variant focus:border-primary focus:ring-1 focus:ring-primary outline-none" placeholder="365" type="number" />
+                </div>
+                <div class="col-span-2">
+                    <label class="block text-label-md font-label-md text-on-surface-variant mb-1">Select Master Courses*</label>
+                    <div class="border border-outline-variant rounded-lg p-3 max-h-48 overflow-y-auto flex flex-col gap-2">
+                        <label class="flex items-center gap-3 p-2 hover:bg-surface-container-low rounded cursor-pointer">
+                            <input class="w-4 h-4 text-primary rounded border-outline-variant focus:ring-primary" type="checkbox" />
+                            <span class="text-body-md">Advanced Machine Learning (ML-101)</span>
+                        </label>
+                        <label class="flex items-center gap-3 p-2 hover:bg-surface-container-low rounded cursor-pointer">
+                            <input class="w-4 h-4 text-primary rounded border-outline-variant focus:ring-primary" type="checkbox" />
+                            <span class="text-body-md">User Interface Design Fundamentals (UI-202)</span>
+                        </label>
+                        <label class="flex items-center gap-3 p-2 hover:bg-surface-container-low rounded cursor-pointer">
+                            <input class="w-4 h-4 text-primary rounded border-outline-variant focus:ring-primary" type="checkbox" />
+                            <span class="text-body-md">Python for Data Science (PY-301)</span>
+                        </label>
+                        <label class="flex items-center gap-3 p-2 hover:bg-surface-container-low rounded cursor-pointer">
+                            <input class="w-4 h-4 text-primary rounded border-outline-variant focus:ring-primary" type="checkbox" />
+                            <span class="text-body-md">React.js Advanced Patterns (JS-404)</span>
+                        </label>
+                    </div>
+                    <p class="text-[11px] text-outline mt-1 italic">Only approved master courses are available for selection.</p>
+                </div>
+            </div>
+        </div>
+        <div class="px-6 py-4 border-t border-outline-variant flex justify-end gap-3 bg-surface-container-low">
+            <button class="px-6 py-2 rounded-lg border border-outline-variant font-title-md text-secondary hover:bg-white transition-colors" onclick="toggleModal('createModal', false)">Cancel</button>
+            <button class="px-6 py-2 rounded-lg bg-primary text-on-primary font-title-md hover:bg-primary-container transition-all shadow-md active:scale-95" onclick="simulateSubmit('createModal')">Submit for Approval</button>
+        </div>
+    </div>
+</div>
+<!-- Delete Confirmation Modal -->
+<div class="fixed inset-0 z-[60] hidden" id="deleteModal">
+    <div class="absolute inset-0 bg-on-background/60 backdrop-blur-sm" onclick="toggleModal('deleteModal', false)"></div>
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-md bg-white rounded-2xl shadow-2xl p-8 flex flex-col items-center text-center gap-6">
+        <div class="w-16 h-16 bg-error-container text-error rounded-full flex items-center justify-center">
+            <span class="material-symbols-outlined text-[32px]">warning</span>
+        </div>
+        <div>
+            <h3 class="font-headline-lg text-title-lg text-on-surface mb-2">Confirm Deletion</h3>
+            <p class="text-body-md text-secondary">Are you sure you want to delete this subscription plan? This action cannot be undone and may affect current pending enrollments.</p>
+        </div>
+        <div class="flex gap-3 w-full">
+            <button class="flex-1 px-6 py-2.5 rounded-xl border border-outline-variant font-title-md text-secondary hover:bg-surface-container-low transition-colors" onclick="toggleModal('deleteModal', false)">Cancel</button>
+            <button class="flex-1 px-6 py-2.5 rounded-xl bg-error text-on-error font-title-md hover:bg-on-error-container transition-all shadow-md active:scale-95" onclick="simulateSubmit('deleteModal')">Delete Plan</button>
+        </div>
+    </div>
+</div>
+<script>
+    function toggleModal(id, show) {
+        const modal = document.getElementById(id);
+        if (show) {
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        } else {
+            modal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+    }
+
+    function simulateSubmit(id) {
+        const btn = event.target;
+        const originalText = btn.innerHTML;
+        btn.innerHTML = '<span class="material-symbols-outlined animate-spin">progress_activity</span> Processing...';
+        btn.disabled = true;
+
+        setTimeout(() => {
+            toggleModal(id, false);
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+
+            // Show a quick toast notification (mock)
+            alert(id === 'deleteModal' ? 'Plan deleted successfully.' : 'Plan submitted for approval.');
+        }, 1000);
+    }
+
+    // Add small hover interaction for cards
+    document.querySelectorAll('.grid > div').forEach(card => {
+        card.addEventListener('mouseenter', () => card.classList.add('elevation-2', '-translate-y-1', 'transition-all', 'duration-300'));
+        card.addEventListener('mouseleave', () => card.classList.remove('elevation-2', '-translate-y-1'));
+    });
+</script>
