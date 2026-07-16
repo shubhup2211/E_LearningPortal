@@ -1,0 +1,270 @@
+﻿@model IEnumerable<ELearning.Models.Courses.Course>
+
+@{
+    ViewData["Title"] = "Completed Courses";
+}
+
+<div class="container py-4">
+
+    <!-- Heading -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+            <h2 class="fw-bold">Completed Courses</h2>
+            <p class="text-muted mb-0">
+                Congratulations! Here are all the courses you've successfully completed.
+            </p>
+        </div>
+
+        <span class="badge bg-success fs-6 px-3 py-2">
+            ✔ @Model.Count() Courses Completed
+        </span>
+
+    </div>
+
+    <!-- Completed Courses -->
+
+    <div class="row g-4">
+
+        @if (Model != null && Model.Any())
+        {
+            @foreach (var item in Model)
+            {
+                <div class="col-lg-6">
+
+                    <div class="card border-0 shadow rounded-4 overflow-hidden">
+
+                        <div class="row g-0">
+
+                            <!-- Course Image -->
+                            <div class="col-4">
+
+                                <img src="~/images/courses/@item.Image"
+                                     class="img-fluid w-100 h-100"
+                                     style="object-fit:cover;"
+                                     alt="@item.CourseName" />
+
+                            </div>
+
+                            <!-- Course Details -->
+
+                            <div class="col-8">
+
+                                <div class="card-body d-flex flex-column h-100">
+
+                                    <div class="d-flex justify-content-between">
+
+                                        <span class="badge bg-primary-subtle text-primary rounded-pill">
+
+                                            @(item.Branch != null ? item.Branch.BranchName : "No Branch")
+
+                                        </span>
+
+                                        <span class="badge bg-success rounded-pill">
+
+                                            ✔ Completed
+
+                                        </span>
+
+                                    </div>
+
+                                    <h4 class="mt-3 fw-bold">
+
+                                        @item.CourseName
+
+                                    </h4>
+
+                                    <p class="text-muted small flex-grow-1">
+
+                                        @item.Description
+
+                                    </p>
+
+                                    <div class="progress mb-3" style="height:8px;">
+
+                                        <div class="progress-bar bg-success"
+                                             style="width:100%;">
+                                        </div>
+
+                                    </div>
+
+                                    <div class="d-flex justify-content-between align-items-center">
+
+                                        <strong class="text-success">
+
+                                            100% Completed
+
+                                        </strong>
+
+                                        <button class="btn btn-success rounded-pill btnCertificate"
+                                                data-course="@item.CourseId">
+
+                                            View Certificate
+
+                                        </button>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            }
+        }
+        else
+        {
+            <div class="col-12">
+
+                <div class="alert alert-info text-center shadow-sm rounded-4 p-5">
+
+                    <h4>No Completed Courses Found</h4>
+
+                    <p class="mb-0">
+                        Complete a course to view it here.
+                    </p>
+
+                </div>
+
+            </div>
+        }
+
+    </div>
+
+</div>
+
+@section Scripts{
+
+    <div class="modal fade"
+         id="certificateModal"
+         tabindex="-1">
+
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+
+            <div class="modal-content">
+
+                <div class="modal-header">
+
+                    <h5 class="modal-title">
+
+                        📜 Course Certificate
+
+                    </h5>
+
+                    <button class="btn-close"
+                            data-bs-dismiss="modal">
+                    </button>
+
+                </div>
+
+                <div class="modal-body">
+
+                    <iframe id="pdfFrame"
+                            width="100%"
+                            height="600"
+                            style="border:none;">
+                    </iframe>
+
+                </div>
+
+                <div class="modal-footer justify-content-between">
+
+                    <div>
+
+                        <strong>
+
+                            Certificate No :
+
+                        </strong>
+
+                        <span id="certificateNo"></span>
+
+                        <br>
+
+                        <strong>
+
+                            Generated :
+
+                        </strong>
+
+                        <span id="generatedDate"></span>
+
+                    </div>
+
+                    <div>
+
+                        <a id="downloadPdf"
+                           class="btn btn-success"
+                           download>
+
+                            Download PDF
+
+                        </a>
+
+                        <a id="openPdf"
+                           target="_blank"
+                           class="btn btn-primary">
+
+                            Full Screen
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+
+        $(".btnCertificate").click(function(){
+
+            var id=$(this).data("course");
+
+            $.get("/LearningPath/GetCertificate",
+            {
+                courseId:id
+            },
+
+            function(res)
+            {
+                if(res==null)
+                {
+                    alert("Certificate not found.");
+                    return;
+                }
+
+                $("#certificateNo").text(res.certificateNo);
+
+                $("#generatedDate").text(res.generatedDate);
+
+                $("#pdfFrame").attr("src",res.pdf);
+
+                $("#downloadPdf").attr("href",res.pdf);
+
+                $("#openPdf").attr("href",res.pdf);
+
+                var modal=new bootstrap.Modal(
+                    document.getElementById("certificateModal"));
+
+                modal.show();
+
+            });
+
+        });
+
+    </script>
+
+
+}
+
+
+

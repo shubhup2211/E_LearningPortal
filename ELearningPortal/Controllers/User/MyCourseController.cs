@@ -10,9 +10,11 @@ namespace ELearningPortal.Controllers.User
         {
             this.myCouService = myCouService;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var courses = await myCouService.GetAllCoursesAsync();
+
+            return View(courses);
         }
     }
 }

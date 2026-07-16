@@ -1,0 +1,222 @@
+﻿@{
+    ViewData["Title"] = "Dashboard";
+}
+@model IEnumerable<ELearning.Models.Courses.Course>
+
+
+
+<div class="container py-4">
+
+    <!-- Welcome -->
+    <div class="mb-4">
+        <small class="text-muted">
+            Welcome back,
+            <strong>@User.Identity?.Name</strong>👋
+        </small>
+        <h2 class="fw-bold mt-2">Your Dashboard</h2>
+    </div>
+
+    <!-- Statistics -->
+    <div class="row g-4 mb-5">
+
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm rounded-4">
+                <div class="card-body">
+                    <h2 class="fw-bold text-primary">
+                        @ViewBag.InProgress
+                    </h2>
+                    <small class="text-uppercase text-muted">
+                        Courses In Progress
+                    </small>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm rounded-4">
+                <div class="card-body">
+                    <h2 class="fw-bold text-success">
+                        @ViewBag.Average%
+                    </h2>
+                    <small class="text-uppercase text-muted">
+                        Avg Completion
+                    </small>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm rounded-4">
+                <div class="card-body">
+                    <h2 class="fw-bold text-danger">
+                        @ViewBag.Completed
+                    </h2>
+                    <small class="text-uppercase text-muted">
+                        Courses Completed
+                    </small>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Continue Learning -->
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+            <h3 class="fw-bold">Continue Learning</h3>
+            <p class="text-muted mb-0">
+                Resume your enrolled courses and continue learning.
+            </p>
+        </div>
+
+        <a asp-controller="MyCourse"
+           asp-action="Index"
+           class="btn btn-outline-primary rounded-pill">
+
+            View All
+
+        </a>
+
+    </div>
+
+    <div class="row g-4">
+
+        @foreach (var item in Model)
+        {
+            var progress = (double)ViewBag.Progress[item.CourseId];
+
+            string progressColor = "bg-warning";
+
+            if (progress >= 100)
+            {
+                progressColor = "bg-success";
+            }
+            else if (progress >= 50)
+            {
+                progressColor = "bg-primary";
+            }
+
+            <div class="col-lg-6">
+
+                <div class="card border-0 shadow rounded-4 overflow-hidden h-100">
+
+                    <div class="row g-0">
+
+                        <!-- Course Image -->
+
+                        <div class="col-4">
+
+                            <img src="~/images/courses/@item.Image"
+                                 class="img-fluid h-100 w-100"
+                                 style="object-fit:cover;"
+                                 alt="@item.CourseName" />
+
+                        </div>
+
+                        <!-- Course Details -->
+
+                        <div class="col-8">
+
+                            <div class="card-body d-flex flex-column h-100">
+
+                                <div class="d-flex justify-content-between align-items-center">
+
+                                    <span class="badge bg-primary-subtle text-primary rounded-pill">
+
+                                        @item.Branch?.BranchName
+
+                                    </span>
+
+                                    <small class="fw-semibold">
+
+                                        @progress%
+
+                                    </small>
+
+                                </div>
+
+                                <h4 class="fw-bold mt-3">
+
+                                    @item.CourseName
+
+                                </h4>
+
+                                <p class="text-muted small flex-grow-1">
+
+                                    @item.Description
+
+                                </p>
+
+                                <!-- Lesson Count -->
+
+                                <small class="text-muted mb-2">
+
+                                    📚 @item.SubCourses.Sum(x => x.Lessons.Count) Lessons
+
+                                </small>
+
+                                <!-- Progress -->
+
+                                <div class="progress mb-3" style="height:8px;">
+
+                                    <div class="progress-bar @progressColor"
+                                         style="width:@progress%;">
+                                    </div>
+
+                                </div>
+
+                                <div class="d-flex justify-content-between align-items-center">
+
+                                    <strong class="text-muted">
+
+                                        @progress% Complete
+
+                                    </strong>
+
+                                    <div class="d-flex gap-2">
+
+                                        <!-- Resume -->
+
+                                        <a asp-controller="MyCourse"
+                                           asp-action="Details"
+                                           asp-route-id="@item.CourseId"
+                                           class="btn btn-primary rounded-pill">
+
+                                            Resume
+
+                                        </a>
+
+                                        @if (progress == 100)
+                                        {
+                                            <a asp-controller="LearningPath"
+                                               asp-action="Index"
+                                               class="btn btn-success rounded-pill">
+
+                                                Certificate
+
+                                            </a>
+                                        }
+                                        
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        }
+
+
+
+    </div>
+
+</div>
