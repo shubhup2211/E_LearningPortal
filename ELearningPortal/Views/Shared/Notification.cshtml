@@ -1,0 +1,24 @@
+﻿<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+@if (TempData["successmsg"]!=null)
+{
+    <script>
+        alert('@TempData["successmsg"]')
+    </script>
+}
+
+
+
+@if (TempData["dangermsg"] != null)
+{
+    <script>
+        alert('@TempData["dangermsg"]')
+    </script>
+}
+@if (TempData["warningmsg"] != null)
+{
+    <script>
+        alert('@TempData["warningmsg"]')
+    </script>
+}

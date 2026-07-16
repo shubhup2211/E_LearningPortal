@@ -1,0 +1,17 @@
+﻿@using ELearningPortal.Helpers
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<div>
+    <h3>Welcome, @User.GetFullName()!</h3>
+    <p>Your User ID is: @User.GetUserId()</p>
+    <p>Your Role is: @User.GetRole()</p>
+    <p>@User.GetBranchName()</p>
+</div>
+<a class="flex items-center gap-3 px-4 py-3 text-error/80 hover:bg-error/10 hover:text-error transition-colors" asp-controller="Account" asp-action="Logout">
+    <span class="material-symbols-outlined">logout</span>
+    <span class="text-sm">Logout</span>
+</a>
+

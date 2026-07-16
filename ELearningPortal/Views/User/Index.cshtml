@@ -1,0 +1,383 @@
+﻿@using ELearning.Models.Authentication
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<!-- Admin Insights Header -->
+<div class="mb-8 fade-in-up">
+    <h1 class="font-headline-lg text-headline-lg text-on-surface mb-1">Welcome back, Branch Administrator.</h1>
+    <p class="font-body-lg text-body-lg text-on-surface-variant">Here's what's happening across your learning centers today.</p>
+</div>
+<!-- Stats Grid (6 Columns) -->
+<section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-gutter mb-8">
+    <div class="bg-surface-container-lowest p-stack-lg rounded-xl border border-outline-variant/30 shadow-sm fade-in-up" style="animation-delay: 0.1s;">
+        <div class="flex justify-between items-start mb-4">
+            <div class="p-2 bg-primary/10 rounded-lg">
+                <span class="material-symbols-outlined text-primary">group</span>
+            </div>
+            <span class="text-tertiary font-label-md flex items-center gap-1">+12% <span class="material-symbols-outlined text-[14px]">trending_up</span></span>
+        </div>
+        <p class="font-label-md text-label-md text-outline">Total Students</p>
+        <p class="font-title-lg text-title-lg font-bold">14,280</p>
+    </div>
+    <div class="bg-surface-container-lowest p-stack-lg rounded-xl border border-outline-variant/30 shadow-sm fade-in-up" style="animation-delay: 0.15s;">
+        <div class="flex justify-between items-start mb-4">
+            <div class="p-2 bg-tertiary/10 rounded-lg">
+                <span class="material-symbols-outlined text-tertiary">school</span>
+            </div>
+            <span class="text-tertiary font-label-md flex items-center gap-1">+4% <span class="material-symbols-outlined text-[14px]">trending_up</span></span>
+        </div>
+        <p class="font-label-md text-label-md text-outline">Total Courses</p>
+        <p class="font-title-lg text-title-lg font-bold">156</p>
+    </div>
+    <div class="bg-surface-container-lowest p-stack-lg rounded-xl border border-outline-variant/30 shadow-sm fade-in-up" style="animation-delay: 0.2s;">
+        <div class="flex justify-between items-start mb-4">
+            <div class="p-2 bg-secondary/10 rounded-lg">
+                <span class="material-symbols-outlined text-secondary">layers</span>
+            </div>
+            <span class="text-on-surface-variant font-label-md flex items-center gap-1">0% <span class="material-symbols-outlined text-[14px]">trending_flat</span></span>
+        </div>
+        <p class="font-label-md text-label-md text-outline">Total SubCourses</p>
+        <p class="font-title-lg text-title-lg font-bold">892</p>
+    </div>
+    <div class="bg-surface-container-lowest p-stack-lg rounded-xl border border-outline-variant/30 shadow-sm fade-in-up" style="animation-delay: 0.25s;">
+        <div class="flex justify-between items-start mb-4">
+            <div class="p-2 bg-on-tertiary-fixed-variant/10 rounded-lg">
+                <span class="material-symbols-outlined text-on-tertiary-fixed-variant">verified_user</span>
+            </div>
+            <span class="text-tertiary font-label-md flex items-center gap-1">+2.4k <span class="material-symbols-outlined text-[14px]">trending_up</span></span>
+        </div>
+        <p class="font-label-md text-label-md text-outline">Active Subscriptions</p>
+        <p class="font-title-lg text-title-lg font-bold">8,642</p>
+    </div>
+    <div class="bg-surface-container-lowest p-stack-lg rounded-xl border border-outline-variant/30 shadow-sm fade-in-up" style="animation-delay: 0.3s;">
+        <div class="flex justify-between items-start mb-4">
+            <div class="p-2 bg-on-primary-fixed-variant/10 rounded-lg">
+                <span class="material-symbols-outlined text-on-primary-fixed-variant">monetization_on</span>
+            </div>
+            <span class="text-tertiary font-label-md flex items-center gap-1">+18% <span class="material-symbols-outlined text-[14px]">trending_up</span></span>
+        </div>
+        <p class="font-label-md text-label-md text-outline">Revenue (Mo)</p>
+        <p class="font-title-lg text-title-lg font-bold">$124.5k</p>
+    </div>
+    <div class="bg-surface-container-lowest p-stack-lg rounded-xl border border-outline-variant/30 shadow-sm fade-in-up" style="animation-delay: 0.35s;">
+        <div class="flex justify-between items-start mb-4">
+            <div class="p-2 bg-error/10 rounded-lg">
+                <span class="material-symbols-outlined text-error">rate_review</span>
+            </div>
+            <span class="text-error font-label-md flex items-center gap-1">-5% <span class="material-symbols-outlined text-[14px]" data-original-icon="trending">trending_down</span></span>
+        </div>
+        <p class="font-label-md text-label-md text-outline">Pending Reviews</p>
+        <p class="font-title-lg text-title-lg font-bold">48</p>
+    </div>
+</section>
+<!-- Charts Row -->
+<section class="grid grid-cols-1 lg:grid-cols-2 gap-gutter mb-8">
+    <!-- Student Enrollment Trend Bar Chart -->
+    <div class="bg-surface-container-lowest p-stack-lg rounded-xl border border-outline-variant/30 shadow-sm fade-in-up" style="animation-delay: 0.4s;">
+        <div class="flex justify-between items-center mb-8">
+            <h3 class="font-title-md text-title-md text-on-surface">Student Enrollment Trend</h3>
+            <select class="bg-surface-container border-none text-label-md rounded-lg focus:ring-1 focus:ring-primary">
+                <option>Last 6 Months</option>
+                <option>Year to Date</option>
+            </select>
+        </div>
+        <div class="h-64 flex items-end justify-between gap-2">
+            <div class="flex-1 flex flex-col items-center gap-2 group">
+                <div class="w-full bg-primary/20 rounded-t-lg relative group-hover:bg-primary/40 transition-colors" style="height: 40%">
+                    <div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-on-surface text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">1,200</div>
+                </div>
+                <span class="font-label-md text-outline">Jan</span>
+            </div>
+            <div class="flex-1 flex flex-col items-center gap-2 group">
+                <div class="w-full bg-primary/20 rounded-t-lg relative group-hover:bg-primary/40 transition-colors" style="height: 65%"></div>
+                <span class="font-label-md text-outline">Feb</span>
+            </div>
+            <div class="flex-1 flex flex-col items-center gap-2 group">
+                <div class="w-full bg-primary/20 rounded-t-lg relative group-hover:bg-primary/40 transition-colors" style="height: 55%"></div>
+                <span class="font-label-md text-outline">Mar</span>
+            </div>
+            <div class="flex-1 flex flex-col items-center gap-2 group">
+                <div class="w-full bg-primary/20 rounded-t-lg relative group-hover:bg-primary/40 transition-colors" style="height: 80%"></div>
+                <span class="font-label-md text-outline">Apr</span>
+            </div>
+            <div class="flex-1 flex flex-col items-center gap-2 group">
+                <div class="w-full bg-primary/20 rounded-t-lg relative group-hover:bg-primary/40 transition-colors" style="height: 70%"></div>
+                <span class="font-label-md text-outline">May</span>
+            </div>
+            <div class="flex-1 flex flex-col items-center gap-2 group">
+                <div class="w-full bg-primary/100 rounded-t-lg relative" style="height: 95%">
+                    <div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-on-surface text-white text-[10px] px-2 py-1 rounded">2,840</div>
+                </div>
+                <span class="font-label-md text-outline">Jun</span>
+            </div>
+        </div>
+    </div>
+    <!-- Revenue Line Chart Visualization -->
+    <div class="bg-surface-container-lowest p-stack-lg rounded-xl border border-outline-variant/30 shadow-sm fade-in-up" style="animation-delay: 0.45s;">
+        <div class="flex justify-between items-center mb-8">
+            <h3 class="font-title-md text-title-md text-on-surface">Monthly Revenue Insight</h3>
+            <div class="flex gap-2">
+                <span class="flex items-center gap-1 font-label-md text-outline"><span class="w-3 h-3 bg-primary rounded-full"></span> Subscriptions</span>
+                <span class="flex items-center gap-1 font-label-md text-outline"><span class="w-3 h-3 bg-tertiary rounded-full"></span> Direct Sales</span>
+            </div>
+        </div>
+        <div class="h-64 relative overflow-hidden flex items-end">
+            <!-- SVG Chart Logic -->
+            <svg class="w-full h-full" preserveAspectRatio="none" viewBox="0 0 400 150">
+                <defs>
+                    <linearGradient id="lineGrad" x1="0" x2="0" y1="0" y2="1">
+                        <stop offset="0%" stop-color="#2563EB" stop-opacity="0.3"></stop>
+                        <stop offset="100%" stop-color="#2563EB" stop-opacity="0"></stop>
+                    </linearGradient>
+                </defs>
+                <path d="M0,130 Q50,110 100,120 T200,80 T300,50 T400,30 L400,150 L0,150 Z" fill="url(#lineGrad)"></path>
+                <path d="M0,130 Q50,110 100,120 T200,80 T300,50 T400,30" fill="none" stroke="#2563EB" stroke-width="3"></path>
+                <!-- Circles on peaks -->
+                <circle cx="200" cy="80" fill="white" r="4" stroke="#2563EB" stroke-width="2"></circle>
+                <circle cx="300" cy="50" fill="white" r="4" stroke="#2563EB" stroke-width="2"></circle>
+                <circle cx="400" cy="30" fill="white" r="4" stroke="#2563EB" stroke-width="2"></circle>
+            </svg>
+            <div class="absolute bottom-0 w-full flex justify-between px-2 pt-2 border-t border-outline-variant/20">
+                <span class="font-label-md text-outline">W1</span>
+                <span class="font-label-md text-outline">W2</span>
+                <span class="font-label-md text-outline">W3</span>
+                <span class="font-label-md text-outline">W4</span>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Middle Section (2 Columns) -->
+<section class="grid grid-cols-1 xl:grid-cols-3 gap-gutter mb-8">
+    <!-- Latest Users Table -->
+    <div class="xl:col-span-2 bg-surface-container-lowest rounded-xl border border-outline-variant/30 shadow-sm overflow-hidden fade-in-up" style="animation-delay: 0.5s;">
+        <div class="p-6 border-b border-outline-variant/20 flex justify-between items-center">
+            <h3 class="font-title-md text-title-md text-on-surface">Latest Learner Enrollments</h3>
+            <button class="text-primary font-label-md hover:underline">View All Students</button>
+        </div>
+        <div class="overflow-x-auto">
+            <table class="w-full text-left">
+                <thead class="bg-surface-container/30">
+                    <tr>
+                        <th class="px-6 py-4 font-label-md text-outline uppercase tracking-wider">Student</th>
+                        <th class="px-6 py-4 font-label-md text-outline uppercase tracking-wider">Email Address</th>
+                        <th class="px-6 py-4 font-label-md text-outline uppercase tracking-wider">Course</th>
+                        <th class="px-6 py-4 font-label-md text-outline uppercase tracking-wider text-center">Status</th>
+                        <th class="px-6 py-4"></th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-outline-variant/10">
+                    <tr class="hover:bg-surface-container/10 transition-colors">
+                        <td class="px-6 py-4">
+                            <div class="flex items-center gap-3">
+                                <img class="w-10 h-10 rounded-full object-cover" data-alt="A detailed, vibrant profile avatar of a young professional student with a bright, welcoming expression. The student is set against a solid, soft pastel background in light blue, adhering to the professional e-learning portal style. The lighting is crisp and the composition is a tight portrait suitable for a dashboard table entry." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDht1Rzxp6qrYtmHr6fnrr_-FudhFPzxFYUjfRG2cVysEDOShGE58Hk1n5mhbYLgKz7oyh_bzhxmAjh4anf36Ogg09k_o5Mzairf_ki1Ze1xHmSDyB-m-uxOeHPfAVk2FzdJkT3smr8ySSH6bnCO9A1tLdoIkDI4H2FyAMz9-4Mf7cUbacfE9O_VE7tCJpiOrGIEKErZYRh_xui8xB-EF-XKs9QUTDfp7Z7rYiqJlUqtA_MsQbo_yaqTbLC6NEhDxfVLtd_lfANBvA">
+                                <span class="font-body-md text-body-md font-semibold">Julianna Varga</span>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4 font-body-md text-on-surface-variant">julianna.v@edu.com</td>
+                        <td class="px-6 py-4 font-body-md text-on-surface-variant">Advanced UI/UX 2024</td>
+                        <td class="px-6 py-4 text-center">
+                            <span class="px-3 py-1 bg-tertiary/10 text-tertiary rounded-full font-label-md">Active</span>
+                        </td>
+                        <td class="px-6 py-4 text-right">
+                            <button class="material-symbols-outlined text-outline hover:text-primary transition-colors">more_vert</button>
+                        </td>
+                    </tr>
+                    <tr class="hover:bg-surface-container/10 transition-colors">
+                        <td class="px-6 py-4">
+                            <div class="flex items-center gap-3">
+                                <img class="w-10 h-10 rounded-full object-cover" data-alt="A friendly, high-quality headshot of a male adult learner with glasses, appearing professional and focused. The background is a clean, neutral office environment blurred slightly. This image serves as a profile picture in a data table for an e-learning administrative dashboard, maintaining a cohesive high-end SaaS aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAqOtgb8kjgF-F2U24D6mF3Y13trNaHsYhJuIxYJDHpCvu4cgkamiy6Q4FqxXtUZoHux1EtJyfYT69cy6uI3WLXn9K3SqN-UbVIuW0A6dfkLbTnnMXmtVCYh_2KEictWBo9s9vTQx5Hc5wEy0s8U1AD02ui2gQTndKJQA76R6-INR7q1sTY9rKeHGfsSH6VyDepsz1AcNAC1xKNWtX6HL6oAzmRdxj1Q4tx8_QawlWOqAp5XBSCG8gB7lvxXGPUyY8YB_5MbGoD6b8">
+                                <span class="font-body-md text-body-md font-semibold">Marcus Thorne</span>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4 font-body-md text-on-surface-variant">m.thorne@network.net</td>
+                        <td class="px-6 py-4 font-body-md text-on-surface-variant">Full Stack Mastery</td>
+                        <td class="px-6 py-4 text-center">
+                            <span class="px-3 py-1 bg-primary/10 text-primary rounded-full font-label-md">Pending</span>
+                        </td>
+                        <td class="px-6 py-4 text-right">
+                            <button class="material-symbols-outlined text-outline hover:text-primary transition-colors">more_vert</button>
+                        </td>
+                    </tr>
+                    <tr class="hover:bg-surface-container/10 transition-colors">
+                        <td class="px-6 py-4">
+                            <div class="flex items-center gap-3">
+                                <img class="w-10 h-10 rounded-full object-cover" data-alt="A portrait of a cheerful diverse student in a casual hoodie, suggesting a modern and approachable e-learning environment. The lighting is warm and the background is a minimalist studio set. The image is professional and designed for a list of recent user enrollments in an administrative dashboard." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQPoTeftxlR6kJ9fBJYWa7F59z8QfqpyQpGNW1wrVwnEI-1o1OOlai3n_S1_YPOHK161epKAuLR9uDtCVJBOeUsopoHTULTSeCbwKoSBA0oXkZXlUCUsESPRuPzhb8pLmLgkREfeHW6sdqKCwfwlPIGYkPLYwc6cjTSMYph6iKBdGCnOw-Ozva0fj1BvnnvZ00TpfnU7MF7rLKlrkDdz8JrFcZt4vO76j8YaCX7nfisBCNZW1N-0DoKWpNcGpXc7PmJrNWrU-HeEA">
+                                <span class="font-body-md text-body-md font-semibold">Sophia Chen</span>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4 font-body-md text-on-surface-variant">sophia.c@university.edu</td>
+                        <td class="px-6 py-4 font-body-md text-on-surface-variant">Data Science Ethics</td>
+                        <td class="px-6 py-4 text-center">
+                            <span class="px-3 py-1 bg-tertiary/10 text-tertiary rounded-full font-label-md">Active</span>
+                        </td>
+                        <td class="px-6 py-4 text-right">
+                            <button class="material-symbols-outlined text-outline hover:text-primary transition-colors">more_vert</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- Recent Activities -->
+    <div class="bg-surface-container-lowest rounded-xl border border-outline-variant/30 shadow-sm p-6 fade-in-up" style="animation-delay: 0.55s;">
+        <h3 class="font-title-md text-title-md text-on-surface mb-6">Recent Branch Activity</h3>
+        <div class="space-y-6 relative">
+            <!-- Vertical Timeline Line -->
+            <div class="absolute left-4 top-2 bottom-2 w-px bg-outline-variant/30"></div>
+            <div class="relative pl-10">
+                <div class="absolute left-2.5 top-1.5 w-3 h-3 rounded-full bg-primary ring-4 ring-primary/10"></div>
+                <p class="font-body-md text-body-md font-semibold">New course added</p>
+                <p class="font-label-md text-label-md text-outline">"Advanced Cybersecurity" by Dr. Elena</p>
+                <p class="font-label-md text-label-md text-primary mt-1">2 mins ago</p>
+            </div>
+            <div class="relative pl-10">
+                <div class="absolute left-2.5 top-1.5 w-3 h-3 rounded-full bg-error ring-4 ring-error/10"></div>
+                <p class="font-body-md text-body-md font-semibold">Approval pending</p>
+                <p class="font-label-md text-label-md text-outline">Subscription renewal for Enterprise A</p>
+                <p class="font-label-md text-label-md text-error mt-1">1 hour ago</p>
+            </div>
+            <div class="relative pl-10">
+                <div class="absolute left-2.5 top-1.5 w-3 h-3 rounded-full bg-tertiary ring-4 ring-tertiary/10"></div>
+                <p class="font-body-md text-body-md font-semibold">Review completed</p>
+                <p class="font-label-md text-label-md text-outline">Mark J. final project evaluated</p>
+                <p class="font-label-md text-label-md text-tertiary mt-1">3 hours ago</p>
+            </div>
+            <div class="relative pl-10">
+                <div class="absolute left-2.5 top-1.5 w-3 h-3 rounded-full bg-secondary-container ring-4 ring-secondary-container/10"></div>
+                <p class="font-body-md text-body-md font-semibold">System update</p>
+                <p class="font-label-md text-label-md text-outline">Branch nodes synchronization successful</p>
+                <p class="font-label-md text-label-md text-outline-variant mt-1">Yesterday</p>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Quick Action Row -->
+<section class="mb-12">
+    <h3 class="font-title-md text-title-md text-on-surface mb-6">Administrative Quick Actions</h3>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-gutter">
+        <button class="group bg-primary text-white p-6 rounded-xl shadow-lg hover:shadow-primary/30 transition-all duration-300 flex flex-col items-center gap-3 fade-in-up" style="animation-delay: 0.6s;">
+            <div class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
+                <span class="material-symbols-outlined">person_add</span>
+            </div>
+            <span class="font-title-md text-title-md">Add User</span>
+        </button>
+        <button class="group bg-on-secondary-fixed text-white p-6 rounded-xl shadow-lg hover:shadow-on-secondary-fixed/30 transition-all duration-300 flex flex-col items-center gap-3 fade-in-up" style="animation-delay: 0.65s;">
+            <div class="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
+                <span class="material-symbols-outlined">library_add</span>
+            </div>
+            <span class="font-title-md text-title-md">New Course</span>
+        </button>
+        <button class="group bg-surface-container-lowest text-on-surface p-6 rounded-xl border border-outline-variant/50 shadow-sm hover:border-primary transition-all duration-300 flex flex-col items-center gap-3 fade-in-up" style="animation-delay: 0.7s;">
+            <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
+                <span class="material-symbols-outlined text-primary">post_add</span>
+            </div>
+            <span class="font-title-md text-title-md text-primary">Add Lesson</span>
+        </button>
+        <button class="group bg-surface-container-lowest text-on-surface p-6 rounded-xl border border-outline-variant/50 shadow-sm hover:border-tertiary transition-all duration-300 flex flex-col items-center gap-3 fade-in-up" style="animation-delay: 0.75s;">
+            <div class="w-12 h-12 bg-tertiary/10 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
+                <span class="material-symbols-outlined text-tertiary">card_membership</span>
+            </div>
+            <span class="font-title-md text-title-md text-tertiary">Create Sub</span>
+        </button>
+    </div>
+</section>
+<!-- Bottom Section: Featured Courses -->
+<section class="fade-in-up" style="animation-delay: 0.8s;">
+    <div class="flex justify-between items-center mb-6">
+        <h3 class="font-title-md text-title-md text-on-surface">Top Performing Courses</h3>
+        <div class="flex gap-2">
+            <button class="w-8 h-8 rounded-full border border-outline-variant flex items-center justify-center hover:bg-surface-container transition-colors"><span class="material-symbols-outlined text-[18px]">chevron_left</span></button>
+            <button class="w-8 h-8 rounded-full border border-outline-variant flex items-center justify-center hover:bg-surface-container transition-colors"><span class="material-symbols-outlined text-[18px]">chevron_right</span></button>
+        </div>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter">
+        <!-- Course Card 1 -->
+        <div class="bg-surface-container-lowest rounded-xl border border-outline-variant/30 shadow-sm overflow-hidden group hover:-translate-y-1 transition-transform duration-300">
+            <div class="h-40 overflow-hidden relative">
+                <img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="A clean, minimalist 3D isometric illustration of a computer screen showing lines of code and abstract geometric shapes, representing a coding course. The color palette is composed of primary blues and soft whites, matching the e-learning portal's visual identity. The lighting is high-key and modern, giving a premium educational feel." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCECcQAlfgfAVjOBt8B6PtEJjjuofzOaNXloEBS1nERoNGhu663LfUnfxVWZpr1nkczPyjSUBgM_tOeJ0swZ8w532LeN42uOvvEeMh098q0esDKq4uD80Xh5N7_I-YKjnkhgJExh538TsGH6df9uZo1tP5lkQjsz4venytUY238eflDTzdM98vYCN6ywGNZh4-ceZeRlUjIZr5FwA9gLOxIVrDnhsoD2koAE8OBZYuRbcUbBEKH97XAjcO3IHNmvbmJAEY_YHO0uIk">
+                <div class="absolute top-3 right-3 bg-white/90 backdrop-blur px-2 py-1 rounded text-label-md font-bold text-primary">$199</div>
+            </div>
+            <div class="p-4">
+                <span class="font-label-md text-label-md text-tertiary bg-tertiary/10 px-2 py-1 rounded">Development</span>
+                <h4 class="font-title-md text-title-md text-on-surface mt-2 line-clamp-1">Full Stack React Masterclass</h4>
+                <div class="flex items-center gap-4 mt-4">
+                    <span class="flex items-center gap-1 text-label-md text-outline"><span class="material-symbols-outlined text-[16px]">group</span> 2.4k</span>
+                    <span class="flex items-center gap-1 text-label-md text-outline"><span class="material-symbols-outlined text-[16px] text-primary" style="font-variation-settings: 'FILL' 1;">star</span> 4.9</span>
+                </div>
+            </div>
+        </div>
+        <!-- Course Card 2 -->
+        <div class="bg-surface-container-lowest rounded-xl border border-outline-variant/30 shadow-sm overflow-hidden group hover:-translate-y-1 transition-transform duration-300">
+            <div class="h-40 overflow-hidden relative">
+                <img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="A stylized 3D representation of digital layering and typography elements, symbolizing a professional UI/UX design course. Soft shadows, glassmorphism textures, and a primary blue accent color are used. The composition is clean, centered, and reflects high-end SaaS design principles for an academic portal thumbnail." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDcEx2aAaQ4h9Q92D18QeL-9IIdUI76LjGiMnuXqN7nagOQNqbgI1kH7_n5mUPlY876Edp-HzFukHZ894gppDzfsTOgm1Cz8WaDXmeJMYTNcEY-kTRP6yRZ_1ZaXkWvgdntGMMqfvaLVZ4B5kp2YslTST3ZeSlAqfryyooG2ZlKKzK4MPDkEU2ueYoMCX-RPq9gP84dmTolk5Rzi4qIIbATAjrcHjug-9TiFK34M4_DsZIp4ZbCAW3lIQQ5Vdd3qyefzNy7h8lkWb8">
+                <div class="absolute top-3 right-3 bg-white/90 backdrop-blur px-2 py-1 rounded text-label-md font-bold text-primary">$149</div>
+            </div>
+            <div class="p-4">
+                <span class="font-label-md text-label-md text-primary bg-primary/10 px-2 py-1 rounded">Design</span>
+                <h4 class="font-title-md text-title-md text-on-surface mt-2 line-clamp-1">Professional UI Design Systems</h4>
+                <div class="flex items-center gap-4 mt-4">
+                    <span class="flex items-center gap-1 text-label-md text-outline"><span class="material-symbols-outlined text-[16px]">group</span> 1.8k</span>
+                    <span class="flex items-center gap-1 text-label-md text-outline"><span class="material-symbols-outlined text-[16px] text-primary" style="font-variation-settings: 'FILL' 1;">star</span> 4.8</span>
+                </div>
+            </div>
+        </div>
+        <!-- Course Card 3 -->
+        <div class="bg-surface-container-lowest rounded-xl border border-outline-variant/30 shadow-sm overflow-hidden group hover:-translate-y-1 transition-transform duration-300">
+            <div class="h-40 overflow-hidden relative">
+                <img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="An abstract visualization of a digital shield and networking nodes, rendered in a sleek 3D style with blue and dark navy tones. The image represents a cybersecurity course, conveying security, stability, and advanced technology. The overall aesthetic is clean and matches the corporate modernism of the dashboard." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB0pNP4qPgLcxW5_YN7JoPNaD462WhKn8A-QKiS7WeblJ-4IUBU5Nv6DGnL-zwsDNd0Dy5tQDWnsC4p8WNOmVolbIHDCYJxdSuSgJt8D6wo9VEiH5QVBLp7T-xZsBTCoYgDwp55UNfVsyK1jTWxv2D0DIyH4Tsx47DogckMYsB51yoIsyG4ZIwDVhe5spZXCcKOkMCZC9z0AhaaNhLU1_ozXWJNZAP3iR-0SUXBi28Ds1_i3sR2Uvi7HBtOf_e9V3CbXQNJJHEYIB0">
+                <div class="absolute top-3 right-3 bg-white/90 backdrop-blur px-2 py-1 rounded text-label-md font-bold text-primary">$299</div>
+            </div>
+            <div class="p-4">
+                <span class="font-label-md text-label-md text-error bg-error/10 px-2 py-1 rounded">Security</span>
+                <h4 class="font-title-md text-title-md text-on-surface mt-2 line-clamp-1">Ethical Hacking &amp; Defense</h4>
+                <div class="flex items-center gap-4 mt-4">
+                    <span class="flex items-center gap-1 text-label-md text-outline"><span class="material-symbols-outlined text-[16px]">group</span> 950</span>
+                    <span class="flex items-center gap-1 text-label-md text-outline"><span class="material-symbols-outlined text-[16px] text-primary" style="font-variation-settings: 'FILL' 1;">star</span> 4.7</span>
+                </div>
+            </div>
+        </div>
+        <!-- Course Card 4 -->
+        <div class="bg-surface-container-lowest rounded-xl border border-outline-variant/30 shadow-sm overflow-hidden group hover:-translate-y-1 transition-transform duration-300">
+            <div class="h-40 overflow-hidden relative">
+                <img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="A sophisticated 3D render of a golden gear and bar charts, representing an enterprise management or business analytics course. The lighting is soft and professional, utilizing a palette of deep blues and whites with subtle gold highlights. The image is designed to fit seamlessly into a modern e-learning dashboard interface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuALvwLR8HyQYFS6Fo-k211k9UCAXNet3TTTYte-JsQtfACoj9KTIzo0qs1XurtIJNqD-pp3M9upvWJKgdZxBS08rYu2kXCAF3j-HIsphFXoTqboYgkiNafBl3vhavPASntU5KWPWaPOPpaZ9amrE951e9saF2nM3-C1AnSlJAoeICwLXx53kf0rYLfZAok5MdOtV94hb49wlD3UC4r82v8x9haQ0X5RAxeGJxWQ0jAW6hmwJpu78tg7tKdKKgNSUdubU-ef_gZL-Nk">
+                <div class="absolute top-3 right-3 bg-white/90 backdrop-blur px-2 py-1 rounded text-label-md font-bold text-primary">$120</div>
+            </div>
+            <div class="p-4">
+                <span class="font-label-md text-label-md text-secondary bg-secondary/10 px-2 py-1 rounded">Business</span>
+                <h4 class="font-title-md text-title-md text-on-surface mt-2 line-clamp-1">Agile Product Management</h4>
+                <div class="flex items-center gap-4 mt-4">
+                    <span class="flex items-center gap-1 text-label-md text-outline"><span class="material-symbols-outlined text-[16px]">group</span> 3.1k</span>
+                    <span class="flex items-center gap-1 text-label-md text-outline"><span class="material-symbols-outlined text-[16px] text-primary" style="font-variation-settings: 'FILL' 1;">star</span> 5.0</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    // Micro-interactions for stats cards
+    document.querySelectorAll('.bg-surface-container-lowest').forEach(card => {
+        card.addEventListener('mouseenter', () => {
+            card.classList.add('shadow-md');
+        });
+        card.addEventListener('mouseleave', () => {
+            card.classList.remove('shadow-md');
+        });
+    });
+
+    // Simulating some dynamic behavior for progress bars
+    window.addEventListener('load', () => {
+        const bars = document.querySelectorAll('.chart-bar');
+        bars.forEach(bar => {
+            const height = bar.style.height;
+            bar.style.height = '0px';
+            setTimeout(() => {
+                bar.style.height = height;
+            }, 100);
+        });
+    });
+</script>
+

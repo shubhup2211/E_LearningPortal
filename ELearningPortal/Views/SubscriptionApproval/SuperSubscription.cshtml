@@ -1,0 +1,311 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "~/Views/Shared/_SuperAdminLayout.cshtml";
+}
+<div class="pt-10 pb-12 px-container-margin">
+    <!-- Header Section -->
+    <div class="mb-stack-lg flex justify-between items-end">
+        <div>
+            <h2 class="font-headline-lg text-headline-lg text-on-surface">Subscription Approval</h2>
+            <p class="text-on-surface-variant font-body-lg text-body-lg mt-1">Review and approve subscription plans and bundles submitted by Branch Admins.</p>
+        </div>
+        <div class="flex gap-3">
+            <button class="px-4 py-2 border border-outline-variant text-on-surface font-title-md text-title-md rounded-lg hover:bg-surface-container-high transition-colors">
+                Export Report
+            </button>
+            <button class="px-4 py-2 bg-primary text-on-primary font-title-md text-title-md rounded-lg shadow-sm hover:shadow-md transition-all">
+                Refresh Queue
+            </button>
+        </div>
+    </div>
+    <!-- Summary Cards Bento Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter mb-stack-lg">
+        <div class="bg-surface-container-lowest p-stack-lg rounded-xl border border-outline-variant shadow-sm hover:shadow-md transition-shadow">
+            <div class="flex justify-between items-start mb-4">
+                <div class="p-3 rounded-lg bg-primary-fixed-dim/20 text-primary">
+                    <span class="material-symbols-outlined">payments</span>
+                </div>
+                <span class="text-label-md text-tertiary font-bold">+12% vs last month</span>
+            </div>
+            <p class="text-on-surface-variant font-label-md text-label-md uppercase tracking-wider">Total Subscriptions</p>
+            <h3 class="text-headline-lg font-headline-lg text-on-surface mt-1">124</h3>
+        </div>
+        <div class="bg-surface-container-lowest p-stack-lg rounded-xl border border-outline-variant shadow-sm hover:shadow-md transition-shadow">
+            <div class="flex justify-between items-start mb-4">
+                <div class="p-3 rounded-lg bg-yellow-100 text-yellow-700">
+                    <span class="material-symbols-outlined">pending_actions</span>
+                </div>
+                <span class="text-label-md text-yellow-700 font-bold">Action Required</span>
+            </div>
+            <p class="text-on-surface-variant font-label-md text-label-md uppercase tracking-wider">Pending Approval</p>
+            <h3 class="text-headline-lg font-headline-lg text-on-surface mt-1">18</h3>
+        </div>
+        <div class="bg-surface-container-lowest p-stack-lg rounded-xl border border-outline-variant shadow-sm hover:shadow-md transition-shadow">
+            <div class="flex justify-between items-start mb-4">
+                <div class="p-3 rounded-lg bg-tertiary-container/30 text-tertiary-container">
+                    <span class="material-symbols-outlined">check_circle</span>
+                </div>
+                <span class="text-label-md text-tertiary font-bold">Active Plans</span>
+            </div>
+            <p class="text-on-surface-variant font-label-md text-label-md uppercase tracking-wider">Approved Plans</p>
+            <h3 class="text-headline-lg font-headline-lg text-on-surface mt-1">94</h3>
+        </div>
+        <div class="bg-surface-container-lowest p-stack-lg rounded-xl border border-outline-variant shadow-sm hover:shadow-md transition-shadow">
+            <div class="flex justify-between items-start mb-4">
+                <div class="p-3 rounded-lg bg-error-container/30 text-on-error-container">
+                    <span class="material-symbols-outlined">cancel</span>
+                </div>
+                <span class="text-label-md text-on-error-container font-bold">Draft / Refused</span>
+            </div>
+            <p class="text-on-surface-variant font-label-md text-label-md uppercase tracking-wider">Rejected Plans</p>
+            <h3 class="text-headline-lg font-headline-lg text-on-surface mt-1">12</h3>
+        </div>
+    </div>
+    <!-- Main Data Table Container -->
+    <div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm overflow-hidden">
+        <div class="p-6 border-b border-outline-variant flex justify-between items-center bg-surface-container-low/50">
+            <h4 class="font-title-lg text-title-lg text-on-surface">Approval Queue</h4>
+            <div class="flex gap-2">
+                <select class="px-3 py-1.5 bg-white border border-outline-variant rounded-lg text-body-md focus:ring-primary outline-none">
+                    <option>All Branches</option>
+                    <option>North Campus</option>
+                    <option>Digital Academy</option>
+                </select>
+                <select class="px-3 py-1.5 bg-white border border-outline-variant rounded-lg text-body-md focus:ring-primary outline-none">
+                    <option>Pending Status</option>
+                    <option>Approved</option>
+                    <option>Rejected</option>
+                </select>
+            </div>
+        </div>
+        <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="bg-surface-container-low text-on-surface-variant font-label-md text-label-md uppercase tracking-wider">
+                        <th class="px-6 py-4">Plan Name</th>
+                        <th class="px-6 py-4">Branch Name</th>
+                        <th class="px-6 py-4 text-right">Price</th>
+                        <th class="px-6 py-4">Validity</th>
+                        <th class="px-6 py-4">Status</th>
+                        <th class="px-6 py-4 text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-outline-variant">
+                    <!-- Row 1 -->
+                    <tr class="hover:bg-surface-container-low/30 transition-colors group">
+                        <td class="px-6 py-4">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded bg-primary-container/10 flex items-center justify-center text-primary">
+                                    <span class="material-symbols-outlined">stars</span>
+                                </div>
+                                <div>
+                                    <p class="font-title-md text-title-md text-on-surface">Gold Certification Bundle</p>
+                                    <p class="text-label-md text-on-surface-variant">Curriculum Access + 1:1 Mentoring</p>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4 text-body-md text-on-surface">Digital Arts Academy</td>
+                        <td class="px-6 py-4 text-right font-title-md text-on-surface">$499.00</td>
+                        <td class="px-6 py-4 text-body-md text-on-surface">12 Months</td>
+                        <td class="px-6 py-4">
+                            <span class="px-3 py-1 rounded-full bg-yellow-100 text-yellow-700 text-label-md font-bold">Pending</span>
+                        </td>
+                        <td class="px-6 py-4">
+                            <div class="flex justify-center gap-2">
+                                <button class="p-2 text-tertiary-container hover:bg-tertiary-container/10 rounded-lg transition-colors" onclick="toggleModal('modal-approve')" title="Approve">
+                                    <span class="material-symbols-outlined">check_circle</span>
+                                </button>
+                                <button class="p-2 text-error hover:bg-error/10 rounded-lg transition-colors" onclick="toggleModal('modal-reject')" title="Reject">
+                                    <span class="material-symbols-outlined">cancel</span>
+                                </button>
+                                <button class="p-2 text-primary hover:bg-primary/10 rounded-lg transition-colors" title="View Details">
+                                    <span class="material-symbols-outlined">visibility</span>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    <!-- Row 2 -->
+                    <tr class="hover:bg-surface-container-low/30 transition-colors">
+                        <td class="px-6 py-4">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded bg-primary-container/10 flex items-center justify-center text-primary">
+                                    <span class="material-symbols-outlined">terminal</span>
+                                </div>
+                                <div>
+                                    <p class="font-title-md text-title-md text-on-surface">Silver Developer Path</p>
+                                    <p class="text-label-md text-on-surface-variant">Core Engineering Modules</p>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4 text-body-md text-on-surface">North Campus Tech</td>
+                        <td class="px-6 py-4 text-right font-title-md text-on-surface">$249.00</td>
+                        <td class="px-6 py-4 text-body-md text-on-surface">6 Months</td>
+                        <td class="px-6 py-4">
+                            <span class="px-3 py-1 rounded-full bg-yellow-100 text-yellow-700 text-label-md font-bold">Pending</span>
+                        </td>
+                        <td class="px-6 py-4">
+                            <div class="flex justify-center gap-2">
+                                <button class="p-2 text-tertiary-container hover:bg-tertiary-container/10 rounded-lg transition-colors" onclick="toggleModal('modal-approve')">
+                                    <span class="material-symbols-outlined">check_circle</span>
+                                </button>
+                                <button class="p-2 text-error hover:bg-error/10 rounded-lg transition-colors" onclick="toggleModal('modal-reject')">
+                                    <span class="material-symbols-outlined">cancel</span>
+                                </button>
+                                <button class="p-2 text-primary hover:bg-primary/10 rounded-lg transition-colors">
+                                    <span class="material-symbols-outlined">visibility</span>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    <!-- Row 3 -->
+                    <tr class="hover:bg-surface-container-low/30 transition-colors">
+                        <td class="px-6 py-4">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded bg-primary-container/10 flex items-center justify-center text-primary">
+                                    <span class="material-symbols-outlined">corporate_fare</span>
+                                </div>
+                                <div>
+                                    <p class="font-title-md text-title-md text-on-surface">Enterprise Full Access</p>
+                                    <p class="text-label-md text-on-surface-variant">Global Site License</p>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4 text-body-md text-on-surface">Corporate Learning Hub</td>
+                        <td class="px-6 py-4 text-right font-title-md text-on-surface">$2,999.00</td>
+                        <td class="px-6 py-4 text-body-md text-on-surface">24 Months</td>
+                        <td class="px-6 py-4">
+                            <span class="px-3 py-1 rounded-full bg-yellow-100 text-yellow-700 text-label-md font-bold">Pending</span>
+                        </td>
+                        <td class="px-6 py-4">
+                            <div class="flex justify-center gap-2">
+                                <button class="p-2 text-tertiary-container hover:bg-tertiary-container/10 rounded-lg transition-colors" onclick="toggleModal('modal-approve')">
+                                    <span class="material-symbols-outlined">check_circle</span>
+                                </button>
+                                <button class="p-2 text-error hover:bg-error/10 rounded-lg transition-colors" onclick="toggleModal('modal-reject')">
+                                    <span class="material-symbols-outlined">cancel</span>
+                                </button>
+                                <button class="p-2 text-primary hover:bg-primary/10 rounded-lg transition-colors">
+                                    <span class="material-symbols-outlined">visibility</span>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- Pagination -->
+        <div class="p-6 border-t border-outline-variant flex justify-between items-center bg-surface-container-low/30">
+            <p class="text-body-md text-on-surface-variant">Showing 1 to 3 of 18 pending requests</p>
+            <div class="flex gap-2">
+                <button class="w-10 h-10 flex items-center justify-center rounded-lg border border-outline-variant hover:bg-white text-on-surface disabled:opacity-50" disabled="">
+                    <span class="material-symbols-outlined">chevron_left</span>
+                </button>
+                <button class="w-10 h-10 flex items-center justify-center rounded-lg bg-primary text-on-primary font-bold">1</button>
+                <button class="w-10 h-10 flex items-center justify-center rounded-lg border border-outline-variant hover:bg-white text-on-surface">2</button>
+                <button class="w-10 h-10 flex items-center justify-center rounded-lg border border-outline-variant hover:bg-white text-on-surface">3</button>
+                <button class="w-10 h-10 flex items-center justify-center rounded-lg border border-outline-variant hover:bg-white text-on-surface">
+                    <span class="material-symbols-outlined">chevron_right</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal: Approve Subscription -->
+<div class="hidden fixed inset-0 z-[60] flex items-center justify-center p-4" id="modal-approve">
+    <div class="absolute inset-0 modal-overlay" onclick="toggleModal('modal-approve')"></div>
+    <div class="relative bg-surface-container-lowest rounded-2xl shadow-2xl w-full max-w-md overflow-hidden transform transition-all">
+        <div class="p-stack-lg border-b border-outline-variant flex items-center gap-4 bg-tertiary-container/5">
+            <div class="p-3 rounded-full bg-tertiary-container/20 text-tertiary-container">
+                <span class="material-symbols-outlined">check_circle</span>
+            </div>
+            <div>
+                <h5 class="font-title-lg text-title-lg text-on-surface">Approve Subscription</h5>
+                <p class="text-label-md text-on-surface-variant">Finalize plan activation</p>
+            </div>
+        </div>
+        <div class="p-stack-lg">
+            <p class="text-body-md text-on-surface mb-stack-md">
+                Are you sure you want to approve the <strong>Gold Certification Bundle</strong>? This plan will become immediately available for enrollment in the branch.
+            </p>
+            <div class="bg-surface-container-low rounded-lg p-stack-md space-y-2 mb-stack-md">
+                <div class="flex justify-between text-label-md">
+                    <span class="text-on-surface-variant">Branch:</span>
+                    <span class="text-on-surface font-bold">Digital Arts Academy</span>
+                </div>
+                <div class="flex justify-between text-label-md">
+                    <span class="text-on-surface-variant">Price Point:</span>
+                    <span class="text-on-surface font-bold">$499.00 / 12 Months</span>
+                </div>
+            </div>
+            <div class="flex gap-3 mt-6">
+                <button class="flex-1 px-4 py-2 border border-outline-variant rounded-lg font-title-md text-on-surface hover:bg-surface-container-high transition-colors" onclick="toggleModal('modal-approve')">
+                    Cancel
+                </button>
+                <button class="flex-1 px-4 py-2 bg-tertiary-container text-on-tertiary rounded-lg font-title-md shadow-md hover:shadow-lg transition-all">
+                    Yes, Approve
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal: Reject Subscription -->
+<div class="hidden fixed inset-0 z-[60] flex items-center justify-center p-4" id="modal-reject">
+    <div class="absolute inset-0 modal-overlay" onclick="toggleModal('modal-reject')"></div>
+    <div class="relative bg-surface-container-lowest rounded-2xl shadow-2xl w-full max-w-md overflow-hidden transform transition-all">
+        <div class="p-stack-lg border-b border-outline-variant flex items-center gap-4 bg-error-container/5">
+            <div class="p-3 rounded-full bg-error-container/20 text-error">
+                <span class="material-symbols-outlined">warning</span>
+            </div>
+            <div>
+                <h5 class="font-title-lg text-title-lg text-on-surface">Reject Subscription</h5>
+                <p class="text-label-md text-on-surface-variant">Review will be returned to branch</p>
+            </div>
+        </div>
+        <div class="p-stack-lg">
+            <p class="text-body-md text-on-surface mb-stack-md">
+                Please provide a reason for rejecting the <strong>Enterprise Full Access</strong> plan.
+            </p>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-label-md text-on-surface-variant mb-2 font-bold uppercase tracking-wide">Reason for Rejection</label>
+<textarea class="w-full bg-surface-container-low border border-outline-variant rounded-lg p-3 text-body-md focus:ring-2 focus:ring-error focus:border-transparent outline-none resize-none" placeholder="Example: Pricing structure does not meet campus guidelines..." rows="4"></textarea>
+                </div>
+                <div class="flex items-start gap-3">
+                    <input class="mt-1 rounded border-outline-variant text-error focus:ring-error" type="checkbox" />
+                    <label class="text-label-md text-on-surface-variant">Notify Branch Administrator immediately via email.</label>
+                </div>
+            </div>
+            <div class="flex gap-3 mt-8">
+                <button class="flex-1 px-4 py-2 border border-outline-variant rounded-lg font-title-md text-on-surface hover:bg-surface-container-high transition-colors" onclick="toggleModal('modal-reject')">
+                    Cancel
+                </button>
+                <button class="flex-1 px-4 py-2 bg-error text-on-error rounded-lg font-title-md shadow-md hover:shadow-lg transition-all">
+                    Confirm Rejection
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function toggleModal(id) {
+        const modal = document.getElementById(id);
+        if (modal.classList.contains('hidden')) {
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        } else {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+    }
+
+    // Search Bar Micro-interaction
+    const searchInput = document.querySelector('input[type="text"]');
+    searchInput.addEventListener('focus', () => {
+        searchInput.classList.add('w-80');
+    });
+    searchInput.addEventListener('blur', () => {
+        searchInput.classList.remove('w-80');
+    });
+</script>

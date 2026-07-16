@@ -1,0 +1,56 @@
+﻿@using ELearningPortal.Models.Course
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<partial name="Notification"></partial>
+
+@model CourseView
+<form asp-action="AdminUpdateCourse" asp-controller="Course" method="post" enctype="multipart/form-data" class="grid grid-cols-1 md:grid-cols-2 gap-8">
+    <input type="hidden" asp-for="CourseId" id="EditCourseId" />
+    <!-- Left Column -->
+    <div class="space-y-6">
+        <div class="space-y-2">
+            <label class="font-bold text-sm text-on-surface-variant">Course Name</label>
+            <input asp-for="CourseName" class="w-full px-4 py-2.5 border border-outline-variant rounded-xl bg-surface-container-low focus:ring-2 focus:ring-primary focus:border-transparent outline-none" placeholder="e.g., Reactive Spring Microservices" type="text" />
+            <span asp-validation-for="CourseName" class="text-danger"></span>
+        </div>
+        <div class="space-y-2">
+            <label class="font-bold text-sm text-on-surface-variant">Description</label>
+            <textarea asp-for="Description" class="w-full px-4 py-2.5 border border-outline-variant rounded-xl bg-surface-container-low focus:ring-2 focus:ring-primary focus:border-transparent outline-none resize-none" placeholder="Detailed module overview..." rows="2"></textarea>
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+    </div>
+    <!-- Right Column -->
+    <div class="space-y-6">
+        <div class="grid grid-cols-2 gap-4">
+            <div class="space-y-2">
+                <label class="font-bold text-sm text-on-surface-variant">Thumbnail Image</label>
+                <div class="border-2 border-dashed border-outline-variant rounded-2xl p-8 flex flex-col items-center justify-center bg-surface-container-low hover:bg-surface-variant/30 transition-colors cursor-pointer relative overflow-hidden group">
+                    <input asp-for="UploadedCImage" class="absolute inset-0 opacity-0 cursor-pointer" name="UploadedCImage" type="file" />
+                    <span asp-validation-for="UploadedCImage" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="space-y-2">
+                <label class="font-bold text-sm text-on-surface-variant">Status</label>
+                <select asp-for="Status" class="w-full px-4 py-2.5 border border-outline-variant rounded-xl bg-surface-container-low focus:ring-2 focus:ring-primary focus:border-transparent outline-none">
+                    <option value="1">Active</option>
+                    <option value="0">Inactive</option>
+                </select>
+                <span asp-validation-for="Status" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div class="px-8 py-6 border-t border-outline-variant flex justify-end gap-4 bg-surface-container-lowest">
+        <button class="px-6 py-2.5 rounded-lg border border-outline text-on-surface font-semibold hover:bg-surface-container-high transition-colors" onclick="toggleModal('addModal')">Cancel</button>
+        <button type="submit" class="px-8 py-2.5 rounded-lg bg-primary text-white font-bold shadow-lg hover:bg-primary-container active:scale-95 transition-all">Update Course</button>
+    </div>
+</form>
+
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+}

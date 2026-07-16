@@ -1,0 +1,78 @@
+﻿@using ELearningPortal.Models.Authentication
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@model UserViewModel
+<!-- Edit User Modal -->
+<div class="flex items-center gap-2 mb-1">
+    <h2 class="font-headline-lg text-headline-lg text-on-surface">Edit User</h2>
+</div>
+    <form id="user-form" asp-action="AdminUpdateUser" method="post" enctype="multipart/form-data">
+        <input type="hidden" asp-for="UserId" id="EditUserId" />
+        <div class="p-6 overflow-y-auto max-h-[70vh] custom-scrollbar space-y-4">
+            <div class="space-y-1">
+                <label class="text-label-md text-on-surface-variant font-medium">Profile Image:</label>
+                <div class="flex items-center gap-3 p-2 border border-outline-variant rounded-lg">
+                    <input type="file" name="ProfileImage" id="editProfileImage" class="hidden" onchange="document.getElementById('fileNameSpan').innerText = this.files[0] ? this.files[0].name : 'No file chosen'" />
+                    <button class="px-4 py-1.5 bg-surface-container-low border border-outline-variant rounded text-body-md" type="button" onclick="document.getElementById('editProfileImage').click()">Choose File</button>
+                    <span class="text-body-md text-outline">No file chosen</span>
+                </div>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div class="space-y-1">
+                    <label class="text-label-md text-on-surface-variant font-medium">Full Name <span class="text-error">*</span></label>
+                    <input asp-for="FullName" class="w-full px-4 py-2 border border-outline-variant rounded-lg text-body-md focus:ring-2 focus:ring-primary/20 focus:border-primary" id="edit-first-name" placeholder="Enter First Name" type="text" />
+                </div>
+                <div class="space-y-1">
+                    <label class="text-label-md text-on-surface-variant font-medium">Phone Number <span class="text-error">*</span></label>
+                    <input asp-for="Phone" class="w-full px-4 py-2 border border-outline-variant rounded-lg text-body-md focus:ring-2 focus:ring-primary/20 focus:border-primary" id="edit-phone" placeholder="Enter Phone Number" type="tel" />
+                </div>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div class="space-y-1">
+                    <label class="text-label-md text-on-surface-variant font-medium">Email address <span class="text-error">*</span></label>
+                    <input asp-for="Email" class="w-full px-4 py-2 border border-outline-variant rounded-lg text-body-md focus:ring-2 focus:ring-primary/20 focus:border-primary" id="edit-email" placeholder="Enter email" type="email" />
+                </div>
+                <div class="space-y-1">
+                    <label class="text-label-md text-on-surface-variant font-medium">Password <span class="text-error">*</span></label>
+                    <input asp-for="Password" class="w-full px-4 py-2 border border-outline-variant rounded-lg text-body-md focus:ring-2 focus:ring-primary/20 focus:border-primary" id="edit-password" placeholder="Enter Password" type="password" />
+                </div>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div class="space-y-1">
+                    <label class="text-label-md text-on-surface-variant font-medium">Gender <span class="text-error">*</span></label>
+                    <select asp-for="Gender" class="w-full px-4 py-2 border border-outline-variant rounded-lg text-body-md focus:ring-2 focus:ring-primary/20 focus:border-primary" id="edit-status">
+                        <option value="1">Male</option>
+                        <option value="2">Female</option>
+                        <option value="3">Other</option>
+                    </select>
+                </div>
+                <div class="space-y-1">
+                    <label class="text-label-md text-on-surface-variant font-medium">Branch <span class="text-error">*</span></label>
+                    <select asp-for="BranchId" class="w-full px-4 py-2 border border-outline-variant rounded-lg text-body-md focus:ring-2 focus:ring-primary/20 focus:border-primary" id="edit-branch" asp-items="@ViewBag.Branch">
+                    </select>
+                </div>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div class="space-y-1">
+                    <label class="text-label-md text-on-surface-variant font-medium">Role <span class="text-error">*</span></label>
+                    <select asp-for="RoleId" class="w-full px-4 py-2 border border-outline-variant rounded-lg text-body-md focus:ring-2 focus:ring-primary/20 focus:border-primary" id="edit-role" asp-items="@ViewBag.Role">
+                    </select>
+                </div>
+                <div class="space-y-1">
+                    <label class="text-label-md text-on-surface-variant font-medium">Status <span class="text-error">*</span></label>
+                    <select asp-for="Status" class="w-full px-4 py-2 border border-outline-variant rounded-lg text-body-md focus:ring-2 focus:ring-primary/20 focus:border-primary" id="edit-status">
+                        <option value="1">Active</option>
+                        <option value="0">Inactive</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="px-6 py-4 bg-surface-container-low border-t border-outline-variant flex justify-end gap-3">
+                        <button class="px-6 py-2 bg-primary text-white rounded-lg font-title-md hover:bg-primary-container transition-all" type="submit">Update changes</button>
+        </div>
+    </form>
+

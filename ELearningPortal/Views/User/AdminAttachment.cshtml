@@ -1,0 +1,435 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<!-- Page Header -->
+<div class="flex justify-between items-end mb-8">
+    <div>
+        <h2 class="font-headline-lg text-headline-lg text-on-surface">Attachment Management</h2>
+        <p class="font-body-lg text-body-lg text-on-surface-variant mt-1">Manage learning attachment content for your branch.</p>
+    </div>
+    <button class="bg-primary text-white px-6 py-3 rounded-xl font-title-md flex items-center gap-2 hover:bg-primary-container transition-all shadow-lg shadow-primary/20" onclick="openAddModal()">
+        <span class="material-symbols-outlined text-lg">add</span>
+        Add Attachment
+    </button>
+</div>
+<!-- Scrollable Content -->
+<div class="flex-1 overflow-y-auto p-section-padding bg-background space-y-stack-lg">
+    <!-- Summary Cards Section -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter">
+        <!-- Total Attachments -->
+        <div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant shadow-sm flex items-center justify-between group hover:border-primary transition-all">
+            <div>
+                <p class="text-on-surface-variant text-label-md uppercase tracking-wider mb-1">Total Attachments</p>
+                <h3 class="text-headline-lg font-bold">1,248</h3>
+                <p class="text-xs text-tertiary flex items-center mt-2">
+                    <span class="material-symbols-outlined text-sm mr-1">trending_up</span>
+                    +12% this month
+                </p>
+            </div>
+            <div class="w-12 h-12 rounded-lg bg-primary/10 text-primary flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-colors">
+                <span class="material-symbols-outlined">folder</span>
+            </div>
+        </div>
+        <!-- PDF Files -->
+        <div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant shadow-sm flex items-center justify-between group hover:border-error transition-all">
+            <div>
+                <p class="text-on-surface-variant text-label-md uppercase tracking-wider mb-1">PDF Files</p>
+                <h3 class="text-headline-lg font-bold text-error">842</h3>
+                <p class="text-xs text-on-surface-variant mt-2">67% of total storage</p>
+            </div>
+            <div class="w-12 h-12 rounded-lg bg-error/10 text-error flex items-center justify-center group-hover:bg-error group-hover:text-white transition-colors">
+                <span class="material-symbols-outlined">picture_as_pdf</span>
+            </div>
+        </div>
+        <!-- Documents -->
+        <div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant shadow-sm flex items-center justify-between group hover:border-primary-container transition-all">
+            <div>
+                <p class="text-on-surface-variant text-label-md uppercase tracking-wider mb-1">Documents</p>
+                <h3 class="text-headline-lg font-bold text-primary-container">312</h3>
+                <p class="text-xs text-on-surface-variant mt-2">DOCX, PPTX, XLS</p>
+            </div>
+            <div class="w-12 h-12 rounded-lg bg-primary-container/10 text-primary-container flex items-center justify-center group-hover:bg-primary-container group-hover:text-white transition-colors">
+                <span class="material-symbols-outlined">description</span>
+            </div>
+        </div>
+        <!-- Recently Uploaded -->
+        <div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant shadow-sm flex items-center justify-between group hover:border-tertiary transition-all">
+            <div>
+                <p class="text-on-surface-variant text-label-md uppercase tracking-wider mb-1">Recently Uploaded</p>
+                <h3 class="text-headline-lg font-bold text-tertiary">24</h3>
+                <p class="text-xs text-on-surface-variant mt-2">Past 24 hours</p>
+            </div>
+            <div class="w-12 h-12 rounded-lg bg-tertiary/10 text-tertiary flex items-center justify-center group-hover:bg-tertiary group-hover:text-white transition-colors">
+                <span class="material-symbols-outlined">upload_file</span>
+            </div>
+        </div>
+    </div>
+    <!-- Filters Section -->
+    <div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant shadow-sm">
+        <div class="flex flex-col md:flex-row gap-gutter items-end">
+            <div class="flex-1 w-full space-y-2">
+                <label class="text-sm font-semibold text-on-surface">Search</label>
+                <div class="relative">
+                    <span class="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-outline">search</span>
+                    <input class="w-full pl-10 pr-4 py-2 border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all" placeholder="Title or Lesson name..." type="text" />
+                </div>
+            </div>
+            <div class="w-full md:w-48 space-y-2">
+                <label class="text-sm font-semibold text-on-surface">Master Course</label>
+                <select class="w-full py-2 border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all" id="filterMaster">
+                    <option value="">All Master Courses</option>
+                    <option>Full Stack Java</option>
+                    <option>Python Full Stack</option>
+                </select>
+            </div>
+            <div class="w-full md:w-48 space-y-2">
+                <label class="text-sm font-semibold text-on-surface">Sub Course</label>
+                <select class="w-full py-2 border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all" disabled="" id="filterSub">
+                    <option value="">All Sub Courses</option>
+                </select>
+            </div>
+            <div class="w-full md:w-40 space-y-2">
+                <label class="text-sm font-semibold text-on-surface">File Type</label>
+                <select class="w-full py-2 border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all">
+                    <option value="">All Types</option>
+                    <option>PDF</option>
+                    <option>DOCX</option>
+                    <option>ZIP</option>
+                    <option>PPTX</option>
+                </select>
+            </div>
+            <button class="bg-surface-container-high text-primary px-6 py-2 rounded-lg font-bold flex items-center gap-2 hover:bg-surface-variant transition-colors border border-primary/20 h-[42px]">
+                <span class="material-symbols-outlined text-lg">filter_alt</span>
+                Filter
+            </button>
+        </div>
+    </div>
+    <!-- Table Section -->
+    <div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm overflow-hidden">
+        <div class="px-6 py-4 border-b border-outline-variant flex justify-between items-center bg-surface-container-low/30">
+            <h4 class="font-title-md text-on-surface">Attachment List</h4>
+            <span class="text-xs text-on-surface-variant font-medium bg-white px-3 py-1 rounded-full border border-outline-variant">Showing 10 of 1,248</span>
+        </div>
+        <div class="overflow-x-auto overflow-y-hidden">
+            <!-- Desktop Table -->
+            <table class="w-full text-left border-collapse hidden md:table">
+                <thead class="bg-surface-container-low/20">
+                    <tr>
+                        <th class="px-6 py-4 text-xs font-bold text-on-surface-variant uppercase tracking-wider">Title</th>
+                        <th class="px-6 py-4 text-xs font-bold text-on-surface-variant uppercase tracking-wider">Sub Course</th>
+                        <th class="px-6 py-4 text-xs font-bold text-on-surface-variant uppercase tracking-wider">Lesson</th>
+                        <th class="px-6 py-4 text-xs font-bold text-on-surface-variant uppercase tracking-wider">Type</th>
+                        <th class="px-6 py-4 text-xs font-bold text-on-surface-variant uppercase tracking-wider">Size</th>
+                        <th class="px-6 py-4 text-xs font-bold text-on-surface-variant uppercase tracking-wider text-right">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-outline-variant">
+                    <!-- Data Row 1 -->
+                    <tr class="hover:bg-surface-container-low/50 transition-colors group">
+                        <td class="px-6 py-4">
+                            <div class="flex items-center gap-3">
+                                <div class="w-8 h-8 rounded bg-error/10 text-error flex items-center justify-center">
+                                    <span class="material-symbols-outlined text-sm">picture_as_pdf</span>
+                                </div>
+                                <span class="font-bold text-on-surface">Notes - Lesson 1</span>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4 text-sm text-on-surface-variant">Full Stack Java</td>
+                        <td class="px-6 py-4 text-sm text-on-surface-variant truncate max-w-[150px]">OOPS Principles Intro</td>
+                        <td class="px-6 py-4">
+                            <span class="bg-error/10 text-error text-[10px] font-bold px-2 py-0.5 rounded-full border border-error/20">PDF</span>
+                        </td>
+                        <td class="px-6 py-4 text-sm text-on-surface-variant">2.4 MB</td>
+                        <td class="px-6 py-4 text-right space-x-1">
+                            <button class="p-2 text-primary hover:bg-primary/10 rounded-lg transition-colors" onclick="openViewDrawer()" title="View">
+                                <span class="material-symbols-outlined">visibility</span>
+                            </button>
+                            <button class="p-2 text-outline hover:bg-surface-container-low rounded-lg transition-colors">
+                                <span class="material-symbols-outlined">edit</span>
+                            </button>
+                            <button class="p-2 text-error hover:bg-error/10 rounded-lg transition-colors" onclick="openDeleteModal()" title="Delete">
+                                <span class="material-symbols-outlined">delete</span>
+                            </button>
+                        </td>
+                    </tr>
+                    <!-- Skeleton Loading Row -->
+                    <tr class="skeleton-row hidden">
+                        <td class="px-6 py-4"><div class="h-4 w-32 skeleton rounded"></div></td>
+                        <td class="px-6 py-4"><div class="h-4 w-24 skeleton rounded"></div></td>
+                        <td class="px-6 py-4"><div class="h-4 w-20 skeleton rounded"></div></td>
+                        <td class="px-6 py-4"><div class="h-6 w-12 skeleton rounded-full"></div></td>
+                        <td class="px-6 py-4"><div class="h-4 w-12 skeleton rounded"></div></td>
+                        <td class="px-6 py-4 text-right"><div class="h-8 w-24 skeleton rounded inline-block"></div></td>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- Mobile List -->
+            <div class="md:hidden divide-y divide-outline-variant">
+                <div class="p-4 space-y-3">
+                    <div class="flex justify-between items-start">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded bg-error/10 text-error flex items-center justify-center">
+                                <span class="material-symbols-outlined">picture_as_pdf</span>
+                            </div>
+                            <div>
+                                <p class="font-bold">Notes - Lesson 1</p>
+                                <p class="text-xs text-on-surface-variant">Full Stack Java • 2.4 MB</p>
+                            </div>
+                        </div>
+                        <span class="bg-error/10 text-error text-[10px] font-bold px-2 py-0.5 rounded-full">PDF</span>
+                    </div>
+                    <div class="flex gap-2">
+                        <button class="flex-1 py-2 bg-surface-container-low text-primary rounded-lg text-sm font-bold">View</button>
+                        <button class="flex-1 py-2 bg-surface-container-low text-tertiary rounded-lg text-sm font-bold">Download</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="px-6 py-4 border-t border-outline-variant flex items-center justify-between">
+            <div class="text-sm text-on-surface-variant hidden sm:block">
+                Showing <span class="font-bold">1</span> to <span class="font-bold">10</span> of <span class="font-bold">1,248</span> entries
+            </div>
+            <div class="flex items-center gap-2">
+                <button class="w-10 h-10 rounded-lg border border-outline-variant flex items-center justify-center text-outline hover:bg-surface-container-low transition-colors disabled:opacity-50" disabled="">
+                    <span class="material-symbols-outlined">chevron_left</span>
+                </button>
+                <button class="w-10 h-10 rounded-lg bg-primary text-white flex items-center justify-center font-bold">1</button>
+                <button class="w-10 h-10 rounded-lg border border-outline-variant flex items-center justify-center hover:bg-surface-container-low transition-colors font-bold">2</button>
+                <button class="w-10 h-10 rounded-lg border border-outline-variant flex items-center justify-center hover:bg-surface-container-low transition-colors font-bold">3</button>
+                <button class="w-10 h-10 rounded-lg border border-outline-variant flex items-center justify-center text-outline hover:bg-surface-container-low transition-colors">
+                    <span class="material-symbols-outlined">chevron_right</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modals and Overlays -->
+<!-- Add Attachment Modal -->
+<div class="fixed inset-0 z-[100] flex items-center justify-center hidden" id="addModal">
+    <div class="modal-overlay absolute inset-0" onclick="closeAddModal()"></div>
+    <div class="bg-surface-container-lowest w-full max-w-2xl rounded-2xl shadow-2xl z-10 overflow-hidden flex flex-col mx-4 max-h-[921px]">
+        <div class="px-8 py-6 border-b border-outline-variant flex justify-between items-center bg-surface-container-low/30">
+            <h3 class="font-headline-lg-mobile md:font-headline-lg text-primary">Add New Attachment</h3>
+            <button class="p-2 hover:bg-error/10 text-outline hover:text-error rounded-full transition-colors" onclick="closeAddModal()">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+        <div class="p-8 overflow-y-auto space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="space-y-2">
+                    <label class="text-sm font-bold">Attachment Title*</label>
+                    <input class="w-full px-4 py-2 border border-outline-variant rounded-xl focus:ring-2 focus:ring-primary/20 outline-none" placeholder="e.g. Lab Exercise 1" type="text" />
+                </div>
+                <div class="space-y-2">
+                    <label class="text-sm font-bold">Sub Course*</label>
+                    <select class="w-full px-4 py-2 border border-outline-variant rounded-xl outline-none" disabled="" id="modalSub">
+                        <option value="">Select Sub Course</option>
+                    </select>
+                </div>
+                <div class="space-y-2">
+                    <label class="text-sm font-bold">Lesson*</label>
+                    <select class="w-full px-4 py-2 border border-outline-variant rounded-xl outline-none" disabled="" id="modalLesson">
+                        <option value="">Select Lesson</option>
+                    </select>
+                </div>
+            </div>
+            <!-- Drag & Drop Area -->
+            <div class="space-y-2">
+                <label class="text-sm font-bold">Upload File</label>
+                <div class="border-2 border-dashed border-outline-variant rounded-2xl p-10 flex flex-col items-center justify-center bg-surface-container-low/20 hover:border-primary hover:bg-primary/5 transition-all cursor-pointer group">
+                    <div class="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                        <span class="material-symbols-outlined text-3xl">cloud_upload</span>
+                    </div>
+                    <p class="font-bold text-on-surface">Click to upload or drag and drop</p>
+                    <p class="text-xs text-on-surface-variant mt-1">PDF, DOCX, ZIP or PPTX (Max 50MB)</p>
+                </div>
+            </div>
+        </div>
+        <div class="px-8 py-6 border-t border-outline-variant flex justify-end gap-4 bg-surface-container-low/30">
+            <button class="px-6 py-2 border border-outline-variant rounded-xl font-bold hover:bg-surface-container-high transition-colors" onclick="closeAddModal()">Cancel</button>
+            <button class="px-8 py-2 bg-primary text-white rounded-xl font-bold hover:bg-primary-container transition-colors shadow-lg">Save &amp; Upload</button>
+        </div>
+    </div>
+</div>
+<!-- View Attachment Drawer (Right Side) -->
+<div class="fixed inset-0 z-[110] hidden" id="viewDrawer">
+    <div class="modal-overlay absolute inset-0" onclick="closeViewDrawer()"></div>
+    <div class="absolute right-0 top-0 h-full w-full max-w-md bg-surface-container-lowest shadow-2xl flex flex-col transform transition-transform duration-300 translate-x-0">
+        <div class="p-6 border-b border-outline-variant flex justify-between items-center bg-primary text-white">
+            <div>
+                <h3 class="font-title-lg">File Preview</h3>
+                <p class="text-xs opacity-80">Metadata &amp; Overview</p>
+            </div>
+            <button class="p-2 hover:bg-white/10 rounded-full transition-colors" onclick="closeViewDrawer()">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+        <div class="p-6 flex-1 overflow-y-auto space-y-8">
+            <div class="flex flex-col items-center text-center">
+                <div class="w-32 h-40 bg-surface-container-low border border-outline-variant rounded-lg mb-4 flex items-center justify-center relative overflow-hidden group shadow-lg">
+                    <span class="material-symbols-outlined text-6xl text-error">picture_as_pdf</span>
+                    <div class="absolute inset-0 bg-primary/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity cursor-zoom-in">
+                        <span class="material-symbols-outlined text-white text-3xl">zoom_in</span>
+                    </div>
+                </div>
+                <h4 class="font-bold text-lg mb-1">Notes - Lesson 1.pdf</h4>
+                <span class="bg-error/10 text-error text-xs font-bold px-3 py-1 rounded-full">PDF Document</span>
+            </div>
+            <div class="space-y-4">
+                <h5 class="text-sm font-bold uppercase tracking-wider text-outline">Details</h5>
+                <div class="grid grid-cols-2 gap-y-4 text-sm">
+                    <div class="text-on-surface-variant">Master Course</div>
+                    <div class="font-bold text-right">Full Stack Java</div>
+                    <div class="text-on-surface-variant">Sub Course</div>
+                    <div class="font-bold text-right">Core Java</div>
+                    <div class="text-on-surface-variant">Lesson</div>
+                    <div class="font-bold text-right">OOPS Principles</div>
+                    <div class="text-on-surface-variant">File Size</div>
+                    <div class="font-bold text-right">2.4 MB</div>
+                    <div class="text-on-surface-variant">Upload Date</div>
+                    <div class="font-bold text-right">Oct 24, 2023</div>
+                    <div class="text-on-surface-variant">Uploaded By</div>
+                    <div class="font-bold text-right text-primary underline">Admin User</div>
+                </div>
+            </div>
+            <div class="p-4 bg-surface-container-low rounded-xl border border-outline-variant space-y-2">
+                <h5 class="text-xs font-bold uppercase text-outline">Description</h5>
+                <p class="text-sm leading-relaxed">Comprehensive lecture notes covering Class declarations, Inheritance, and Encapsulation. Essential for the Module 1 assignment.</p>
+            </div>
+        </div>
+        <div class="p-6 border-t border-outline-variant grid grid-cols-2 gap-4">
+            <button class="flex items-center justify-center gap-2 py-3 border border-primary text-primary font-bold rounded-xl hover:bg-primary/5 transition-all">
+                <span class="material-symbols-outlined">download</span>
+                Download
+            </button>
+            <button class="flex items-center justify-center gap-2 py-3 bg-primary text-white font-bold rounded-xl hover:bg-primary-container transition-all shadow-md">
+                <span class="material-symbols-outlined">open_in_new</span>
+                Full Screen
+            </button>
+        </div>
+    </div>
+</div>
+<!-- Delete Confirmation Modal -->
+<div class="fixed inset-0 z-[120] flex items-center justify-center hidden" id="deleteModal">
+    <div class="modal-overlay absolute inset-0" onclick="closeDeleteModal()"></div>
+    <div class="bg-surface-container-lowest w-full max-w-md rounded-2xl shadow-2xl z-10 overflow-hidden mx-4 p-8 text-center animate-[scale-in_0.2s_ease-out]">
+        <div class="w-20 h-20 bg-error/10 text-error rounded-full flex items-center justify-center mx-auto mb-6">
+            <span class="material-symbols-outlined text-5xl">warning</span>
+        </div>
+        <h3 class="text-2xl font-bold text-on-surface mb-2">Are you sure?</h3>
+        <p class="text-on-surface-variant mb-8 leading-relaxed">You are about to delete <span class="font-bold">"Notes - Lesson 1"</span>. This action cannot be undone and the file will be permanently removed from our servers.</p>
+        <div class="flex gap-4">
+            <button class="flex-1 py-3 border border-outline-variant rounded-xl font-bold hover:bg-surface-container-low transition-colors" onclick="closeDeleteModal()">No, Keep it</button>
+            <button class="flex-1 py-3 bg-error text-white rounded-xl font-bold hover:bg-red-700 transition-colors shadow-lg">Yes, Delete</button>
+        </div>
+    </div>
+</div>
+<!-- Toast Notification (Hidden by default) -->
+<div class="fixed bottom-8 left-1/2 -translate-x-1/2 z-[200] bg-inverse-surface text-inverse-on-surface px-6 py-3 rounded-full shadow-2xl flex items-center gap-3 transition-all duration-300 translate-y-20 opacity-0" id="toast">
+    <span class="material-symbols-outlined text-tertiary-fixed">check_circle</span>
+    <span class="text-sm font-medium" id="toastMessage">Operation completed successfully!</span>
+</div>
+<script>
+    // Modal & Drawer Toggles
+    function openAddModal() {
+        document.getElementById('addModal').classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+    }
+    function closeAddModal() {
+        document.getElementById('addModal').classList.add('hidden');
+        document.body.style.overflow = 'auto';
+    }
+
+    function openViewDrawer() {
+        document.getElementById('viewDrawer').classList.remove('hidden');
+    }
+    function closeViewDrawer() {
+        document.getElementById('viewDrawer').classList.add('hidden');
+    }
+
+    function openDeleteModal() {
+        document.getElementById('deleteModal').classList.remove('hidden');
+    }
+    function closeDeleteModal() {
+        document.getElementById('deleteModal').classList.add('hidden');
+    }
+
+    // Cascading Dropdown Logic
+    const courseData = {
+        "Full Stack Java": {
+            subCourses: ["Core Java", "Advanced Java", "Spring Boot"],
+            lessons: ["OOPS Principles", "Generics", "REST APIs", "Microservices"]
+        },
+        "Python Full Stack": {
+            subCourses: ["Python Basics", "Django Framework", "React Integration"],
+            lessons: ["Intro to Py", "Django Models", "Auth Systems"]
+        }
+    };
+
+    function setupCascading(masterId, subId, lessonId) {
+        const masterSelect = document.getElementById(masterId);
+        const subSelect = document.getElementById(subId);
+        const lessonSelect = document.getElementById(lessonId);
+
+        masterSelect.addEventListener('change', function() {
+            const selectedMaster = this.value;
+            subSelect.innerHTML = '<option value="">Select Sub Course</option>';
+            if (lessonSelect) lessonSelect.innerHTML = '<option value="">Select Lesson</option>';
+
+            if (selectedMaster && courseData[selectedMaster]) {
+                subSelect.disabled = false;
+                courseData[selectedMaster].subCourses.forEach(sub => {
+                    const opt = document.createElement('option');
+                    opt.textContent = sub;
+                    subSelect.appendChild(opt);
+                });
+            } else {
+                subSelect.disabled = true;
+                if (lessonSelect) lessonSelect.disabled = true;
+            }
+        });
+
+        if (lessonSelect) {
+            subSelect.addEventListener('change', function() {
+                const selectedMaster = masterSelect.value;
+                lessonSelect.innerHTML = '<option value="">Select Lesson</option>';
+                if (this.value && selectedMaster) {
+                    lessonSelect.disabled = false;
+                    courseData[selectedMaster].lessons.forEach(lesson => {
+                        const opt = document.createElement('option');
+                        opt.textContent = lesson;
+                        lessonSelect.appendChild(opt);
+                    });
+                } else {
+                    lessonSelect.disabled = true;
+                }
+            });
+        }
+    }
+
+    // Initialize Cascading for Filter and Modal
+    setupCascading('filterMaster', 'filterSub', null);
+    setupCascading('modalMaster', 'modalSub', 'modalLesson');
+
+    // Toast Helper
+    function showToast(msg) {
+        const toast = document.getElementById('toast');
+        document.getElementById('toastMessage').innerText = msg;
+        toast.classList.remove('translate-y-20', 'opacity-0');
+        setTimeout(() => {
+            toast.classList.add('translate-y-20', 'opacity-0');
+        }, 3000);
+    }
+
+    // Simulator: Skeleton loading on init
+    window.addEventListener('load', () => {
+        const rows = document.querySelectorAll('.skeleton-row');
+        rows.forEach(r => r.classList.remove('hidden'));
+        setTimeout(() => {
+            rows.forEach(r => r.remove());
+        }, 1500);
+    });
+</script>

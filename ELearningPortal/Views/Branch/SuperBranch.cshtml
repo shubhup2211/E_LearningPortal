@@ -1,0 +1,399 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "~/Views/Shared/_SuperAdminLayout.cshtml";
+}
+<div class="pt-8 px-8 pb-12">
+<!-- Header Actions -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-2">
+<div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface">Organizational Units</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Manage organization branches and assign administrators for decentralized operations.</p>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center gap-2 px-5 py-2.5 rounded-lg border border-outline-variant bg-surface-container-lowest text-on-surface font-title-md hover:bg-surface-container transition-all" onclick="toggleModal('adminModal')">
+<span class="material-symbols-outlined text-[20px]">person_add</span>
+                        Add Branch Admin
+                    </button>
+<button class="flex items-center gap-2 px-5 py-2.5 rounded-lg bg-primary text-on-primary font-title-md shadow-lg shadow-primary/20 hover:bg-primary-container transition-all" onclick="toggleModal('branchModal')">
+<span class="material-symbols-outlined text-[20px]">add_business</span>
+                        Add Branch
+                    </button>
+</div>
+</div>
+<!-- Summary Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+<div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant shadow-sm hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start mb-4">
+<div class="p-3 rounded-lg bg-primary-fixed text-on-primary-fixed-variant">
+<span class="material-symbols-outlined">account_tree</span>
+</div>
+<span class="text-tertiary-container font-label-md flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">trending_up</span> 12%
+                        </span>
+</div>
+<p class="text-on-surface-variant font-label-md uppercase tracking-wider">Total Branches</p>
+<h3 class="text-display-lg font-display-lg text-on-surface mt-1">42</h3>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant shadow-sm hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start mb-4">
+<div class="p-3 rounded-lg bg-tertiary-fixed text-on-tertiary-fixed-variant">
+<span class="material-symbols-outlined">check_circle</span>
+</div>
+</div>
+<p class="text-on-surface-variant font-label-md uppercase tracking-wider">Active Branches</p>
+<h3 class="text-display-lg font-display-lg text-on-surface mt-1">38</h3>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant shadow-sm hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start mb-4">
+<div class="p-3 rounded-lg bg-error-container text-on-error-container">
+<span class="material-symbols-outlined">cancel</span>
+</div>
+</div>
+<p class="text-on-surface-variant font-label-md uppercase tracking-wider">Inactive Branches</p>
+<h3 class="text-display-lg font-display-lg text-on-surface mt-1">04</h3>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant shadow-sm hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start mb-4">
+<div class="p-3 rounded-lg bg-secondary-fixed text-on-secondary-fixed-variant">
+<span class="material-symbols-outlined">admin_panel_settings</span>
+</div>
+</div>
+<p class="text-on-surface-variant font-label-md uppercase tracking-wider">Total Branch Admins</p>
+<h3 class="text-display-lg font-display-lg text-on-surface mt-1">86</h3>
+</div>
+</div>
+<!-- Filters -->
+<div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant mb-6 shadow-sm">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+<div class="md:col-span-2">
+<label class="block text-on-surface-variant font-label-md mb-2">Search Branches</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="w-full pl-10 pr-4 py-2.5 rounded-lg border border-outline focus:ring-2 focus:ring-primary focus:border-primary transition-all" placeholder="Search by name, location or contact person..." type="text"/>
+</div>
+</div>
+<div>
+<label class="block text-on-surface-variant font-label-md mb-2">Status</label>
+<select class="w-full px-4 py-2.5 rounded-lg border border-outline focus:ring-2 focus:ring-primary focus:border-primary appearance-none">
+<option>All Statuses</option>
+<option>Active</option>
+<option>Inactive</option>
+</select>
+</div>
+<div class="flex items-end">
+<button class="w-full px-4 py-2.5 rounded-lg border border-outline-variant text-on-surface font-title-md hover:bg-surface-container-low transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[20px]">restart_alt</span>
+                            Reset Filters
+                        </button>
+</div>
+</div>
+</div>
+<!-- Branch Table Card -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant overflow-hidden shadow-sm">
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead class="bg-surface-container-low border-b border-outline-variant">
+<tr>
+<th class="px-6 py-4 font-title-md text-on-surface">Branch Details</th>
+<th class="px-6 py-4 font-title-md text-on-surface">Pincode</th>
+<th class="px-6 py-4 font-title-md text-on-surface">Contact Person</th>
+<th class="px-6 py-4 font-title-md text-on-surface">Status</th>
+<th class="px-6 py-4 font-title-md text-on-surface">Created Date</th>
+<th class="px-6 py-4 font-title-md text-on-surface text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-lowest transition-colors group">
+<td class="px-6 py-5">
+<div class="flex items-center gap-4">
+<div class="h-10 w-10 rounded-lg bg-primary-fixed flex items-center justify-center text-primary font-bold">MH</div>
+<div>
+<p class="font-title-md text-on-surface">Mumbai Main Branch</p>
+<p class="text-on-surface-variant text-xs">Andheri East, Mumbai</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-5 text-body-md text-on-surface-variant">400069</td>
+<td class="px-6 py-5">
+<p class="text-body-md text-on-surface">Rajesh Kumar</p>
+<p class="text-on-surface-variant text-xs">+91 98765 43210</p>
+</td>
+<td class="px-6 py-5">
+<span class="px-3 py-1 rounded-full bg-tertiary-container/10 text-tertiary-container font-label-md text-[11px] uppercase tracking-wide">Active</span>
+</td>
+<td class="px-6 py-5 text-body-md text-on-surface-variant">12 Oct 2023</td>
+<td class="px-6 py-5 text-right">
+<div class="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-2 rounded-lg hover:bg-surface-container text-on-surface-variant hover:text-primary transition-all" onclick="toggleDrawer()" title="View Details">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+</button>
+<button class="p-2 rounded-lg hover:bg-surface-container text-on-surface-variant hover:text-primary transition-all" title="Edit">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+<button class="p-2 rounded-lg hover:bg-error-container/20 text-on-surface-variant hover:text-error transition-all" onclick="confirmDelete()" title="Delete">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-lowest transition-colors group">
+<td class="px-6 py-5">
+<div class="flex items-center gap-4">
+<div class="h-10 w-10 rounded-lg bg-surface-variant flex items-center justify-center text-on-surface-variant font-bold">DL</div>
+<div>
+<p class="font-title-md text-on-surface">Delhi North Center</p>
+<p class="text-on-surface-variant text-xs">Rohini Sector 7, Delhi</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-5 text-body-md text-on-surface-variant">110085</td>
+<td class="px-6 py-5">
+<p class="text-body-md text-on-surface">Priya Sharma</p>
+<p class="text-on-surface-variant text-xs">+91 99887 76655</p>
+</td>
+<td class="px-6 py-5">
+<span class="px-3 py-1 rounded-full bg-outline-variant/30 text-outline font-label-md text-[11px] uppercase tracking-wide">Inactive</span>
+</td>
+<td class="px-6 py-5 text-body-md text-on-surface-variant">25 Nov 2023</td>
+<td class="px-6 py-5 text-right">
+<div class="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-2 rounded-lg hover:bg-surface-container text-on-surface-variant transition-all"><span class="material-symbols-outlined text-[20px]">visibility</span></button>
+<button class="p-2 rounded-lg hover:bg-surface-container text-on-surface-variant transition-all"><span class="material-symbols-outlined text-[20px]">edit</span></button>
+<button class="p-2 rounded-lg hover:bg-error-container/20 text-on-surface-variant transition-all"><span class="material-symbols-outlined text-[20px]">delete</span></button>
+</div>
+</td>
+</tr>
+<!-- Additional rows would follow here -->
+</tbody>
+</table>
+</div>
+<div class="px-6 py-4 border-t border-outline-variant flex items-center justify-between bg-surface-container-lowest">
+<p class="text-body-md text-on-surface-variant">Showing 1-10 of 42 branches</p>
+<div class="flex gap-2">
+<button class="p-2 rounded-lg border border-outline-variant disabled:opacity-50" disabled="">
+<span class="material-symbols-outlined text-[20px]">chevron_left</span>
+</button>
+<button class="p-2 rounded-lg border border-outline-variant hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-[20px]">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Create Branch Modal -->
+<div class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-on-secondary-fixed/50 backdrop-blur-sm hidden" id="branchModal">
+<div class="bg-surface-container-lowest w-full max-w-2xl rounded-2xl shadow-2xl border border-outline-variant overflow-hidden animate-in fade-in zoom-in duration-300">
+<div class="px-8 py-6 border-b border-outline-variant flex justify-between items-center bg-surface-container-low">
+<h3 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface">Establish New Branch</h3>
+<button class="p-2 hover:bg-surface-variant rounded-full transition-colors" onclick="toggleModal('branchModal')">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<div class="p-8">
+<form class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="md:col-span-2">
+<label class="block text-on-surface font-label-md mb-2">Branch Name</label>
+<input class="w-full px-4 py-3 rounded-xl border border-outline focus:ring-2 focus:ring-primary transition-all" placeholder="e.g. Hyderabad Global Tech Center" type="text"/>
+</div>
+<div class="md:col-span-2">
+<label class="block text-on-surface font-label-md mb-2">Location Address</label>
+<textarea class="w-full px-4 py-3 rounded-xl border border-outline focus:ring-2 focus:ring-primary transition-all" placeholder="Full postal address..." rows="2"></textarea>
+</div>
+<div>
+<label class="block text-on-surface font-label-md mb-2">Pincode</label>
+<input class="w-full px-4 py-3 rounded-xl border border-outline focus:ring-2 focus:ring-primary transition-all" placeholder="6-digit code" type="text"/>
+</div>
+<div>
+<label class="block text-on-surface font-label-md mb-2">Contact Person</label>
+<input class="w-full px-4 py-3 rounded-xl border border-outline focus:ring-2 focus:ring-primary transition-all" placeholder="Full name of representative" type="text"/>
+</div>
+<div>
+<label class="block text-on-surface font-label-md mb-2">Contact Number</label>
+<input class="w-full px-4 py-3 rounded-xl border border-outline focus:ring-2 focus:ring-primary transition-all" placeholder="+91 00000 00000" type="tel"/>
+</div>
+<div class="flex items-center justify-between p-4 bg-surface-container-low rounded-xl">
+<div>
+<p class="font-title-md text-on-surface">Active Status</p>
+<p class="text-on-surface-variant text-xs">Branch will be visible to students</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-outline rounded-full peer peer-focus:ring-4 peer-focus:ring-primary/20 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+</form>
+</div>
+<div class="px-8 py-6 border-t border-outline-variant bg-surface-container-low flex justify-end gap-3">
+<button class="px-6 py-2.5 rounded-xl border border-outline text-on-surface font-title-md hover:bg-surface-container transition-colors" onclick="toggleModal('branchModal')">Cancel</button>
+<button class="px-8 py-2.5 rounded-xl bg-primary text-on-primary font-title-md shadow-lg shadow-primary/30 hover:bg-primary-container transition-all">Save Branch</button>
+</div>
+</div>
+</div>
+<!-- Create Branch Admin Modal -->
+<div class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-on-secondary-fixed/50 backdrop-blur-sm hidden" id="adminModal">
+<div class="bg-surface-container-lowest w-full max-w-lg rounded-2xl shadow-2xl border border-outline-variant overflow-hidden">
+<div class="px-8 py-6 border-b border-outline-variant flex justify-between items-center">
+<h3 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface">Add Branch Administrator</h3>
+<button class="p-2 hover:bg-surface-variant rounded-full transition-colors" onclick="toggleModal('adminModal')">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<div class="p-8 space-y-5">
+<div>
+<label class="block text-on-surface font-label-md mb-2">Assign to Branch</label>
+<select class="w-full px-4 py-3 rounded-xl border border-outline focus:ring-2 focus:ring-primary transition-all">
+<option>Select Branch...</option>
+<option>Mumbai Main Branch</option>
+<option>Delhi North Center</option>
+<option>Bangalore East Hub</option>
+</select>
+</div>
+<div>
+<label class="block text-on-surface font-label-md mb-2">Admin Full Name</label>
+<input class="w-full px-4 py-3 rounded-xl border border-outline focus:ring-2 focus:ring-primary transition-all" type="text"/>
+</div>
+<div>
+<label class="block text-on-surface font-label-md mb-2">Email Address</label>
+<input class="w-full px-4 py-3 rounded-xl border border-outline focus:ring-2 focus:ring-primary transition-all" type="email"/>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div>
+<label class="block text-on-surface font-label-md mb-2">Password</label>
+<input class="w-full px-4 py-3 rounded-xl border border-outline focus:ring-2 focus:ring-primary transition-all" type="password"/>
+</div>
+<div>
+<label class="block text-on-surface font-label-md mb-2">Confirm</label>
+<input class="w-full px-4 py-3 rounded-xl border border-outline focus:ring-2 focus:ring-primary transition-all" type="password"/>
+</div>
+</div>
+</div>
+<div class="px-8 py-6 border-t border-outline-variant flex justify-end gap-3">
+<button class="px-6 py-2.5 rounded-xl border border-outline text-on-surface font-title-md" onclick="toggleModal('adminModal')">Cancel</button>
+<button class="px-8 py-2.5 rounded-xl bg-on-secondary-fixed text-white font-title-md hover:bg-black transition-all">Create Account</button>
+</div>
+</div>
+</div>
+<!-- View Drawer (Right Side) -->
+<div class="fixed top-0 right-0 h-full w-[450px] bg-surface-container-lowest shadow-2xl z-[150] transition-transform duration-300 translate-x-full border-l border-outline-variant" id="viewDrawer">
+<div class="h-full flex flex-col">
+<div class="p-6 border-b border-outline-variant flex items-center justify-between bg-surface-container-low">
+<h3 class="font-title-lg text-title-lg text-on-surface">Branch Details</h3>
+<button class="p-2 hover:bg-surface-variant rounded-full" onclick="toggleDrawer()">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<div class="flex-1 overflow-y-auto p-8">
+<div class="flex items-center gap-6 mb-8">
+<div class="h-20 w-20 rounded-2xl bg-primary-fixed flex items-center justify-center text-primary text-3xl font-bold">MB</div>
+<div>
+<h4 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface">Mumbai Main Branch</h4>
+<p class="text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">location_on</span> Andheri, Mumbai
+                        </p>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4 mb-10">
+<div class="p-4 rounded-xl bg-surface-container border border-outline-variant">
+<p class="text-xs text-on-surface-variant uppercase font-bold tracking-tighter">Total Students</p>
+<p class="text-2xl font-bold text-on-surface mt-1">1,248</p>
+</div>
+<div class="p-4 rounded-xl bg-surface-container border border-outline-variant">
+<p class="text-xs text-on-surface-variant uppercase font-bold tracking-tighter">Active Courses</p>
+<p class="text-2xl font-bold text-on-surface mt-1">24</p>
+</div>
+<div class="p-4 rounded-xl bg-surface-container border border-outline-variant">
+<p class="text-xs text-on-surface-variant uppercase font-bold tracking-tighter">Revenue YTD</p>
+<p class="text-2xl font-bold text-tertiary-container mt-1">₹4.2M</p>
+</div>
+<div class="p-4 rounded-xl bg-surface-container border border-outline-variant">
+<p class="text-xs text-on-surface-variant uppercase font-bold tracking-tighter">Staff Count</p>
+<p class="text-2xl font-bold text-on-surface mt-1">18</p>
+</div>
+</div>
+<div class="space-y-6">
+<div>
+<p class="text-on-surface font-title-md mb-3">Administrators (3)</p>
+<div class="space-y-3">
+<div class="flex items-center justify-between p-3 rounded-lg border border-outline-variant">
+<div class="flex items-center gap-3">
+<div class="h-8 w-8 rounded-full bg-secondary-fixed text-on-secondary-fixed-variant flex items-center justify-center text-xs font-bold">RK</div>
+<p class="text-body-md text-on-surface">Rajesh Kumar (Lead)</p>
+</div>
+<span class="material-symbols-outlined text-outline text-[18px]">verified_user</span>
+</div>
+<div class="flex items-center justify-between p-3 rounded-lg border border-outline-variant">
+<div class="flex items-center gap-3">
+<div class="h-8 w-8 rounded-full bg-secondary-fixed text-on-secondary-fixed-variant flex items-center justify-center text-xs font-bold">SM</div>
+<p class="text-body-md text-on-surface">Sanjay Mishra</p>
+</div>
+</div>
+</div>
+</div>
+<div>
+<p class="text-on-surface font-title-md mb-3">Branch Map</p>
+<div class="aspect-video w-full rounded-xl bg-surface-container-high relative overflow-hidden">
+<div class="w-full h-full bg-cover bg-center opacity-50 grayscale hover:grayscale-0 transition-all duration-500" data-location="Mumbai" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBxbpARDQGn0rvGvxsovYRuS8imREPklhlDWxR7fiA6cGuxdM03OTZLZGw0p-QFYcUtjjNwmUh7O1lrYwBelGiGIp3T3KTInA9Kpj95w3Qewym3I-IdvVdfeqp-7GXNQdPCdpslxPaVHVrptzIFBvUMnOkSFYxaXmX9nT5iZkThKHKOaCEer1PGd__Q1siPnpCg1HwtXIOV6XZNQw1E3nwSZA62xFNYXAQOKPNThr9qLASy30sxIgVwzg4YrRTneZNdRZngMFu5V14')"></div>
+<div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+<div class="p-3 bg-white rounded-full shadow-lg border border-primary animate-bounce">
+<span class="material-symbols-outlined text-primary">location_on</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="p-6 border-t border-outline-variant bg-surface-container-lowest grid grid-cols-2 gap-4">
+<button class="px-4 py-3 rounded-xl border border-outline-variant text-on-surface font-title-md hover:bg-surface-container transition-colors">Edit Branch</button>
+<button class="px-4 py-3 rounded-xl bg-error-container text-on-error-container font-title-md hover:bg-error/10 transition-colors">Deactivate</button>
+</div>
+</div>
+</div>
+<!-- Delete Confirmation Modal -->
+<div class="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-on-secondary-fixed/60 backdrop-blur-md hidden" id="deleteModal">
+<div class="bg-surface-container-lowest w-full max-w-md rounded-2xl shadow-2xl border border-outline-variant overflow-hidden animate-in zoom-in duration-200">
+<div class="p-8 text-center">
+<div class="mx-auto w-16 h-16 rounded-full bg-error-container flex items-center justify-center text-error mb-6">
+<span class="material-symbols-outlined text-4xl">warning</span>
+</div>
+<h3 class="text-2xl font-bold text-on-surface mb-2">Delete Branch?</h3>
+<p class="text-on-surface-variant text-body-lg mb-6">
+                    This action is permanent. Deleting the <span class="font-bold text-on-surface">Mumbai Main Branch</span> will immediately revoke access for 3 admins and 1,248 students. All associated data will be archived.
+                </p>
+<div class="grid grid-cols-2 gap-4">
+<button class="px-6 py-3 rounded-xl border border-outline text-on-surface font-title-md hover:bg-surface-container transition-colors" onclick="toggleModal('deleteModal')">Cancel</button>
+<button class="px-6 py-3 rounded-xl bg-error text-on-primary font-title-md shadow-lg shadow-error/30 hover:bg-error/90 transition-all">Confirm Delete</button>
+</div>
+</div>
+</div>
+</div>
+<script>
+        function toggleModal(id) {
+            const modal = document.getElementById(id);
+            modal.classList.toggle('hidden');
+        }
+
+        function toggleDrawer() {
+            const drawer = document.getElementById('viewDrawer');
+            drawer.classList.toggle('translate-x-full');
+        }
+
+        function confirmDelete() {
+            toggleModal('deleteModal');
+        }
+
+        // Lightweight atmospheric interaction: Card parallax subtle
+        document.querySelectorAll('.bg-surface-container-lowest').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                card.style.setProperty('--mouse-x', `${x}px`);
+                card.style.setProperty('--mouse-y', `${y}px`);
+            });
+        });
+    </script>

@@ -1,0 +1,78 @@
+﻿@using ELearning.Enums
+@using ELearning.Models.Authentication
+@using ELearning.Models.Courses
+@using ELearningPortal.Models.Course
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<partial name="Notification"></partial>
+
+@model SubCourseView
+
+<div class="flex items-center gap-2 mb-1">
+    <h2 class="font-headline-lg text-headline-lg text-on-surface">Edit SubCourse</h2>
+</div>
+<form asp-action="AdminUpdateSubc" method="post" enctype="multipart/form-data" class="grid grid-cols-1 md:grid-cols-2 gap-8">
+    <input type="hidden" asp-for="SubCourseId" id="EditSubCourseId" />
+    <!-- Left Column -->
+    <div class="space-y-6">
+        <div class="space-y-2">
+            <label class="font-bold text-sm text-on-surface-variant">Master Course</label>
+            <select asp-for="CourseId" asp-items="ViewBag.Course" class="w-full px-4 py-2.5 border border-outline-variant rounded-xl bg-surface-container-low focus:ring-2 focus:ring-primary focus:border-transparent outline-none">
+            </select>
+            <span asp-validation-for="CourseId" class="text-danger"></span>
+        </div>
+        <div class="space-y-2">
+            <label class="font-bold text-sm text-on-surface-variant">Sub Course Name</label>
+            <input asp-for="SubCourseName" class="w-full px-4 py-2.5 border border-outline-variant rounded-xl bg-surface-container-low focus:ring-2 focus:ring-primary focus:border-transparent outline-none" placeholder="e.g., Reactive Spring Microservices" type="text" />
+            <span asp-validation-for="SubCourseName" class="text-danger"></span>
+        </div>
+        <div class="space-y-2">
+            <label class="font-bold text-sm text-on-surface-variant">Description</label>
+            <textarea asp-for="Description" class="w-full px-4 py-2.5 border border-outline-variant rounded-xl bg-surface-container-low focus:ring-2 focus:ring-primary focus:border-transparent outline-none resize-none" placeholder="Detailed module overview..." rows="2"></textarea>
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+    </div>
+    <!-- Right Column -->
+    <div class="space-y-6">
+        <div class="grid grid-cols-2 gap-4">
+            <div class="space-y-2">
+                <label class="font-bold text-sm text-on-surface-variant">Price</label>
+                <input asp-for="Price" class="w-full px-4 py-2.5 border border-outline-variant rounded-xl bg-surface-container-low focus:ring-2 focus:ring-primary focus:border-transparent outline-none" placeholder="199.00" type="number" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+            <div class="space-y-2">
+                <label class="font-bold text-sm text-on-surface-variant">Display Order</label>
+                <input asp-for="DisplayOrder" class="w-full px-4 py-2.5 border border-outline-variant rounded-xl bg-surface-container-low focus:ring-2 focus:ring-primary focus:border-transparent outline-none" placeholder="1" type="number" />
+                <span asp-validation-for="DisplayOrder" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="space-y-2">
+            <label class="font-bold text-sm text-on-surface-variant">Thumbnail Image</label>
+            <div class="border-2 border-dashed border-outline-variant rounded-2xl p-8 flex flex-col items-center justify-center bg-surface-container-low hover:bg-surface-variant/30 transition-colors cursor-pointer relative overflow-hidden group">
+                <input asp-for="UploadedImage" class="absolute inset-0 opacity-0 cursor-pointer" type="file" />
+                <span asp-validation-for="UploadedImage" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="space-y-2">
+            <label class="font-bold text-sm text-on-surface-variant">Status</label>
+            <select asp-for="Status" class="w-full px-4 py-2.5 border border-outline-variant rounded-xl bg-surface-container-low focus:ring-2 focus:ring-primary focus:border-transparent outline-none">
+                <option value="1">Active</option>
+                <option value="0">Inactive</option>
+            </select>
+            <span asp-validation-for="Status" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="px-8 py-6 border-t border-outline-variant flex justify-end gap-4 bg-surface-container-lowest">
+        <button class="px-6 py-2.5 rounded-lg border border-outline text-on-surface font-semibold hover:bg-surface-container-high transition-colors" onclick="toggleModal('addModal')">Cancel</button>
+        <button type="submit" class="px-8 py-2.5 rounded-lg bg-primary text-white font-bold shadow-lg hover:bg-primary-container active:scale-95 transition-all">Update Sub Course</button>
+    </div>
+</form>
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,260 @@
+﻿<!DOCTYPE html>
+<html lang="en" class="h-full bg-surface">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - EduAdmin Portal</title>
+
+    <!-- Tailwind CSS & Plugins -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+    <!-- Material Symbols Outlined -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=block" rel="stylesheet">
+
+    <!-- Google Fonts: Inter (matching your Core Scholar theme) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        .sidebar-scroll::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .sidebar-scroll::-webkit-scrollbar-thumb {
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+        }
+    </style>
+
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-container": "#eeefff",
+                        "tertiary-fixed-dim": "#4ae176",
+                        "on-primary-fixed-variant": "#003ea8",
+                        "on-surface": "#0b1c30",
+                        "surface-container": "#e5eeff",
+                        "on-tertiary": "#ffffff",
+                        "surface-bright": "#f8f9ff",
+                        "secondary-fixed": "#dae2fd",
+                        "surface-variant": "#d3e4fe",
+                        "primary-container": "#2563eb",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-fixed-dim": "#b4c5ff",
+                        "inverse-surface": "#213145",
+                        "on-surface-variant": "#434655",
+                        "surface-container-highest": "#d3e4fe",
+                        "secondary-fixed-dim": "#bec6e0",
+                        "on-primary-fixed": "#00174b",
+                        "inverse-on-surface": "#eaf1ff",
+                        "tertiary-fixed": "#6bff8f",
+                        "surface-container-high": "#dce9ff",
+                        "inverse-primary": "#b4c5ff",
+                        "on-secondary-fixed-variant": "#3f465c",
+                        "secondary": "#565e74",
+                        "primary-fixed": "#dbe1ff",
+                        "on-error": "#ffffff",
+                        "tertiary-container": "#007e37",
+                        "surface-dim": "#cbdbf5",
+                        "on-secondary-fixed": "#131b2e",
+                        "background": "#f8f9ff",
+                        "outline": "#737686",
+                        "tertiary": "#006229",
+                        "error-container": "#ffdad6",
+                        "on-error-container": "#93000a",
+                        "secondary-container": "#dae2fd",
+                        "outline-variant": "#c3c6d7",
+                        "on-tertiary-fixed-variant": "#005321",
+                        "on-tertiary-container": "#c1ffc5",
+                        "on-background": "#0b1c30",
+                        "surface-tint": "#0053db",
+                        "surface": "#f8f9ff",
+                        "surface-container-low": "#eff4ff",
+                        "on-secondary": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "on-tertiary-fixed": "#002109",
+                        "primary": "#004ac6",
+                        "on-secondary-container": "#5c647a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-lg": "24px",
+                        "gutter": "16px",
+                        "base": "4px",
+                        "section-padding": "32px",
+                        "container-margin": "24px",
+                        "stack-sm": "8px",
+                        "stack-md": "16px"
+                    },
+                    "fontFamily": {
+                        "title-md": ["Inter"],
+                        "label-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "title-lg": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "body-md": ["Inter"],
+                        "display-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "title-md": ["16px", {"lineHeight": "24px", "fontWeight": "600"}],
+                        "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "title-lg": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+                    }
+                }
+            }
+        }
+    </script>
+    @await RenderSectionAsync("Styles", required: false)
+</head>
+<body class="h-full bg-background text-on-surface overflow-hidden flex">
+
+    <!-- FIXED LEFT SIDEBAR -->
+    <aside class="w-[280px] h-full bg-on-secondary-fixed shadow-lg flex flex-col z-50 shrink-0">
+        <!-- Logo Header -->
+        <div class="p-6 flex flex-col gap-1 border-b border-white/5">
+            <span class="text-xl font-bold text-surface-container-lowest">EduAdmin</span>
+            <span class="text-xs text-outline-variant opacity-70 uppercase tracking-widest">Branch Portal</span>
+        </div>
+
+        <!-- Scrollable Navigation -->
+        <nav class="flex-1 overflow-y-auto sidebar-scroll px-3 py-6 space-y-1">
+            <!-- Dashboard -->
+            <a class="flex items-center gap-3 px-4 py-3 text-outline-variant hover:bg-white/5 hover:text-surface-container-lowest transition-colors" asp-area="" asp-controller="User" asp-action="Index">
+                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+                <span class="font-medium text-sm">Dashboard</span>
+            </a>
+
+            <!-- USER MANAGEMENT GROUP -->
+            <div class="px-4 pt-6 pb-2">
+                <p class="text-[10px] font-bold text-outline-variant uppercase tracking-wider opacity-60">User Management</p>
+            </div>
+            <a class="flex items-center gap-3 px-4 py-3 text-outline-variant hover:bg-white/5 hover:text-surface-container-lowest transition-colors" asp-area="" asp-controller="User" asp-action="AdminUser">
+                <span class="material-symbols-outlined">group</span>                 
+                <span class="text-sm">Users</span>
+            </a>
+
+            <!-- COURSE MANAGEMENT GROUP -->
+            <div class="px-4 pt-6 pb-2">
+                <p class="text-[10px] font-bold text-outline-variant uppercase tracking-wider opacity-60">Course Management</p>
+            </div>
+            <a class="flex items-center gap-3 px-4 py-3 text-outline-variant hover:bg-white/5 hover:text-surface-container-lowest transition-colors" asp-area="" asp-controller="Course" asp-action="AdminCourse">
+                <span class="material-symbols-outlined">school</span>
+                <span class="text-sm">Courses</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 text-outline-variant hover:bg-white/5 hover:text-surface-container-lowest transition-colors" asp-area="" asp-controller="Course" asp-action="AdminSubCourse">
+                <span class="material-symbols-outlined">layers</span>
+                <span class="text-sm">Sub Courses</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 text-outline-variant hover:bg-white/5 hover:text-surface-container-lowest transition-colors" asp-area="" asp-controller="Lesson" asp-action="AddLessons">
+                <span class="material-symbols-outlined">menu_book</span>
+                <span class="text-sm">Lessons</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 text-outline-variant hover:bg-white/5 hover:text-surface-container-lowest transition-colors" asp-area="" asp-controller="User" asp-action="AdminAttachment">
+                <span class="material-symbols-outlined">attachment</span>
+                <span class="text-sm">Attachments</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 text-outline-variant hover:bg-white/5 hover:text-surface-container-lowest transition-colors" asp-area="" asp-controller="User" asp-action="AdminAssignment">
+                <span class="material-symbols-outlined">attachment</span>
+                <span class="text-sm">Assignment</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 text-outline-variant hover:bg-white/5 hover:text-surface-container-lowest transition-colors" asp-area="" asp-controller="User" asp-action="AdminMCQ">
+                <span class="material-symbols-outlined">quiz</span>
+                <span class="text-sm">Questions (MCQ)</span>
+            </a>
+
+            <!-- PURCHASE MANAGEMENT GROUP -->
+            <div class="px-4 pt-6 pb-2">
+                <p class="text-[10px] font-bold text-outline-variant uppercase tracking-wider opacity-60">Purchase Management</p>
+            </div>
+            <a class="flex items-center gap-3 px-4 py-3 text-outline-variant hover:bg-white/5 hover:text-surface-container-lowest transition-colors" asp-area="" asp-controller="User" asp-action="AdminSubscription">
+                <span class="material-symbols-outlined">payments</span>
+                <span class="text-sm">Subscription Plans</span>
+            </a>
+
+        </nav>
+
+        <!-- Sidebar Footer -->
+        <div class="p-4 border-t border-white/5 space-y-1">
+            <a class="flex items-center gap-3 px-4 py-3 text-outline-variant hover:bg-white/5 hover:text-surface-container-lowest transition-colors" href="/Profile">
+                <span class="material-symbols-outlined">person</span>
+                <span class="text-sm">Profile</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 text-error/80 hover:bg-error/10 hover:text-error transition-colors" asp-controller="Account" asp-action="Logout">
+                <span class="material-symbols-outlined">logout</span>
+                <span class="text-sm">Logout</span>
+            </a>
+        </div>
+    </aside>
+
+    <!-- MAIN VIEWPORT -->
+    <div class="flex-1 flex flex-col min-w-0 h-full relative">
+
+        <!-- TOP APP BAR -->
+        <header class="h-16 bg-surface-container-lowest border-b border-outline-variant flex justify-between items-center px-8 z-40 shrink-0">
+            <div class="flex items-center gap-8 flex-1">
+                <span class="text-lg font-bold text-on-surface">Main Branch</span>
+                <div class="relative w-full max-w-md">
+                    <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline-variant text-xl">search</span>
+                    <input type="text" placeholder="Search resources, students..." class="w-full pl-10 pr-4 py-2 bg-surface-container rounded-xl border-none focus:ring-2 focus:ring-primary text-sm outline-none transition-all">
+                </div>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container transition-colors relative">
+                    <span class="material-symbols-outlined text-on-surface-variant">notifications</span>
+                    <span class="absolute top-2.5 right-2.5 w-2 h-2 bg-error rounded-full border-2 border-surface-container-lowest"></span>
+                </button>
+                <div class="h-8 w-px bg-outline-variant/30 mx-2"></div>
+                <div class="flex items-center gap-3">
+                    <div class="text-right hidden sm:block leading-tight">
+                        <p class="text-sm font-bold text-on-surface">Admin User</p>
+                        <p class="text-[11px] text-on-surface-variant font-medium">Principal Branch</p>
+                    </div>
+                    <img class="w-10 h-10 rounded-full border border-outline-variant object-cover shadow-sm" src="https://ui-avatars.com/api/?name=Admin+User&background=004ac6&color=fff" alt="Profile">
+                </div>
+            </div>
+        </header>
+
+        <!-- DYNAMIC CONTENT AREA -->
+        <main class="flex-1 overflow-y-auto p-8 custom-scrollbar">
+            @RenderBody()
+        </main>
+
+        <!-- GLOBAL FOOTER -->
+        <footer class="bg-surface-container-lowest border-t border-outline-variant py-4 px-8 flex justify-between items-center text-[11px] text-on-surface-variant/70">
+            <p>&copy; 2026 EduAdmin Branch Management. All rights reserved.</p>
+            <div class="flex gap-6 font-medium">
+                <a href="#" class="hover:text-primary transition-colors">Privacy Policy</a>
+                <a href="#" class="hover:text-primary transition-colors">Documentation</a>
+                <a href="#" class="hover:text-primary transition-colors">System Status</a>
+            </div>
+        </footer>
+    </div>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

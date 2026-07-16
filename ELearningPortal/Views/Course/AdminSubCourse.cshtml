@@ -1,0 +1,395 @@
+﻿@using ELearning.Enums
+@using ELearning.Models.Authentication
+@using ELearning.Models.Courses
+@using ELearningPortal.Models.Course
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<partial name="Notification"></partial>
+
+@model SubCourseView
+
+<!-- Main Content Area -->
+<!-- Page Content -->
+<div class="p-6 md:p-8 space-y-8">
+    <!-- Page Header -->
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+        <div>
+            <h1 class="font-headline-lg text-headline-lg text-on-surface">Sub Course Management</h1>
+            <p class="text-on-surface-variant">Manage and organize your branch's specialized curriculum modules.</p>
+        </div>
+        <button class="bg-primary-container text-white px-6 py-2.5 rounded-lg font-title-md flex items-center gap-2 hover:bg-primary transition-all shadow-md active:scale-95" onclick="toggleModal('addModal')">
+            <span class="material-symbols-outlined">add</span>
+            Add Sub Course
+        </button>
+    </div>
+    <!-- Summary Cards Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant shadow-sm hover:shadow-md transition-shadow">
+            <div class="flex justify-between items-start mb-4">
+                <div class="p-3 bg-primary-fixed rounded-lg">
+                    <span class="material-symbols-outlined text-primary">menu_book</span>
+                </div>
+                <span class="text-tertiary font-medium text-label-md flex items-center">+4.5%</span>
+            </div>
+            <h3 class="text-on-surface-variant text-label-md">Total Sub Courses</h3>
+            <p class="text-3xl font-bold text-on-surface mt-1">892</p>
+        </div>
+        <div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant shadow-sm hover:shadow-md transition-shadow">
+            <div class="flex justify-between items-start mb-4">
+                <div class="p-3 bg-tertiary-fixed rounded-lg">
+                    <span class="material-symbols-outlined text-tertiary">check_circle</span>
+                </div>
+                <span class="text-tertiary font-medium text-label-md">Active</span>
+            </div>
+            <h3 class="text-on-surface-variant text-label-md">Published</h3>
+            <p class="text-3xl font-bold text-on-surface mt-1">840</p>
+        </div>
+        <div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant shadow-sm hover:shadow-md transition-shadow">
+            <div class="flex justify-between items-start mb-4">
+                <div class="p-3 bg-error-container rounded-lg">
+                    <span class="material-symbols-outlined text-error">visibility_off</span>
+                </div>
+                <span class="text-error font-medium text-label-md">Action Required</span>
+            </div>
+            <h3 class="text-on-surface-variant text-label-md">Inactive</h3>
+            <p class="text-3xl font-bold text-on-surface mt-1">52</p>
+        </div>
+        <div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant shadow-sm hover:shadow-md transition-shadow">
+            <div class="flex justify-between items-start mb-4">
+                <div class="p-3 bg-secondary-container rounded-lg">
+                    <span class="material-symbols-outlined text-secondary">payments</span>
+                </div>
+                <span class="text-on-surface-variant text-label-md">Avg Value</span>
+            </div>
+            <h3 class="text-on-surface-variant text-label-md">Average Price</h3>
+            <p class="text-3xl font-bold text-on-surface mt-1">$145.00</p>
+        </div>
+    </div>
+    <!-- Filters & Table Section -->
+    <div class="bg-surface-container-lowest rounded-2xl border border-outline-variant shadow-sm overflow-hidden">
+        <!-- Filter Toolbar -->
+        <div class="p-6 border-b border-outline-variant bg-surface-container-low/30">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+                <div class="space-y-1">
+                    <label class="text-xs font-semibold text-on-surface-variant uppercase tracking-wider">Search Name</label>
+                    <div class="relative">
+                        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-sm">search</span>
+                        <input class="w-full pl-9 pr-3 py-2 border border-outline-variant rounded-lg text-body-md focus:border-primary focus:ring-1 focus:ring-primary outline-none bg-white" placeholder="Filter by name..." type="text" />
+                    </div>
+                </div>
+                <div class="space-y-1">
+                    <label class="text-xs font-semibold text-on-surface-variant uppercase tracking-wider">Master Course</label>
+                    <select class="w-full px-3 py-2 border border-outline-variant rounded-lg text-body-md focus:border-primary focus:ring-1 focus:ring-primary outline-none bg-white appearance-none">
+                        <option>All Approved Courses</option>
+                        <option>Full Stack Java</option>
+                        <option>Python Full Stack</option>
+                        <option>MERN Stack</option>
+                    </select>
+                </div>
+                <div class="space-y-1">
+                    <label class="text-xs font-semibold text-on-surface-variant uppercase tracking-wider">Status</label>
+                    <select class="w-full px-3 py-2 border border-outline-variant rounded-lg text-body-md focus:border-primary focus:ring-1 focus:ring-primary outline-none bg-white">
+                        <option>All Statuses</option>
+                        <option>Active</option>
+                        <option>Inactive</option>
+                    </select>
+                </div>
+                <div class="space-y-1">
+                    <label class="text-xs font-semibold text-on-surface-variant uppercase tracking-wider">Price Range</label>
+                    <div class="flex items-center gap-2">
+                        <input class="w-1/2 px-3 py-2 border border-outline-variant rounded-lg text-body-md bg-white" placeholder="Min" type="number" />
+                        <span class="text-outline">-</span>
+                        <input class="w-1/2 px-3 py-2 border border-outline-variant rounded-lg text-body-md bg-white" placeholder="Max" type="number" />
+                    </div>
+                </div>
+                <div class="flex items-end gap-2 xl:col-span-1 lg:col-span-4">
+                    <button class="flex-1 bg-surface-container-high text-on-surface font-semibold py-2 px-4 rounded-lg hover:bg-outline-variant transition-colors flex items-center justify-center gap-2">
+                        <span class="material-symbols-outlined text-sm">filter_alt</span> Apply
+                    </button>
+                    <button class="p-2 text-on-surface-variant hover:bg-surface-variant rounded-lg border border-outline-variant">
+                        <span class="material-symbols-outlined">refresh</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Data Table -->
+        <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="bg-surface-container-low text-on-surface-variant text-label-md font-bold uppercase tracking-widest border-b border-outline-variant">
+                        <th class="px-6 py-4">Image</th>
+                        <th class="px-6 py-4">Sub Course Name</th>
+                        <th class="px-6 py-4">Master Course</th>
+                        <th class="px-6 py-4">Price</th>
+                        <th class="px-6 py-4">Order</th>
+                        <th class="px-6 py-4">Status</th>
+                        <th class="px-6 py-4">Created Date</th>
+                        <th class="px-6 py-4 text-right">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-outline-variant">
+                    @foreach (var item in Model.SubCourseList){
+                    <!-- Row 1 -->
+                    <tr class="hover:bg-surface-container-low/50 transition-colors">
+                        <td class="px-6 py-4">
+                            <img class="w-12 h-12 rounded-lg object-cover border border-outline-variant shadow-sm"  src="~/@item.Image" />
+                        </td>
+                        <td class="px-6 py-4">
+                            <div class="font-bold text-on-surface">@item.SubCourseName</div>
+                            <div class="text-xs text-on-surface-variant truncate w-48">@item.Description</div>
+                        </td>
+                        <td class="px-6 py-4">
+                            <span class="px-3 py-1 bg-primary-fixed text-on-primary-fixed-variant text-xs font-bold rounded-full">@item.Course.CourseName</span>
+                        </td>
+                        <td class="px-6 py-4 font-bold text-on-surface">@item.Price</td>
+                        <td class="px-6 py-4 text-on-surface-variant">@item.DisplayOrder</td>
+                        <td class="px-6 py-4">
+                                @if (item.Status == Status.Active)
+                                {
+                                    <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-green-100 text-green-700 text-label-md font-bold">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-green-600"></span>
+                                        Active
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-red-100 text-red-700 text-label-md font-bold">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-red-600"></span>
+                                        Inactive
+                                    </span>
+                                }
+                            </td>
+                        <td class="px-6 py-4 text-on-surface-variant text-sm">2026-07-13</td>
+                        <td class="px-6 py-4 text-right">
+                            <div class="flex justify-end gap-2">
+                                    <a class="p-2 hover:bg-secondary-container rounded-lg text-secondary transition-colors" title="Edit" asp-controller="Course" asp-action="EditSubCourse" asp-route-id="@item.SubCourseId">
+                                    <span class="material-symbols-outlined text-[20px]">edit</span>
+                                </a>
+                                    <a class="p-2 hover:bg-error-container rounded-lg text-error transition-colors" title="Delete" asp-controller="Course" asp-action="DeleteSubcourse" asp-route-id="@item.SubCourseId" onclick="return confirm('Are you sure you want to delete this SubCourse?');">
+                                    <span class="material-symbols-outlined text-[20px]">delete</span>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <!-- Pagination -->
+        <div class="p-6 border-t border-outline-variant flex items-center justify-between">
+            <p class="text-sm text-on-surface-variant">Showing 1 to 3 of 892 entries</p>
+            <div class="flex gap-2">
+                <button class="px-4 py-2 text-sm font-semibold border border-outline-variant rounded-lg hover:bg-surface-container transition-colors disabled:opacity-50" disabled="">Previous</button>
+                <button class="px-4 py-2 text-sm font-semibold bg-primary text-white rounded-lg shadow-sm">1</button>
+                <button class="px-4 py-2 text-sm font-semibold border border-outline-variant rounded-lg hover:bg-surface-container transition-colors">2</button>
+                <button class="px-4 py-2 text-sm font-semibold border border-outline-variant rounded-lg hover:bg-surface-container transition-colors">3</button>
+                <span class="px-2 self-center">...</span>
+                <button class="px-4 py-2 text-sm font-semibold border border-outline-variant rounded-lg hover:bg-surface-container transition-colors">Next</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modals & Drawers -->
+<!-- Add/Edit Modal (Large Centered) -->
+<div class="fixed inset-0 z-[60] hidden flex items-center justify-center p-4" id="addModal">
+    <div class="absolute inset-0 bg-on-background/60 backdrop-blur-sm" onclick="toggleModal('addModal')"></div>
+    <div class="relative bg-surface-container-lowest w-full max-w-4xl rounded-2xl shadow-2xl overflow-hidden max-h-[921px] flex flex-col">
+        <div class="px-8 py-6 border-b border-outline-variant flex items-center justify-between sticky top-0 bg-surface-container-lowest z-10">
+            <div>
+                <h2 class="text-2xl font-bold text-on-surface">Add New Sub Course</h2>
+                <p class="text-on-surface-variant">Create a new module under an approved Master Course.</p>
+            </div>
+            <button class="p-2 hover:bg-surface-variant rounded-full transition-colors" onclick="toggleModal('addModal')">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+        <div class="p-8 overflow-y-auto custom-scrollbar">
+            <form asp-action="AdminSubCourse" method="post" enctype="multipart/form-data" class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Left Column -->
+                <div class="space-y-6">
+                    <div class="space-y-2">
+                        <label class="font-bold text-sm text-on-surface-variant">Master Course</label>
+                        <select asp-for="CourseId" asp-items="ViewBag.Course" class="w-full px-4 py-2.5 border border-outline-variant rounded-xl bg-surface-container-low focus:ring-2 focus:ring-primary focus:border-transparent outline-none">
+                        </select>
+                        <span asp-validation-for="CourseId" class="text-danger"></span>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="font-bold text-sm text-on-surface-variant">Sub Course Name</label>
+                        <input asp-for="SubCourseName" class="w-full px-4 py-2.5 border border-outline-variant rounded-xl bg-surface-container-low focus:ring-2 focus:ring-primary focus:border-transparent outline-none" placeholder="e.g., Reactive Spring Microservices" type="text" />
+                        <span asp-validation-for="SubCourseName" class="text-danger"></span>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="font-bold text-sm text-on-surface-variant">Description</label>
+                      <textarea asp-for="Description" class="w-full px-4 py-2.5 border border-outline-variant rounded-xl bg-surface-container-low focus:ring-2 focus:ring-primary focus:border-transparent outline-none resize-none" placeholder="Detailed module overview..." rows="2"></textarea>
+                      <span asp-validation-for="Description" class="text-danger"></span>  
+                  </div>
+                </div>
+                <!-- Right Column -->
+                <div class="space-y-6">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="space-y-2">
+                            <label class="font-bold text-sm text-on-surface-variant">Price</label>
+                            <input asp-for="Price" class="w-full px-4 py-2.5 border border-outline-variant rounded-xl bg-surface-container-low focus:ring-2 focus:ring-primary focus:border-transparent outline-none" placeholder="199.00" type="number" />
+                             <span asp-validation-for="Price" class="text-danger"></span>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="font-bold text-sm text-on-surface-variant">Display Order</label>
+                            <input asp-for="DisplayOrder" class="w-full px-4 py-2.5 border border-outline-variant rounded-xl bg-surface-container-low focus:ring-2 focus:ring-primary focus:border-transparent outline-none" placeholder="1" type="number" />
+                        <span asp-validation-for="DisplayOrder" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="font-bold text-sm text-on-surface-variant">Thumbnail Image</label>
+                        <div class="border-2 border-dashed border-outline-variant rounded-2xl p-8 flex flex-col items-center justify-center bg-surface-container-low hover:bg-surface-variant/30 transition-colors cursor-pointer relative overflow-hidden group">
+                            <input asp-for="UploadedImage" class="absolute inset-0 opacity-0 cursor-pointer" type="file" />
+                       <span asp-validation-for="UploadedImage" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="font-bold text-sm text-on-surface-variant">Status</label>
+                        <select asp-for="Status" class="w-full px-4 py-2.5 border border-outline-variant rounded-xl bg-surface-container-low focus:ring-2 focus:ring-primary focus:border-transparent outline-none">
+                            <option value="1">Active</option>
+                            <option value="0">Inactive</option>
+                        </select>
+                        <span asp-validation-for="Status" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="px-8 py-6 border-t border-outline-variant flex justify-end gap-4 bg-surface-container-lowest">
+                    <button class="px-6 py-2.5 rounded-lg border border-outline text-on-surface font-semibold hover:bg-surface-container-high transition-colors" onclick="toggleModal('addModal')">Cancel</button>
+                    <button type="submit" class="px-8 py-2.5 rounded-lg bg-primary text-white font-bold shadow-lg hover:bg-primary-container active:scale-95 transition-all">Create Sub Course</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+<!-- Edit Modal (Placeholder - shared structure with Add) -->
+<div class="fixed inset-0 z-[60] hidden flex items-center justify-center p-4" id="editModal">
+    <div class="absolute inset-0 bg-on-background/60 backdrop-blur-sm" onclick="toggleModal('editModal')"></div>
+    <div class="relative bg-surface-container-lowest w-full max-w-4xl rounded-2xl p-8 shadow-2xl">
+        <h2 class="text-2xl font-bold mb-4">Edit Sub Course</h2>
+        <p>Form fields pre-filled with existing data...</p>
+        <div class="mt-8 flex justify-end">
+            <button class="px-6 py-2 bg-primary text-white rounded-lg" onclick="toggleModal('editModal')">Save Changes</button>
+        </div>
+    </div>
+</div>
+<!-- Delete Confirmation Modal -->
+<div class="fixed inset-0 z-[60] hidden flex items-center justify-center p-4" id="deleteModal">
+    <div class="absolute inset-0 bg-on-background/60 backdrop-blur-sm" onclick="toggleModal('deleteModal')"></div>
+    <div class="relative bg-surface-container-lowest w-full max-w-md rounded-2xl p-8 shadow-2xl text-center">
+        <div class="w-20 h-20 bg-error-container text-error rounded-full flex items-center justify-center mx-auto mb-6">
+            <span class="material-symbols-outlined text-4xl">warning</span>
+        </div>
+        <h2 class="text-2xl font-bold text-on-surface mb-2">Delete Sub Course?</h2>
+        <p class="text-on-surface-variant mb-8">This action cannot be undone. All associated student progress and attachments for this module will be permanently removed.</p>
+        <div class="flex gap-4">
+            <button class="flex-1 py-3 border border-outline rounded-xl font-bold text-on-surface hover:bg-surface-container-high transition-colors" onclick="toggleModal('deleteModal')">Cancel</button>
+            <button class="flex-1 py-3 bg-error text-white rounded-xl font-bold shadow-lg hover:bg-red-700 active:scale-95 transition-all">Yes, Delete</button>
+        </div>
+    </div>
+</div>
+<!-- View Analytics Drawer (Slide-out) -->
+<div class="fixed inset-0 z-50 invisible transition-all duration-300" id="viewDrawer">
+    <div class="absolute inset-0 bg-on-background/40 backdrop-blur-sm opacity-0 transition-opacity duration-300" onclick="toggleDrawer('viewDrawer')"></div>
+    <div class="absolute right-0 top-0 h-full w-full max-w-lg bg-surface-container-lowest shadow-2xl translate-x-full transition-transform duration-300 flex flex-col">
+        <div class="p-6 border-b border-outline-variant flex items-center justify-between">
+            <h3 class="font-headline-lg text-xl">Module Analytics</h3>
+            <button class="p-2 hover:bg-surface-variant rounded-full transition-colors" onclick="toggleDrawer('viewDrawer')">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+        <div class="flex-1 p-6 space-y-8 overflow-y-auto custom-scrollbar">
+            <div class="p-4 bg-primary-fixed/30 rounded-2xl flex items-center gap-4">
+                <img class="w-20 h-20 rounded-xl object-cover" data-alt="A stylized 3D gold and glass cup against a clean studio backdrop. High-end product photography style with focus on metallic reflections and sharp edges." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAmIUPie_Srz7pHBGmpvRmDnnC7Wog1ExqfmbOsuxqYhpUSAU9vz4ziabeF8__3ykwoA_JnzYDU4OHbc8-ffM6hjBODpRj6Yuf8h2mBC6ZNdO12jy2i8gqXafPZoon1bu6fGGhpUm9GPgAhEoCpOK1DCQlZYSQ5bFbcUFWUO1L3egcRXyDrCQ8xIjhJmBeOaCEAk1wpp5Ezt4WoXhqaL_9oQJLPFGC4mZ35T8-6iqDYBSGH6uOTUa0LTCNE6if39taAck9CITuidAA" />
+                <div>
+                    <h4 class="font-bold text-on-surface text-lg">Core Java</h4>
+                    <p class="text-sm text-on-surface-variant">Full Stack Java Curriculum</p>
+                </div>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div class="bg-surface-container p-4 rounded-xl">
+                    <p class="text-xs text-on-surface-variant uppercase font-bold tracking-wider">Enrollments</p>
+                    <p class="text-2xl font-bold text-on-surface mt-1">1,402</p>
+                </div>
+                <div class="bg-surface-container p-4 rounded-xl">
+                    <p class="text-xs text-on-surface-variant uppercase font-bold tracking-wider">Completion Rate</p>
+                    <p class="text-2xl font-bold text-on-surface mt-1">78%</p>
+                </div>
+            </div>
+            <div class="space-y-4">
+                <h5 class="font-bold text-on-surface">Student Performance</h5>
+                <div class="space-y-4">
+                    <div class="space-y-2">
+                        <div class="flex justify-between text-sm">
+                            <span class="text-on-surface-variant">Quiz Average Score</span>
+                            <span class="font-bold">84%</span>
+                        </div>
+                        <div class="w-full bg-outline-variant h-2 rounded-full overflow-hidden">
+                            <div class="bg-primary h-full w-[84%]"></div>
+                        </div>
+                    </div>
+                    <div class="space-y-2">
+                        <div class="flex justify-between text-sm">
+                            <span class="text-on-surface-variant">Engagement Level</span>
+                            <span class="font-bold">High</span>
+                        </div>
+                        <div class="w-full bg-outline-variant h-2 rounded-full overflow-hidden">
+                            <div class="bg-tertiary h-full w-[92%]"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="p-6 bg-on-secondary-fixed text-white rounded-2xl relative overflow-hidden">
+                <div class="relative z-10">
+                    <p class="text-sm opacity-80 mb-1">Total Revenue Generated</p>
+                    <p class="text-3xl font-bold">$278,998.00</p>
+                    <div class="mt-4 flex items-center gap-2 text-tertiary-fixed text-xs font-bold uppercase tracking-wider">
+                        <span class="material-symbols-outlined text-sm">trending_up</span>
+                        <span>+12% vs last quarter</span>
+                    </div>
+                </div>
+                <span class="material-symbols-outlined absolute -right-4 -bottom-4 text-9xl opacity-10 rotate-12">payments</span>
+            </div>
+        </div>
+        <div class="p-6 border-t border-outline-variant">
+            <button class="w-full bg-primary text-white py-3 rounded-xl font-bold shadow-lg hover:bg-primary-container transition-all">Download Full Report</button>
+        </div>
+    </div>
+</div>
+<!-- Scripts -->
+<script>
+    function toggleModal(id) {
+        const modal = document.getElementById(id);
+        modal.classList.toggle('hidden');
+    }
+
+    function toggleDrawer(id) {
+        const container = document.getElementById(id);
+        const drawer = container.querySelector('div:last-child');
+        const overlay = container.querySelector('div:first-child');
+
+        if (container.classList.contains('invisible')) {
+            container.classList.remove('invisible');
+            setTimeout(() => {
+                drawer.classList.remove('translate-x-full');
+                overlay.classList.remove('opacity-0');
+            }, 10);
+        } else {
+            drawer.classList.add('translate-x-full');
+            overlay.classList.add('opacity-0');
+            setTimeout(() => {
+                container.classList.add('invisible');
+            }, 300);
+        }
+    }
+</script>
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+}

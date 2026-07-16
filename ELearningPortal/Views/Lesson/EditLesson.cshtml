@@ -1,0 +1,66 @@
+﻿@using ELearningPortal.Models.Course
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<partial name="Notification"></partial>
+
+@model LessonView
+<form asp-action="UpdateLesson" asp-controller="Lesson" method="post">
+    <input type="hidden" asp-for="LessonId" />
+    <div class="grid grid-cols-2 gap-6">
+        <div class="space-y-1">
+            <label class="text-label-md font-bold text-on-surface-variant">Sub Course</label>
+            <select asp-for="SubCourseId" asp-items="ViewBag.SubCourse" class="w-full px-4 py-3 border border-outline-variant rounded-xl focus:ring-2 focus:ring-primary">
+            </select>
+            <span asp-validation-for="SubCourseId" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="space-y-1">
+        <label class="text-label-md font-bold text-on-surface-variant">Lesson Title</label>
+        <input asp-for="LessonTitle" class="w-full px-4 py-3 border border-outline-variant rounded-xl focus:ring-2 focus:ring-primary" placeholder="e.g. Fundamental Theorem of Calculus" type="text" />
+        <span asp-validation-for="LessonTitle" class="text-danger"></span>
+    </div>
+    <div class="space-y-1">
+        <label class="text-label-md font-bold text-on-surface-variant">Video URL</label>
+        <div class="relative">
+            <input asp-for="VideoUrl" class="w-full px-4 py-3 border border-outline-variant rounded-xl focus:ring-2 focus:ring-primary" placeholder="https://youtube.com/watch?v=..." type="text" />
+            <span asp-validation-for="VideoUrl" class="text-danger"></span>
+        </div>
+
+    </div>
+    <div class="grid grid-cols-2 gap-6">
+        <div class="space-y-1">
+            <label class="text-label-md font-bold text-on-surface-variant">Duration (Min)</label>
+            <input asp-for="Duration" class="w-full px-4 py-3 border border-outline-variant rounded-xl focus:ring-2 focus:ring-primary" placeholder="30" type="number" />
+            <span asp-validation-for="Duration" class="text-danger"></span>
+        </div>
+        <div class="space-y-1">
+            <label class="text-label-md font-bold text-on-surface-variant">Display Order</label>
+            <input asp-for="DisplayOrder" class="w-full px-4 py-3 border border-outline-variant rounded-xl focus:ring-2 focus:ring-primary" placeholder="1" type="number" />
+            <span asp-validation-for="DisplayOrder" class="text-danger"></span>
+        </div>
+        <div class="space-y-1">
+            <label class="font-bold text-sm text-on-surface-variant">Status</label>
+            <select asp-for="Status" class="w-full px-4 py-2.5 border border-outline-variant rounded-xl bg-surface-container-low focus:ring-2 focus:ring-primary focus:border-transparent outline-none">
+                <option value="1">Active</option>
+                <option value="0">Inactive</option>
+            </select>
+            <span asp-validation-for="Status" class="text-danger"></span>
+        </div>
+
+    </div>
+
+    <div class="p-6 bg-surface-container-low border-t border-outline-variant/30 flex justify-end gap-3">
+        <button class="px-6 py-2 border border-outline rounded-xl font-title-md hover:bg-white transition-colors" onclick="toggleModal('addLessonModal')">Cancel</button>
+        <button type="submit" class="px-6 py-2 bg-primary text-white rounded-xl font-title-md hover:bg-primary-container shadow-lg shadow-primary/20 transition-all">Update Lesson</button>
+    </div>
+</form>
+
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+}

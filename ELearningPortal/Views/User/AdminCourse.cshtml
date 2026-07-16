@@ -1,0 +1,451 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+    <!-- Dashboard Header -->
+    <div class="flex justify-between items-end mb-8">
+        <div>
+            <h2 class="font-headline-lg text-headline-lg text-on-surface">Course Management</h2>
+            <p class="font-body-md text-body-md text-on-surface-variant">Manage master courses for your assigned branch.</p>
+        </div>
+        <button class="bg-primary-container text-on-primary-container px-6 py-2.5 rounded-lg flex items-center gap-2 font-title-md hover:bg-primary transition-all shadow-md" onclick="toggleModal('createModal')">
+            <span class="material-symbols-outlined">add</span>
+            Create Course
+        </button>
+    </div>
+    <!-- Summary Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div class="bg-surface-container-lowest border border-outline-variant p-6 rounded-xl shadow-sm hover:elevation-2 transition-all">
+            <div class="flex justify-between items-start mb-4">
+                <div class="p-2 bg-primary-container/10 rounded-lg">
+                    <span class="material-symbols-outlined text-primary">school</span>
+                </div>
+                <span class="text-xs font-bold text-tertiary">+12% vs last month</span>
+            </div>
+            <h3 class="text-on-surface-variant font-label-md text-label-md uppercase tracking-wider">Total Courses</h3>
+            <p class="text-on-surface font-headline-lg text-headline-lg mt-1">128</p>
+        </div>
+        <div class="bg-surface-container-lowest border border-outline-variant p-6 rounded-xl shadow-sm">
+            <div class="flex justify-between items-start mb-4">
+                <div class="p-2 bg-tertiary-container/10 rounded-lg">
+                    <span class="material-symbols-outlined text-tertiary">check_circle</span>
+                </div>
+                <span class="text-xs font-bold text-tertiary">92% Approval Rate</span>
+            </div>
+            <h3 class="text-on-surface-variant font-label-md text-label-md uppercase tracking-wider">Approved Courses</h3>
+            <p class="text-on-surface font-headline-lg text-headline-lg mt-1">112</p>
+        </div>
+        <div class="bg-surface-container-lowest border border-outline-variant p-6 rounded-xl shadow-sm">
+            <div class="flex justify-between items-start mb-4">
+                <div class="p-2 bg-error-container/10 rounded-lg">
+                    <span class="material-symbols-outlined text-error">pending_actions</span>
+                </div>
+                <span class="text-xs font-bold text-error">High Priority</span>
+            </div>
+            <h3 class="text-on-surface-variant font-label-md text-label-md uppercase tracking-wider">Pending Approval</h3>
+            <p class="text-on-surface font-headline-lg text-headline-lg mt-1">12</p>
+        </div>
+        <div class="bg-surface-container-lowest border border-outline-variant p-6 rounded-xl shadow-sm">
+            <div class="flex justify-between items-start mb-4">
+                <div class="p-2 bg-secondary-container/10 rounded-lg">
+                    <span class="material-symbols-outlined text-secondary">block</span>
+                </div>
+                <span class="text-xs font-bold text-outline">Archived</span>
+            </div>
+            <h3 class="text-on-surface-variant font-label-md text-label-md uppercase tracking-wider">Inactive Courses</h3>
+            <p class="text-on-surface font-headline-lg text-headline-lg mt-1">4</p>
+        </div>
+    </div>
+    <!-- Filter Panel -->
+    <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 mb-8 shadow-sm">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 items-end">
+            <div class="space-y-1.5">
+                <label class="text-xs font-bold text-on-surface-variant uppercase">Search Name</label>
+                <div class="relative">
+                    <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-sm">search</span>
+                    <input class="w-full pl-10 pr-4 py-2 bg-surface border border-outline-variant rounded-lg text-sm focus:ring-primary focus:border-primary" placeholder="Course ID or name..." type="text" />
+                </div>
+            </div>
+            <div class="space-y-1.5">
+                <label class="text-xs font-bold text-on-surface-variant uppercase">Approval Status</label>
+                <select class="w-full px-4 py-2 bg-surface border border-outline-variant rounded-lg text-sm focus:ring-primary focus:border-primary">
+                    <option>All</option>
+                    <option>Pending</option>
+                    <option>Approved</option>
+                    <option>Rejected</option>
+                </select>
+            </div>
+            <div class="space-y-1.5">
+                <label class="text-xs font-bold text-on-surface-variant uppercase">Status</label>
+                <select class="w-full px-4 py-2 bg-surface border border-outline-variant rounded-lg text-sm focus:ring-primary focus:border-primary">
+                    <option>All</option>
+                    <option>Active</option>
+                    <option>Inactive</option>
+                </select>
+            </div>
+            <div class="space-y-1.5">
+                <label class="text-xs font-bold text-on-surface-variant uppercase">Date Range</label>
+                <input class="w-full px-4 py-2 bg-surface border border-outline-variant rounded-lg text-sm focus:ring-primary focus:border-primary" type="date" />
+            </div>
+            <div class="flex gap-2">
+                <button class="flex-1 bg-surface-container text-on-surface font-title-md py-2 px-4 rounded-lg hover:bg-surface-container-high transition-colors text-sm">Reset</button>
+                <button class="flex-1 bg-primary text-white font-title-md py-2 px-4 rounded-lg hover:bg-primary-container transition-colors text-sm">Filter</button>
+            </div>
+        </div>
+    </div>
+    <!-- Data Table -->
+    <div class="bg-surface-container-lowest border border-outline-variant rounded-xl shadow-sm overflow-hidden">
+        <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+                <thead class="bg-surface-container-low border-b border-outline-variant">
+                    <tr>
+                        <th class="px-6 py-4 font-title-md text-sm text-on-surface-variant uppercase tracking-wider">Image</th>
+                        <th class="px-6 py-4 font-title-md text-sm text-on-surface-variant uppercase tracking-wider">Course Detail</th>
+                        <th class="px-6 py-4 font-title-md text-sm text-on-surface-variant uppercase tracking-wider">Approval Status</th>
+                        <th class="px-6 py-4 font-title-md text-sm text-on-surface-variant uppercase tracking-wider">Status</th>
+                        <th class="px-6 py-4 font-title-md text-sm text-on-surface-variant uppercase tracking-wider">Audit Info</th>
+                        <th class="px-6 py-4 font-title-md text-sm text-on-surface-variant uppercase tracking-wider text-right">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-outline-variant">
+                    <!-- Row 1 -->
+                    <tr class="hover:bg-surface transition-colors">
+                        <td class="px-6 py-4">
+                            <div class="w-16 h-12 rounded-lg bg-surface-container overflow-hidden border border-outline-variant">
+                                <img class="w-full h-full object-cover" data-alt="A clean, minimalist high-quality tech thumbnail for a Full Stack Java course, featuring sleek modern typography and a professional blue and gray corporate e-learning aesthetic with soft studio lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCF9tCK_qbz4tnijNUuiItp4IlF0IXuxikXEu7NYB9OpNpN6BQJgvuImZsQk8lMBgXLtKQvGUlk_YiOrswzdcCWfx4wj63OQkAgy9kbxDI8bgfbSnmOB7-y95HVt1oHWoTVzV6CGFCbcOqd2fwIpz0cGaWD29oVloEKTiVwjFk_xvp_4XGxv6m_NeCJCogrc0ujMbU2yRL2kGZX0UEsACZ23uFpp-OStBfV6MW9CFR2ulzyDuL0GWumptPXVuQzCm9U7fIKncdcUvI" />
+                            </div>
+                        </td>
+                        <td class="px-6 py-4">
+                            <div class="max-w-xs">
+                                <p class="font-title-md text-on-surface">Full Stack Java</p>
+                                <p class="text-xs text-on-surface-variant line-clamp-2">Complete Java Full Stack Development using Spring Boot and React for enterprise applications.</p>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4">
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-tertiary/10 text-tertiary text-xs font-bold uppercase">
+                                <span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+                                Approved
+                            </span>
+                        </td>
+                        <td class="px-6 py-4">
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase">
+                                <span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+                                Active
+                            </span>
+                        </td>
+                        <td class="px-6 py-4">
+                            <div class="text-[11px] leading-tight">
+                                <p class="text-on-surface-variant"><span class="font-semibold">Created:</span> 2026-07-13</p>
+                                <p class="text-on-surface-variant"><span class="font-semibold">Modified:</span> 2026-07-13</p>
+                                <p class="text-outline">ID: 001</p>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4 text-right">
+                            <div class="flex justify-end gap-2">
+                                <button class="p-2 hover:bg-surface-container rounded-lg text-on-surface-variant transition-colors" onclick="toggleDrawer('viewDrawer')" title="View Details">
+                                    <span class="material-symbols-outlined">visibility</span>
+                                </button>
+                                <button class="p-2 hover:bg-surface-container rounded-lg text-primary transition-colors" title="Edit">
+                                    <span class="material-symbols-outlined">edit</span>
+                                </button>
+                                <button class="p-2 hover:bg-error-container/10 rounded-lg text-error transition-colors" title="Delete">
+                                    <span class="material-symbols-outlined text-red-500">delete</span>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    <!-- Row 2 -->
+                    <tr class="hover:bg-surface transition-colors">
+                        <td class="px-6 py-4">
+                            <div class="w-16 h-12 rounded-lg bg-surface-container overflow-hidden border border-outline-variant">
+                                <img class="w-full h-full object-cover" data-alt="A professional Python programming thumbnail featuring modern coding syntax elements and a clean, high-density corporate layout with sophisticated lighting and high-contrast color palette of deep blue and professional white." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAhyycwjnx4OsCPTbUkwWAVNEmhGOOXTZ2evD50QH3Bc5IPTGaSIulT5bNsSn61EdCm2xhjrnJGTH_p8kuo8I7LS8KLTZ7UgikI6tSPiBNAfa4JiMrS_mLTUT0OaT4QfcYzEhDBlpE5Jy7FLljwCGRRcwiVO-ZgZKEOoIUcVmzRf51r9hIIC3XLNy8rQldfh4C-6aDsMdSULu3M-CseL6Amb43D5L_clHk4mA6LYQXtdo353_CamgWoymgUsNdp0P33zntIlM73sN8" />
+                            </div>
+                        </td>
+                        <td class="px-6 py-4">
+                            <div class="max-w-xs">
+                                <p class="font-title-md text-on-surface">Python Full Stack</p>
+                                <p class="text-xs text-on-surface-variant line-clamp-2">Python Development with Django framework, REST APIs, and modern frontend integration.</p>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4">
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-yellow-100 text-yellow-700 text-xs font-bold uppercase">
+                                <span class="w-1.5 h-1.5 rounded-full bg-yellow-500"></span>
+                                Pending
+                            </span>
+                        </td>
+                        <td class="px-6 py-4">
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase">
+                                <span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+                                Active
+                            </span>
+                        </td>
+                        <td class="px-6 py-4">
+                            <div class="text-[11px] leading-tight">
+                                <p class="text-on-surface-variant"><span class="font-semibold">Created:</span> 2026-07-13</p>
+                                <p class="text-on-surface-variant"><span class="font-semibold">Modified:</span> 2026-07-13</p>
+                                <p class="text-outline">ID: 002</p>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4 text-right">
+                            <div class="flex justify-end gap-2">
+                                <button class="p-2 hover:bg-surface-container rounded-lg text-on-surface-variant transition-colors">
+                                    <span class="material-symbols-outlined">visibility</span>
+                                </button>
+                                <button class="p-2 hover:bg-surface-container rounded-lg text-primary transition-colors">
+                                    <span class="material-symbols-outlined">edit</span>
+                                </button>
+                                <button class="p-2 hover:bg-error-container/10 rounded-lg text-error transition-colors">
+                                    <span class="material-symbols-outlined text-red-500">delete</span>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    <!-- Row 3 -->
+                    <tr class="hover:bg-surface transition-colors">
+                        <td class="px-6 py-4">
+                            <div class="w-16 h-12 rounded-lg bg-surface-container overflow-hidden border border-outline-variant">
+                                <img class="w-full h-full object-cover" data-alt="A professional React and MongoDB MERN stack course thumbnail with vibrant tech branding, clean asymmetric layout, and premium SaaS-style visual depth on a pristine light-mode background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCcO334lMyLME0yt33hqXcg6EuqbqdWDMHrMSiXpa1NdV_4o2z93lSLSiS8HW0YM5CiU53EseJSVhbn4aMJsMHA5MZi4q1X7vC7R5EbvVtfjteTj3owbrbnkL7jEZ3KlM8mwn6avaC4F8TQ00op79tfz6GLjvai9bn5_czT1AWXteD1yX8WaSGFd221sPKq1iNKbqtf65H_4OeOc0F41UZKyRC2AxEwCl3yhfljM-LIPJYaWwdD7Ppui_hVYLp8DR4GfSSf1bhxAn8" />
+                            </div>
+                        </td>
+                        <td class="px-6 py-4">
+                            <div class="max-w-xs">
+                                <p class="font-title-md text-on-surface">MERN Stack</p>
+                                <p class="text-xs text-on-surface-variant line-clamp-2">Mastering MongoDB, Express, React, and NodeJS for modern web development.</p>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4">
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-error-container/20 text-error text-xs font-bold uppercase">
+                                <span class="w-1.5 h-1.5 rounded-full bg-error"></span>
+                                Rejected
+                            </span>
+                        </td>
+                        <td class="px-6 py-4">
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-outline-variant/30 text-outline-variant text-xs font-bold uppercase">
+                                <span class="w-1.5 h-1.5 rounded-full bg-outline-variant"></span>
+                                Inactive
+                            </span>
+                        </td>
+                        <td class="px-6 py-4">
+                            <div class="text-[11px] leading-tight">
+                                <p class="text-on-surface-variant"><span class="font-semibold">Created:</span> 2026-07-13</p>
+                                <p class="text-on-surface-variant"><span class="font-semibold">Modified:</span> 2026-07-13</p>
+                                <p class="text-outline">ID: 003</p>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4 text-right">
+                            <div class="flex justify-end gap-2">
+                                <button class="p-2 hover:bg-surface-container rounded-lg text-on-surface-variant transition-colors">
+                                    <span class="material-symbols-outlined">visibility</span>
+                                </button>
+                                <button class="p-2 hover:bg-surface-container rounded-lg text-primary transition-colors">
+                                    <span class="material-symbols-outlined">edit</span>
+                                </button>
+                                <button class="p-2 hover:bg-error-container/10 rounded-lg text-error transition-colors">
+                                    <span class="material-symbols-outlined text-red-500">delete</span>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- Pagination Placeholder -->
+        <div class="px-6 py-4 bg-surface-container-low border-t border-outline-variant flex justify-between items-center">
+            <span class="text-xs text-on-surface-variant">Showing 1 to 3 of 128 courses</span>
+            <div class="flex gap-1">
+                <button class="px-3 py-1 bg-surface-container-lowest border border-outline-variant rounded-md text-xs font-bold hover:bg-surface transition-colors">Prev</button>
+                <button class="px-3 py-1 bg-primary text-white border border-primary rounded-md text-xs font-bold">1</button>
+                <button class="px-3 py-1 bg-surface-container-lowest border border-outline-variant rounded-md text-xs font-bold hover:bg-surface transition-colors">2</button>
+                <button class="px-3 py-1 bg-surface-container-lowest border border-outline-variant rounded-md text-xs font-bold hover:bg-surface transition-colors">3</button>
+                <button class="px-3 py-1 bg-surface-container-lowest border border-outline-variant rounded-md text-xs font-bold hover:bg-surface transition-colors">Next</button>
+            </div>
+        </div>
+    </div>
+    <!-- Empty State (Hidden) -->
+    <div class="hidden flex-col items-center justify-center py-24 text-center" id="emptyState">
+        <div class="w-64 h-64 mb-6 opacity-40">
+            <span class="material-symbols-outlined !text-[120px] text-outline-variant">done_outline</span>
+        </div>
+        <h3 class="font-headline-lg text-headline-lg text-on-surface-variant">No Courses Created</h3>
+        <p class="font-body-lg text-body-lg text-outline max-w-sm mx-auto mb-8">It seems you haven't added any master courses for this branch yet. Get started by creating your first course.</p>
+        <button class="bg-primary-container text-on-primary-container px-8 py-3 rounded-lg font-title-lg flex items-center gap-2 hover:bg-primary transition-all">
+            <span class="material-symbols-outlined">add</span>
+            Create First Course
+        </button>
+    </div>
+<!-- Create Course Modal -->
+<div class="fixed inset-0 bg-on-secondary-fixed/50 backdrop-blur-sm z-[60] flex items-center justify-center hidden opacity-0 transition-opacity duration-300" id="createModal">
+    <div class="bg-surface-container-lowest w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden scale-95 transition-transform duration-300">
+        <div class="p-6 border-b border-outline-variant flex justify-between items-center bg-surface-container-low">
+            <h3 class="font-title-lg text-title-lg text-on-surface">Create Master Course</h3>
+            <button class="p-2 hover:bg-white rounded-full transition-colors" onclick="toggleModal('createModal')">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+        <div class="p-8 space-y-6 max-h-[716px] overflow-y-auto">
+            <div class="grid grid-cols-2 gap-6">
+                <div class="col-span-2 space-y-2">
+                    <label class="font-title-md text-sm text-on-surface">Course Name <span class="text-error">*</span></label>
+                    <input class="w-full px-4 py-2.5 border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary" placeholder="e.g. Advanced UI/UX Design Masterclass" type="text" />
+                </div>
+                <div class="col-span-2 space-y-2">
+                    <label class="font-title-md text-sm text-on-surface">Course Description</label>
+<textarea class="w-full px-4 py-2.5 border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary" placeholder="Provide a detailed overview of the course curriculum..." rows="4"></textarea>
+                </div>
+                <div class="space-y-2">
+                    <label class="font-title-md text-sm text-on-surface">Thumbnail Upload</label>
+                    <div class="border-2 border-dashed border-outline-variant rounded-lg p-6 text-center hover:border-primary transition-colors cursor-pointer bg-surface">
+                        <span class="material-symbols-outlined text-outline mb-2">upload_file</span>
+                        <p class="text-xs text-on-surface-variant font-medium">Click to upload or drag &amp; drop</p>
+                        <p class="text-[10px] text-outline mt-1">PNG, JPG up to 5MB (16:9 recommended)</p>
+                    </div>
+                </div>
+                <div class="space-y-2">
+                    <label class="font-title-md text-sm text-on-surface">Status Toggle</label>
+                    <div class="flex items-center gap-3 p-4 bg-surface rounded-lg border border-outline-variant">
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input checked="" class="sr-only peer" type="checkbox" />
+                            <div class="w-11 h-6 bg-outline-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                        </label>
+                        <span class="text-sm font-semibold text-on-surface">Set Active immediately</span>
+                    </div>
+                </div>
+            </div>
+            <div class="p-4 bg-surface-container-high/50 rounded-lg border border-primary-container/20">
+                <div class="flex gap-3">
+                    <span class="material-symbols-outlined text-primary text-sm">info</span>
+                    <div class="text-[11px] text-on-surface-variant space-y-0.5">
+                        <p><span class="font-bold">System Managed:</span> Branch (Main), CreatedBy (Admin), and Timestamps are automatically handled.</p>
+                        <p><span class="font-bold">Approval Workflow:</span> This course will start as <span class="text-yellow-700 font-bold">PENDING</span> and requires regional manager approval.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="p-6 border-t border-outline-variant bg-surface flex justify-end gap-3">
+            <button class="px-6 py-2.5 font-title-md text-on-surface hover:bg-surface-container rounded-lg transition-colors" onclick="toggleModal('createModal')">Cancel</button>
+            <button class="px-8 py-2.5 bg-primary text-white font-title-md rounded-lg shadow-md hover:bg-primary-container transition-all">Submit for Approval</button>
+        </div>
+    </div>
+</div>
+<!-- View Course Drawer -->
+<div class="fixed inset-0 z-[70] pointer-events-none overflow-hidden" id="viewDrawer">
+    <div class="absolute inset-0 bg-on-secondary-fixed/30 backdrop-blur-sm pointer-events-none opacity-0 transition-opacity duration-300" id="drawerOverlay" onclick="toggleDrawer('viewDrawer')"></div>
+    <div class="absolute right-0 top-0 h-full w-full max-w-md bg-surface-container-lowest drawer-shadow translate-x-full transition-transform duration-500 pointer-events-auto flex flex-col">
+        <div class="p-6 border-b border-outline-variant flex items-center justify-between bg-on-secondary-fixed text-white">
+            <div>
+                <p class="text-[10px] uppercase font-bold tracking-widest opacity-60">Course Reference</p>
+                <h3 class="font-title-lg text-title-lg">Full Stack Java</h3>
+            </div>
+            <button class="w-10 h-10 rounded-full flex items-center justify-center hover:bg-white/10 transition-colors" onclick="toggleDrawer('viewDrawer')">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+        <div class="flex-1 overflow-y-auto p-6 space-y-8">
+            <!-- Cover Image Preview -->
+            <div class="aspect-video w-full rounded-xl overflow-hidden shadow-lg border border-outline-variant">
+                <img class="w-full h-full object-cover" data-alt="A detailed, high-density visualization of a Java course curriculum interface, showcasing modern typography, sleek data structures, and a premium educational dashboard aesthetic with bright studio lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDViEtazlmM-akk6Hc7k_hgbRFMcomAV2QIL0U88wPrJugrWoAXWXmupSJ-nwsEvg2oqOr-07Qlfg8_J9RTsMGctjzvbLffk7PdP4PrlvdzAfklkzjr8s9MWeM7L-9jnUKiNikjCuhOoGD3Iqz3HKC-yWC2dOYgGD8-xaohKsicGlduWXUv8z0bnhJt03nS-RUTXeyrxogaAuVCMgu7gxdNtgzdIgI9b8mRR_wnh17idNGveMZass7D9pxfj3EGBWgl38sVwAttjkw" />
+            </div>
+            <!-- Meta Stats Bento Grid -->
+            <div class="grid grid-cols-2 gap-4">
+                <div class="p-4 bg-surface rounded-xl border border-outline-variant text-center">
+                    <p class="text-xs font-bold text-outline uppercase mb-1">Sub Courses</p>
+                    <p class="text-2xl font-display-lg text-primary">08</p>
+                </div>
+                <div class="p-4 bg-surface rounded-xl border border-outline-variant text-center">
+                    <p class="text-xs font-bold text-outline uppercase mb-1">Lessons</p>
+                    <p class="text-2xl font-display-lg text-primary">124</p>
+                </div>
+                <div class="p-4 bg-surface rounded-xl border border-outline-variant text-center">
+                    <p class="text-xs font-bold text-outline uppercase mb-1">Students</p>
+                    <p class="text-2xl font-display-lg text-tertiary">2.4k</p>
+                </div>
+                <div class="p-4 bg-surface rounded-xl border border-outline-variant text-center">
+                    <p class="text-xs font-bold text-outline uppercase mb-1">Rating</p>
+                    <div class="flex justify-center items-center gap-1">
+                        <p class="text-2xl font-display-lg text-on-surface">4.8</p>
+                        <span class="material-symbols-outlined text-yellow-500 text-lg" style="font-variation-settings: 'FILL' 1;">star</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Details List -->
+            <div class="space-y-6">
+                <div class="space-y-1">
+                    <h4 class="text-xs font-bold text-on-surface-variant uppercase">Full Description</h4>
+                    <p class="text-sm text-on-surface leading-relaxed">This master course provides a comprehensive deep-dive into the Java ecosystem. Students will master core Java concepts, advanced multithreading, and move into the full stack realm using Spring Framework, Hibernate, and modern React for building industrial-grade scalable architectures.</p>
+                </div>
+                <div class="grid grid-cols-2 gap-y-6 pt-4 border-t border-outline-variant">
+                    <div>
+                        <h4 class="text-xs font-bold text-on-surface-variant uppercase">Approval Status</h4>
+                        <span class="inline-block mt-2 px-3 py-1 bg-tertiary/10 text-tertiary text-xs font-bold rounded-full">APPROVED</span>
+                    </div>
+                    <div>
+                        <h4 class="text-xs font-bold text-on-surface-variant uppercase">Course ID</h4>
+                        <p class="mt-2 text-sm font-mono font-bold text-on-surface">CRS-MAIN-001</p>
+                    </div>
+                    <div>
+                        <h4 class="text-xs font-bold text-on-surface-variant uppercase">Assigned Branch</h4>
+                        <p class="mt-2 text-sm text-on-surface">Main HQ Branch</p>
+                    </div>
+                    <div>
+                        <h4 class="text-xs font-bold text-on-surface-variant uppercase">Manager</h4>
+                        <p class="mt-2 text-sm text-on-surface">Jane Doe (ID: 2)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="p-6 border-t border-outline-variant bg-surface flex gap-3">
+            <button class="flex-1 py-3 bg-primary text-white rounded-lg font-bold shadow-md hover:bg-primary-container transition-all">Edit Master Course</button>
+            <button class="flex-1 py-3 border border-outline-variant text-on-surface rounded-lg font-bold hover:bg-surface-container transition-all">Duplicate</button>
+        </div>
+    </div>
+</div>
+<script>
+    function toggleModal(id) {
+        const modal = document.getElementById(id);
+        const content = modal.querySelector('div');
+
+        if (modal.classList.contains('hidden')) {
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.add('opacity-100');
+                content.classList.add('scale-100');
+            }, 10);
+        } else {
+            modal.classList.remove('opacity-100');
+            content.classList.remove('scale-100');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+        }
+    }
+
+    function toggleDrawer(id) {
+        const drawer = document.getElementById(id);
+        const overlay = drawer.querySelector('#drawerOverlay');
+        const panel = drawer.querySelector('.translate-x-full, .translate-x-0');
+
+        if (panel.classList.contains('translate-x-full')) {
+            panel.classList.remove('translate-x-full');
+            panel.classList.add('translate-x-0');
+            overlay.classList.remove('pointer-events-none');
+            overlay.classList.add('opacity-100', 'pointer-events-auto');
+        } else {
+            panel.classList.add('translate-x-full');
+            panel.classList.remove('translate-x-0');
+            overlay.classList.remove('opacity-100', 'pointer-events-auto');
+            overlay.classList.add('pointer-events-none');
+        }
+    }
+
+    // Search highlight micro-interaction
+    document.querySelectorAll('input').forEach(input => {
+        input.addEventListener('focus', () => {
+            input.parentElement.classList.add('ring-2', 'ring-primary/20');
+        });
+        input.addEventListener('blur', () => {
+            input.parentElement.classList.remove('ring-2', 'ring-primary/20');
+        });
+    });
+</script>
