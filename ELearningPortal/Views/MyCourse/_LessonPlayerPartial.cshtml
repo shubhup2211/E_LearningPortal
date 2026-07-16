@@ -1,0 +1,62 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model LessonDetailViewModel
+@using ELearningPortal.Helpers
+@using ELearningPortal.Models.Helpers
+@using ELearningPortal.Models.ViewModels
+
+<div id="lessonPlayerWrapper" data-lesson-id="@Model.LessonId">
+
+    <div class="video-box">
+        <div class="video-topbar">Masstech LMS</div>
+
+        <div class="ratio ratio-16x9">
+            <iframe id="youtube-player"
+                    src="@YouTubeHelper.GetEmbedUrl(Model.VideoUrl)"
+                    title="@Model.LessonTitle"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen></iframe>
+
+            <div class="yt-logo-blocker"></div>
+        </div>
+
+        <div class="video-bottombar">Masstech LMS Protected Video &bull; Masstech LMS Protected Video</div>
+    </div>
+
+    <h4 class="mt-3">Lesson : @Model.LessonTitle</h4>
+
+    @* ===== MCQ Button: Video khatam hone ke baad JS ise show karega ===== *@
+    <div id="mcqButtonArea" class="mt-2 @(Model.ShowMcqButton ? "" : "d-none")">
+        <button type="button" id="btnOpenMcq" class="btn btn-danger">
+            Solve 5 MCQ to Unlock Next Lesson
+        </button>
+    </div>
+
+    @* ===== Assignment Upload Area: MCQ pass hone ke baad JS ise show karega ===== *@
+    <div id="assignmentArea" class="mt-3 @(Model.ShowAssignmentSection ? "" : "d-none")">
+        <h5>Assignment Submission</h5>
+        @if (Model.AssignmentSubmitted)
+        {
+            <div class="alert alert-success mb-0">
+                Assignment Submitted! Next Lesson Unlocked.
+            </div>
+        }
+        else
+        {
+            <form id="assignmentForm" enctype="multipart/form-data">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="lessonId" value="@Model.LessonId" />
+                <div class="input-group">
+                    <input type="file" name="file" class="form-control" required />
+                    <button type="submit" class="btn btn-primary">Submit Assignment</button>
+                </div>
+                <small class="text-muted">Allowed: PDF, DOC, DOCX, ZIP, RAR (Max 10MB)</small>
+            </form>
+        }
+    </div>
+    
+</div>

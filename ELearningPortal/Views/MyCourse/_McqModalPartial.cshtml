@@ -1,0 +1,44 @@
+﻿@using ELearningPortal.Models.ViewModels
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model List<McqQuestionViewModel>
+
+<div class="modal fade" id="mcqModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Solve 5 MCQs to Unlock Next Lesson</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="mcqResultAlert"></div>
+
+                <form id="mcqForm">
+                    @Html.AntiForgeryToken()
+                    @for (int i = 0; i < Model.Count; i++)
+                    {
+                        var q = Model[i];
+                        <div class="mcq-question mb-4" data-question-id="@q.QuestionId">
+                            <p class="fw-semibold">@(i + 1). @q.QuestionText</p>
+                            @foreach (var opt in q.Options)
+                            {
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio"
+                                           name="q_@q.QuestionId" id="opt_@opt.OptionId"
+                                           value="@opt.OptionId" required />
+                                    <label class="form-check-label" for="opt_@opt.OptionId">@opt.OptionText</label>
+                                </div>
+                            }
+                        </div>
+                    }
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btnSubmitMcq" class="btn btn-danger">Submit Answers</button>
+            </div>
+        </div>
+    </div>
+</div>

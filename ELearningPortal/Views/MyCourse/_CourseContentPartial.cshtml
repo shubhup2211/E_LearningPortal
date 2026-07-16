@@ -1,0 +1,73 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@using ELearningPortal.Models.ViewModels
+@model MyCourseIndexViewModel
+
+
+
+<div class="row mycourse-wrapper">
+
+    @* ================= LEFT: VIDEO PLAYER ================= *@
+    <div class="col-lg-8" id="leftPlayerColumn">
+        @await Html.PartialAsync("_LessonPlayerPartial", Model.CurrentLesson)
+    </div>
+
+    @* ================= RIGHT: COURSE CONTENT SIDEBAR ================= *@
+    <div class="col-lg-4">
+        <div class="content-sidebar">
+            <div class="sidebar-header">
+                <h5 class="mb-0">Course Content</h5>
+                <small class="text-muted">@Model.TotalLessons Lessons</small>
+
+               
+            </div>
+
+
+
+
+            <ul id="lessonList" class="lesson-list">
+                @foreach (var lesson in Model.Lessons.OrderBy(l => l.DisplayOrder))
+                {
+                   // string stateClass = lesson.IsActive ? "active" : lesson.IsUnlocked ? "unlocked" : "locked";
+
+                    @* Isme badlo (purane wale ko hi comment karo, naye wale ko active karo): *@
+                    // string stateClass = lesson.IsActive ? "active" : lesson.IsUnlocked ? "unlocked" : "locked";
+                    string stateClass = lesson.IsUnlocked ? "unlocked" : "locked";
+                    if (lesson.IsActive) stateClass += " active";
+
+                    <li class="lesson-item @stateClass"
+                        data-lesson-id="@lesson.LessonId"
+                        data-unlocked="@lesson.IsUnlocked.ToString().ToLower()">
+
+                        <div class="lesson-icon">
+                            @if (lesson.IsCompleted)
+                            {
+                                <span class="icon-check">&#10003;</span>
+                            }
+                            else if (!lesson.IsUnlocked)
+                            {
+                                <span class="icon-lock">&#128274;</span>
+                            }
+                            else
+                            {
+                                <span class="icon-play">&#9658;</span>
+                            }
+                        </div>
+
+                        <div class="lesson-text">
+                            <span class="lesson-title">@lesson.DisplayOrder. @lesson.LessonTitle</span>
+                            @if (!string.IsNullOrEmpty(lesson.Duration))
+                            {
+                                <span class="lesson-duration">@lesson.Duration</span>
+                            }
+                        </div>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,233 @@
+﻿@using ELearningPortal.Models.ViewModels
+@model MyCourseIndexViewModel
+@{
+    ViewData["Title"] = Model.CourseName;
+}
+
+@* ===== SubCourse Tabs (Course > SubCourse > Lesson) ===== *@
+<div class="subcourse-tabs mb-3">
+    <div class="text-muted small mb-1">@Model.CourseName</div>
+    <div class="d-flex flex-wrap gap-2">
+        @foreach (var sc in Model.SubCourses)
+        {
+            string tabClass = sc.IsActive ? "subcourse-tab active"
+            : sc.IsPurchased ? "subcourse-tab" : "subcourse-tab locked";
+
+            <div class="@tabClass" data-subcourse-id="@sc.SubCourseId" data-purchased="@sc.IsPurchased.ToString().ToLower()">
+                @if (!sc.IsPurchased)
+                {
+                    <span class="me-1">&#128274;</span>
+                }
+                <span>@sc.SubCourseName</span>
+                <span class="badge bg-light text-dark ms-1">@sc.CompletedLessons/@sc.TotalLessons</span>
+            </div>
+        }
+    </div>
+</div>
+
+@* ===== FIX: Yeh line missing thi — actual content yahan render hoga ===== *@
+<div id="courseContentWrapper">
+    @await Html.PartialAsync("_CourseContentPartial", Model)
+</div>
+
+@* ===== Progress Bar ===== *@
+<div class="mt-2" id="courseProgressWrapper" style="height:auto; width:350px; padding:8px; border:1px solid #ddd; border-radius:6px;">
+    <div class="d-flex justify-content-between">
+        <small class="text-muted">
+            <span id="completedCountText">@Model.CompletedLessons</span>/@Model.TotalLessons Lessons Completed
+        </small>
+        <small class="fw-semibold" id="progressPercentText">@Model.ProgressPercentage%</small>
+    </div>
+    <div class="progress mt-1" style="height: 8px;">
+        <div class="progress-bar bg-success" id="courseProgressBar"
+             role="progressbar"
+             style="width: @Model.ProgressPercentage%;"
+             aria-valuenow="@Model.ProgressPercentage" aria-valuemin="0" aria-valuemax="100">
+        </div>
+    </div>
+</div> @* ===== FIX: Yeh closing div missing thi ===== *@
+
+@* MCQ Modal container *@
+<div id="mcqModalContainer"></div>
+
+
+
+@section Scripts {
+    <script src="~/js/mycourse.js"></script>
+}
+
+@section Styles {
+    <style>
+        .subcourse-tabs {
+            padding: 10px 0;
+        }
+
+        .subcourse-tab {
+            padding: 8px 16px;
+            border-radius: 20px;
+            background: #f1f1f1;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 14px;
+            transition: background 0.15s;
+        }
+
+            .subcourse-tab:hover {
+                background: #e6e6e6;
+            }
+
+            .subcourse-tab.active {
+                background: #6f1a8f;
+                color: #fff;
+            }
+
+            .subcourse-tab.locked {
+                opacity: 0.6;
+                cursor: not-allowed;
+            }
+
+
+
+        .video-container {
+            position: relative;
+        }
+        .yt-logo-blocker {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 70px; /* logo jitni jagah leta hai, roughly */
+            height: 40px;
+            z-index: 5;
+            background: transparent;
+            cursor: default;}       
+
+
+        .mycourse-wrapper {
+            margin-top: 20px;
+        }
+
+        .video-box {
+            background: #1a0010;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .video-topbar {
+            background: #5c0a5c;
+            color: #fff;
+            text-align: center;
+            padding: 14px;
+            font-weight: 600;
+            font-size: 18px;
+        }
+
+        .video-bottombar {
+            background: #5c0a5c;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+            font-size: 13px;
+        }
+
+        .content-sidebar {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            padding: 16px;
+            max-height: 650px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-header {
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 10px;
+        }
+
+        .lesson-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            overflow-y: auto;
+        }
+
+        .lesson-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 8px;
+            border-radius: 8px;
+            margin-bottom: 6px;
+            cursor: pointer;
+            transition: background 0.15s;
+        }
+
+            .lesson-item.unlocked:hover {
+                background: #f5f5f5;
+            }
+
+            .lesson-item.active {
+                background: #f3e8fd;
+                border: 1px solid #b98ee0;
+            }
+
+            .lesson-item.locked {
+                opacity: 0.55;
+                cursor: not-allowed;
+            }
+
+        .lesson-icon {
+            width: 34px;
+            height: 34px;
+            background: #0b1220;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            flex-shrink: 0;
+        }
+
+        .icon-check {
+            color: #4caf50;
+            font-weight: bold;
+        }
+
+        .icon-lock {
+            font-size: 14px;
+        }
+
+        .lesson-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .lesson-title {
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .lesson-duration {
+            font-size: 12px;
+            color: #888;
+        }
+
+
+        .unlock-toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: #28a745;
+            color: #fff;
+            padding: 14px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            z-index: 9999;
+            font-weight: 500;
+        }
+    </style>
+
+}
+<br />
+
